@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import Header from "./components/Header";
 
-const geistSans = Geist({
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: "100 900",
 });
 
 export const metadata: Metadata = {
@@ -17,7 +14,10 @@ export const metadata: Metadata = {
     template: '%s | Trusted Home Essentials',
     default: 'Trusted Home Essentials',
   },
-  description: 'The AI-First Home Maintenance Authority. Expert guides for homeowners.',
+  description: 'The AI-First Home Maintenance Authority.',
+  icons: {
+    icon: '/favicon.svg', // This connects your new T icon!
+  },
 };
 
 export default function RootLayout({
@@ -27,9 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} antialiased bg-black text-white`}>
+        <Header />
         {children}
       </body>
     </html>
