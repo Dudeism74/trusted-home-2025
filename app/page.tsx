@@ -1,19 +1,57 @@
-import Image from "next/image";
+import { client } from "../sanity/client";
 
-export default function Home() {
+// This query asks the database for data
+const POSTS_QUERY = `*[_type == "post"]{
+  _id,
+  title,
+  slug,
+  publishedAt,
+  quickAnswer,
+  "authorName": author->name
+}`;
+
+export default async function Home() {
+  // Go get the data!
+  const posts = await client.fetch(POSTS_QUERY);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1 className="text-4xl font-bold">Trusted Home Essentials</h1>
-        <p className="text-xl">
-          The AI-First Home Maintenance Authority.
-        </p>
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <button className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5">
-            Coming Soon
-          </button>
-        </div>
-      </main>
-    </div>
+    <main className="min-h-screen p-8 bg-black text-white font-sans">
+      <header className="mb-12 border-b border-gray-800 pb-8">
+        <h1 className="text-4xl font-bold mb-2">Trusted Home Essentials</h1>
+        <p className="text-gray-400">The AI-First Home Maintenance Authority.</p>
+      </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post: any) => (
+          <article 
+            key={post._id} 
+            className="border border-gray-800 rounded-lg p-6 hover:border-blue-500 transition-colors bg-[#111]"
+          >
+            {/* The GEO Strategy: Title first */}
+            <h2 className="text-xl font-bold mb-2">{post.title}</h2>
+            
+            {/* The Author Credit */}
+            <p className="text-sm text-gray-500 mb-4">
+              By {post.authorName}
+            </p>
+
+            {/* The "Quick Answer" Box (AI Gold) */}
+            <div className="bg-[#222] p-4 rounded-md mb-4 border-l-4 border-blue-500">
+              <p className="text-xs text-blue-400 font-bold uppercase mb-1">
+                Quick Answer
+              </p>
+              <p className="text-sm text-gray-300">
+                {post.quickAnswer}
+              </p>
+            </div>
+
+            {/* Read More Button (Placeholder for now) */}
+            <button className="text-sm font-bold text-white underline decoration-blue-500">
+              Read Full Guide →
+            </button>
+          </article>
+        ))}
+      </div>
+    </main>
   );
 }
