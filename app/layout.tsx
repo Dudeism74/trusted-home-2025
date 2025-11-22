@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google"; // We are switching to Google Fonts
 import "./globals.css";
 import Header from "./components/Header";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
+// Setup the Google Font
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -16,7 +13,7 @@ export const metadata: Metadata = {
   },
   description: 'The AI-First Home Maintenance Authority.',
   icons: {
-    icon: '/favicon.svg', // This connects your new T icon!
+    icon: '/favicon.svg',
   },
 };
 
@@ -27,7 +24,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} antialiased bg-black text-white`}>
+      {/* We apply the 'inter' font class here */}
+      <body className={`${inter.className} antialiased bg-black text-white`}>
         <Header />
         {children}
       </body>
