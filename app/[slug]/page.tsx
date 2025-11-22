@@ -11,7 +11,30 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   "authorName": author->name
 }`;
 
-// 1. THE NEW PART: This tells Google what the page is about
+// This is the "Style Guide" for your content
+const ptComponents = {
+  block: {
+    // H2: Big, Bold, White, with space above and below
+    h2: ({children}: any) => <h2 className="text-3xl font-bold mt-10 mb-4 text-white border-b border-gray-800 pb-2">{children}</h2>,
+    
+    // H3: Slightly smaller, usually for sub-points
+    h3: ({children}: any) => <h3 className="text-2xl font-bold mt-8 mb-3 text-blue-400">{children}</h3>,
+    
+    // Normal Text: Relaxed spacing, gray color
+    normal: ({children}: any) => <p className="mb-6 leading-7 text-gray-300">{children}</p>,
+  },
+  list: {
+    // Bullet points
+    bullet: ({children}: any) => <ul className="list-disc pl-6 mb-6 space-y-2 text-gray-300">{children}</ul>,
+    // Numbered lists
+    number: ({children}: any) => <ol className="list-decimal pl-6 mb-6 space-y-2 text-gray-300">{children}</ol>,
+  },
+  marks: {
+    // Bold text
+    strong: ({children}: any) => <strong className="font-bold text-white">{children}</strong>,
+  }
+}
+
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const params = await props.params;
   const post = await client.fetch(POST_QUERY, { slug: params.slug });
@@ -26,7 +49,6 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   };
 }
 
-// 2. The Regular Page Content
 export default async function PostPage(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params; 
   const post = await client.fetch(POST_QUERY, { slug: params.slug });
@@ -44,7 +66,8 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
       </nav>
 
       <article className="max-w-3xl mx-auto p-6 mt-10">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+        
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white leading-tight">
           {post.title}
         </h1>
 
@@ -59,7 +82,7 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
         </div>
 
         {post.quickAnswer && (
-          <div className="bg-[#1a1a1a] border-l-4 border-blue-500 p-6 mb-10 rounded-r-lg">
+          <div className="bg-[#111] border-l-4 border-blue-500 p-6 mb-12 rounded-r-lg">
             <h3 className="text-blue-400 font-bold text-xs uppercase mb-2 tracking-wider">
               Quick Answer
             </h3>
@@ -69,9 +92,11 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
           </div>
         )}
 
-        <div className="prose prose-invert prose-lg max-w-none text-gray-300">
-          {post.body && <PortableText value={post.body} />}
+        <div className="text-lg">
+          {/* We pass the 'components' prop here to apply the styles */}
+          {post.body && <PortableText value={post.body} components={ptComponents} />}
         </div>
+
       </article>
     </main>
   );
