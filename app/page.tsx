@@ -1,5 +1,5 @@
 import { client } from "../sanity/client";
-
+import Link from "next/link";
 // This query asks the database for data
 const POSTS_QUERY = `*[_type == "post"]{
   _id,
@@ -46,9 +46,12 @@ export default async function Home() {
             </div>
 
             {/* Read More Button (Placeholder for now) */}
-            <button className="text-sm font-bold text-white underline decoration-blue-500">
-              Read Full Guide →
-            </button>
+           <Link 
+  href={`/${post.slug.current}`} 
+  className="text-sm font-bold text-blue-400 hover:text-white underline decoration-blue-500/50 transition-colors"
+>
+  Read Full Guide →
+</Link>
           </article>
         ))}
       </div>
