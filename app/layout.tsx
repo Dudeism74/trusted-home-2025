@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,7 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased bg-black text-white`}>
+      {/* CHANGED: This line now sets the background to Off-White (#F9FAFB) and text to Dark Gray */}
+      <body className={`${inter.className} antialiased bg-[#F9FAFB] text-slate-900`}>
         <Header />
         {children}
         <Footer />
