@@ -1,4 +1,4 @@
-import { client } from "../sanity/client";
+import { client } from "@/sanity/client";
 import Link from "next/link";
 
 const POSTS_QUERY = `*[_type == "post"]{
@@ -11,37 +11,54 @@ const POSTS_QUERY = `*[_type == "post"]{
 }`;
 
 export default async function Home() {
-  // This is the line that turns on the "Live News Feed" (60-second updates)
+  // This ensures the homepage updates with new articles every 60 seconds
   const posts = await client.fetch(POSTS_QUERY, {}, { next: { revalidate: 60 } });
 
   return (
-    <main className="min-h-screen p-8 bg-black text-white font-sans">
+    <main className="min-h-screen p-8 font-sans">
+      {/* Header Section */}
+      <div className="max-w-6xl mx-auto mb-12 text-center">
+        <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+          Expert Guides & Reviews
+        </h1>
+        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          No fluff. Just the tools and techniques you need to maintain your home, verified by a professional mechanic.
+        </p>
+      </div>
+
+      {/* The Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {posts.map((post: any) => (
           <article 
             key={post._id} 
-            className="border border-gray-800 rounded-lg p-6 hover:border-blue-500 transition-colors bg-[#111] flex flex-col"
+            className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full"
           >
-            <h2 className="text-xl font-bold mb-2">{post.title}</h2>
+            {/* Title */}
+            <h2 className="text-xl font-bold mb-2 text-slate-900 leading-tight">
+              {post.title}
+            </h2>
             
-            <p className="text-sm text-gray-500 mb-4">
+            {/* Byline */}
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">
               By {post.authorName}
             </p>
 
-            <div className="bg-[#222] p-4 rounded-md mb-6 border-l-4 border-blue-500 flex-grow">
-              <p className="text-xs text-blue-400 font-bold uppercase mb-1">
+            {/* The Quick Answer Box (Light Mode) */}
+            <div className="bg-blue-50 p-4 rounded-lg mb-6 border-l-4 border-blue-500 flex-grow">
+              <p className="text-xs text-blue-700 font-bold uppercase mb-2">
                 Quick Answer
               </p>
-              <p className="text-sm text-gray-300 leading-relaxed">
+              <p className="text-sm text-slate-700 leading-relaxed">
                 {post.quickAnswer}
               </p>
             </div>
 
+            {/* Button */}
             <Link 
               href={`/${post.slug.current}`} 
-              className="text-sm font-bold text-blue-400 hover:text-white underline decoration-blue-500/50 transition-colors mt-auto"
+              className="text-sm font-bold text-white bg-[#1A3C2F] hover:bg-[#142f25] py-3 px-4 rounded-lg text-center mt-auto transition-colors"
             >
-              Read Full Guide →
+              Read Full Guide
             </Link>
           </article>
         ))}
