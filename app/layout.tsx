@@ -12,9 +12,12 @@ export const metadata: Metadata = {
     default: 'Trusted Home Essentials',
   },
   description: 'The AI-First Home Maintenance Authority.',
-  icons: {
-    icon: '/favicon.svg',
+  export const metadata: Metadata = {
+  title: {
+    template: '%s | Trusted Home Essentials',
+    default: 'Trusted Home Essentials',
   },
+  description: 'The AI-First Home Maintenance Authority.',
 };
 
 export default function RootLayout({
