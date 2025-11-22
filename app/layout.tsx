@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* CHANGED: This line now sets the background to Off-White (#F9FAFB) and text to Dark Gray */}
+      {/* I fixed the colors here: bg-[#F9FAFB] is Off-White, text-slate-900 is Dark Gray */}
       <body className={`${inter.className} antialiased bg-[#F9FAFB] text-slate-900`}>
         <Header />
         {children}
