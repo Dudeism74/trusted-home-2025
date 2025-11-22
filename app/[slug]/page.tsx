@@ -11,27 +11,20 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   "authorName": author->name
 }`;
 
-// This is the "Style Guide" for your content
+// THIS IS THE MISSING PIECE: The Style Guide
 const ptComponents = {
   block: {
-    // H2: Big, Bold, White, with space above and below
     h2: ({children}: any) => <h2 className="text-3xl font-bold mt-10 mb-4 text-white border-b border-gray-800 pb-2">{children}</h2>,
-    
-    // H3: Slightly smaller, usually for sub-points
     h3: ({children}: any) => <h3 className="text-2xl font-bold mt-8 mb-3 text-blue-400">{children}</h3>,
-    
-    // Normal Text: Relaxed spacing, gray color
     normal: ({children}: any) => <p className="mb-6 leading-7 text-gray-300">{children}</p>,
   },
   list: {
-    // Bullet points
     bullet: ({children}: any) => <ul className="list-disc pl-6 mb-6 space-y-2 text-gray-300">{children}</ul>,
-    // Numbered lists
     number: ({children}: any) => <ol className="list-decimal pl-6 mb-6 space-y-2 text-gray-300">{children}</ol>,
   },
   marks: {
     strong: ({children}: any) => <strong className="font-bold text-white">{children}</strong>,
-    // NEW: This makes your links Blue, Clickable, and SEO-Safe (NoFollow)
+    // This turns your links BLUE and adds the SEO protection
     link: ({value, children}: any) => {
       const target = (value?.href || '').startsWith('http') ? '_blank' : undefined
       return (
@@ -39,7 +32,7 @@ const ptComponents = {
           href={value?.href} 
           target={target} 
           rel={target === '_blank' ? 'noindex nofollow' : undefined} 
-          className="text-blue-400 hover:text-blue-300 underline decoration-blue-500/50 transition-colors font-semibold"
+          className="text-blue-400 hover:text-blue-300 underline decoration-blue-500/50 transition-colors font-bold"
         >
           {children}
         </a>
@@ -94,6 +87,8 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
           )}
         </div>
 
+        {/* Main Image display could go here if you wanted */}
+
         {post.quickAnswer && (
           <div className="bg-[#111] border-l-4 border-blue-500 p-6 mb-12 rounded-r-lg">
             <h3 className="text-blue-400 font-bold text-xs uppercase mb-2 tracking-wider">
@@ -106,7 +101,7 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
         )}
 
         <div className="text-lg">
-          {/* We pass the 'components' prop here to apply the styles */}
+          {/* This tells the page to USE the styles we defined above */}
           {post.body && <PortableText value={post.body} components={ptComponents} />}
         </div>
 
