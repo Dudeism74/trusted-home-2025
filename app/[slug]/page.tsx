@@ -30,8 +30,21 @@ const ptComponents = {
     number: ({children}: any) => <ol className="list-decimal pl-6 mb-6 space-y-2 text-gray-300">{children}</ol>,
   },
   marks: {
-    // Bold text
     strong: ({children}: any) => <strong className="font-bold text-white">{children}</strong>,
+    // NEW: This makes your links Blue, Clickable, and SEO-Safe (NoFollow)
+    link: ({value, children}: any) => {
+      const target = (value?.href || '').startsWith('http') ? '_blank' : undefined
+      return (
+        <a 
+          href={value?.href} 
+          target={target} 
+          rel={target === '_blank' ? 'noindex nofollow' : undefined} 
+          className="text-blue-400 hover:text-blue-300 underline decoration-blue-500/50 transition-colors font-semibold"
+        >
+          {children}
+        </a>
+      )
+    },
   }
 }
 
