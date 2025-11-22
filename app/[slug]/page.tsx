@@ -1,4 +1,4 @@
-import { client } from "@/sanity/client"; // Updated to use the @ symbol so it never breaks
+import { client } from "@/sanity/client";
 import Link from "next/link";
 
 const POSTS_QUERY = `*[_type == "post"]{
