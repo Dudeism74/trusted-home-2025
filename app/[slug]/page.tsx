@@ -1,6 +1,7 @@
 import { client } from "../../sanity/client";
 import { PortableText } from "next-sanity";
 import Link from "next/link";
+import { Metadata } from "next";
 
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   title,
@@ -10,7 +11,22 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   "authorName": author->name
 }`;
 
-// UPDATED: We now treat params as a Promise (Next.js 15 requirement)
+// 1. THE NEW PART: This tells Google what the page is about
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const params = await props.params;
+  const post = await client.fetch(POST_QUERY, { slug: params.slug });
+
+  if (!post) {
+    return { title: "Article Not Found" };
+  }
+
+  return {
+    title: post.title,
+    description: post.quickAnswer || "Read our expert guide on Trusted Home Essentials.",
+  };
+}
+
+// 2. The Regular Page Content
 export default async function PostPage(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params; 
   const post = await client.fetch(POST_QUERY, { slug: params.slug });
@@ -28,7 +44,6 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
       </nav>
 
       <article className="max-w-3xl mx-auto p-6 mt-10">
-        
         <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
           {post.title}
         </h1>
@@ -57,7 +72,6 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
         <div className="prose prose-invert prose-lg max-w-none text-gray-300">
           {post.body && <PortableText value={post.body} />}
         </div>
-
       </article>
     </main>
   );
