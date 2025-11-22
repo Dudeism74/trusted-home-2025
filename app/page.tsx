@@ -14,8 +14,7 @@ export default async function Home() {
   const posts = await client.fetch(POSTS_QUERY, {}, { next: { revalidate: 60 } });
 
   return (
-    // CHANGED: bg-slate-100 makes the page background light gray
-    <main className="min-h-screen p-8 font-sans bg-slate-100">
+    <main className="min-h-screen p-8 font-sans">
       <div className="max-w-6xl mx-auto mb-12 text-center">
         <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
           Expert Guides & Reviews
@@ -29,8 +28,7 @@ export default async function Home() {
         {posts.map((post: any) => (
           <article 
             key={post._id} 
-            // CHANGED: border-gray-300 and shadow-md make the cards pop
-            className="bg-white border border-gray-300 rounded-xl p-6 shadow-md hover:shadow-xl transition-all flex flex-col h-full"
+            className="bg-white border border-gray-300 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all flex flex-col h-full"
           >
             <h2 className="text-xl font-bold mb-2 text-slate-900 leading-tight">
               {post.title}
