@@ -2,13 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Tailwind CSS light theme variables */
-:root {
-	--background: #fff;
-	--foreground: #1e293b;
-}
-
-body {
-	background-color: var(--background);
-	color: var(--foreground);
-}
+/* We rely on the layout.tsx file to set the background and font colors */
