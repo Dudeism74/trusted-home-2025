@@ -14,7 +14,7 @@ export default async function Home() {
   const posts = await client.fetch(POSTS_QUERY, {}, { next: { revalidate: 60 } });
 
   return (
-    <main className="min-h-screen font-sans bg-slate-50 py-16"> 
+    <main className="min-h-screen p-8 font-sans bg-slate-50 py-16"> 
       {/* Container wraps all content and centers it */}
       <div className="max-w-6xl mx-auto px-6">
         
@@ -29,7 +29,7 @@ export default async function Home() {
         </div>
 
         {/* The Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {posts.map((post: any) => (
             <article 
               key={post._id} 
