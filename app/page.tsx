@@ -1,4 +1,4 @@
-import { client } from "../sanity/client"; // CHANGED: Using ../ instead of @/ to fix the editor error
+import { client } from "../sanity/client";
 import Link from "next/link";
 
 const POSTS_QUERY = `*[_type == "post"]{
@@ -28,7 +28,7 @@ export default async function Home() {
         {posts.map((post: any) => (
           <article 
             key={post._id} 
-            className="bg-white border border-gray-300 rounded-xl p-6 shadow-md hover:shadow-xl transition-all flex flex-col h-full"
+            className="bg-white border border-gray-300 rounded-xl p-6 shadow-sm hover:shadow-xl transition-all flex flex-col h-full"
           >
             <h2 className="text-xl font-bold mb-2 text-slate-900 leading-tight">
               {post.title}
