@@ -1,33 +1,15 @@
-import { client } from "@/sanity/client";
-import Link from "next/link";
+export const revalidate = 60;
 
-const POSTS_QUERY = `*[_type == "post"]{
-  _id,
-  title,
-  slug,
-  publishedAt,
-  quickAnswer,
-  "authorName": author->name
-}`;
-
-export default async function Home() {
-  const posts = await client.fetch(POSTS_QUERY, {}, { next: { revalidate: 60 } });
-
+export default function Home() {
   return (
-    <main className="min-h-screen p-8 font-sans">
-      <div className="max-w-6xl mx-auto mb-12 text-center">
-        <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
-          Expert Guides & Reviews
-        </h1>
-        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-          No fluff. Just the tools and techniques you need to maintain your home, verified by a professional mechanic.
-        </p>
+    <main className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white border border-gray-300 rounded-lg shadow p-8 max-w-xl w-full">
+        <h1 className="text-3xl font-bold mb-4 text-slate-900">Welcome to Trusted Home 2025</h1>
+        <p className="text-slate-700">Your modern home platform.</p>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {posts.map((post: any) => (
-          <article 
-            key={post._id} 
+    </main>
+  );
+}
             className="bg-white border border-gray-300 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all flex flex-col h-full"
           >
             <h2 className="text-xl font-bold mb-2 text-slate-900 leading-tight">
