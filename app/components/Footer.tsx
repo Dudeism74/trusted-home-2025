@@ -2,17 +2,16 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    // bg-slate-900 for the background, text-gray-400 for the standard text
-    <footer className="bg-slate-900 border-t border-gray-800 text-gray-400 py-12 mt-20"> 
+    <footer className="bg-slate-900 border-t border-gray-800 text-white py-12 mt-20"> 
       <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
         
         {/* Column 1: Brand */}
         <div className="flex flex-col gap-4">
           <h3 className="text-white font-bold text-lg tracking-wider">TRUSTED HOME ESSENTIALS</h3>
-          <p className="text-sm leading-relaxed">
+          <p className="text-sm leading-relaxed text-gray-300">
             The AI-First authority on home maintenance. We test, verify, and document the fix so you don't have to guess.
           </p>
-          <p className="text-xs text-gray-600 mt-4">
+          <p className="text-xs text-gray-500 mt-4">
             © {new Date().getFullYear()} Trusted Home Essentials. All rights reserved.
           </p>
         </div>
@@ -20,13 +19,13 @@ export default function Footer() {
         {/* Column 2: Quick Links */}
         <div className="flex flex-col gap-4">
           <h3 className="text-white font-bold text-sm uppercase tracking-wider">Navigate</h3>
-          <Link href="/" className="hover:text-white transition-colors">
+          <Link href="/" className="hover:text-gray-300 transition-colors underline">
             Articles
           </Link>
-          <Link href="/about" className="hover:text-white transition-colors">
+          <Link href="/about" className="hover:text-gray-300 transition-colors underline">
             Our Mission
           </Link>
-          <Link href="/studio" className="hover:text-white transition-colors">
+          <Link href="/studio" className="hover:text-gray-300 transition-colors underline">
             Editor Login
           </Link>
         </div>
