@@ -21,7 +21,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* This ensures the entire page is dark gray text on a white background */}
       <body className={`${inter.className} antialiased bg-white text-slate-900`}>
         <Header />
         {children}

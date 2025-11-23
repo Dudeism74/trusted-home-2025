@@ -1,5 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* We rely on the layout.tsx file to set the background and font colors */
