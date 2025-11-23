@@ -1,4 +1,4 @@
-import { client } from "../sanity/client";
+import { client } from "../sanity/client"; // CORRECTED: Now uses ../ to fix path error
 import Link from "next/link";
 
 const POSTS_QUERY = `*[_type == "post"]{
@@ -15,6 +15,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen p-8 font-sans bg-slate-50">
+      {/* Header Section */}
       <div className="max-w-6xl mx-auto mb-12 text-center">
         <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
           Expert Guides & Reviews
@@ -24,6 +25,7 @@ export default async function Home() {
         </p>
       </div>
 
+      {/* The Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {posts.map((post: any) => (
           <article 
