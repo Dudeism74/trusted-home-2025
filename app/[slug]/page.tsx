@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import { client } from "../../sanity/client";
 
 export const dynamic = "force-dynamic";
@@ -16,27 +15,9 @@ type PageProps = {
   params?: { slug?: string };
 };
 
-export default async function PostPage(props: PageProps) {
-  // 1. Try to get slug from params (normal Next behavior)
-  const paramSlug = props.params?.slug;
-
-  // 2. Fallback: derive slug from the request path in headers
-  const h = headers();
-  const rawPath =
-    h.get("next-url") ||
-    h.get("x-invoke-path") ||
-    h.get("x-matched-path") ||
-    "";
-
-  const derivedSlug =
-    rawPath
-      .split("?")[0]
-      .split("#")[0]
-      .split("/")
-      .filter(Boolean)
-      .pop() || "";
-
-  const requestedSlug = paramSlug || derivedSlug;
+export default async function PostPage({ params }: PageProps) {
+  // Get the slug only from the route params
+  const requestedSlug = params?.slug ?? "";
 
   let posts: Post[] = [];
   let fetchError: string | null = null;
@@ -78,7 +59,7 @@ export default async function PostPage(props: PageProps) {
           </h1>
           <p className="mb-4 text-sm text-slate-700">
             There was an error fetching posts from Sanity. Check your project
-            ID, dataset, and token.
+            ID, dataset and token.
           </p>
           <pre className="text-xs bg-slate-900 text-slate-100 p-4 rounded overflow-x-auto">
             {fetchError}
@@ -108,18 +89,11 @@ export default async function PostPage(props: PageProps) {
           </h1>
 
           <p className="text-sm text-slate-700 mb-2">
-            Requested slug (from params or URL):
+            Requested slug from route params:
           </p>
           <p className="text-sm font-mono bg-slate-100 px-3 py-2 rounded mb-4">
             "{requestedSlug}" (length{" "}
             {requestedSlug ? requestedSlug.length : 0})
-          </p>
-
-          <p className="text-sm text-slate-700 mb-2">
-            Raw path from headers:
-          </p>
-          <p className="text-sm font-mono bg-slate-100 px-3 py-2 rounded mb-6">
-            "{rawPath}"
           </p>
 
           <p className="text-sm text-slate-700 mb-3">
@@ -132,7 +106,7 @@ export default async function PostPage(props: PageProps) {
               hitting the wrong dataset.
             </p>
           ) : (
-            <ul className="text-sm text-slate-700 space-y-1 mb-6">
+            <ul className="text-sm text-slate-700 space-y-1 mb-6 list-disc list-inside">
               {posts.map((p) => (
                 <li key={p._id}>
                   <span className="font-mono bg-slate-100 px-2 py-1 rounded">
@@ -146,8 +120,9 @@ export default async function PostPage(props: PageProps) {
           )}
 
           <p className="text-xs text-slate-500">
-            Once this requested slug matches one of the Sanity slugs above,
-            this page will automatically switch to the full article layout.
+            Once the slug in the URL exactly matches one of the Sanity slugs
+            listed above, this page will automatically switch to the full
+            article layout.
           </p>
         </div>
       </main>
@@ -191,7 +166,7 @@ export default async function PostPage(props: PageProps) {
           </section>
 
           <p className="text-sm text-slate-600">
-            This is the simple article view rendered from Sanity. Once we are
+            This is the simple article view rendered from Sanity. Once you are
             happy with the data flow, we can expand this with the full layout
             and sections.
           </p>
