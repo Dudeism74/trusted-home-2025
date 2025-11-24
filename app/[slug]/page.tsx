@@ -17,6 +17,7 @@ export default async function PostDebugPage({
   params: { slug: string };
 }) {
   let posts: Post[] = [];
+  let errorMessage: string | null = null;
 
   try {
     posts = await client.fetch(
@@ -29,7 +30,15 @@ export default async function PostDebugPage({
       }`
     );
   } catch (err) {
-    // If this throws, show the error so we can see it
+    errorMessage =
+      err instanceof Error ? err.message : typeof err === "string" ? err : String(err);
+  }
+
+  const requestedSlug = params.slug;
+  const matchedPost = posts.find((p) => p.slug?.current === requestedSlug);
+
+  // If the Sanity query itself failed
+  if (errorMessage) {
     return (
       <main className="min-h-screen bg-slate-50">
         <div className="max-w-3xl mx-auto px-6 py-10">
@@ -40,8 +49,8 @@ export default async function PostDebugPage({
             There was an error fetching posts from Sanity. Check your project
             ID, dataset, and token.
           </p>
-          <pre className="text-xs bg-slate-900 text-slate-100 p-4 rounded">
-            {String(err)}
+          <pre className="text-xs bg-slate-900 text-slate-100 p-4 rounded overflow-x-auto">
+            {errorMessage}
           </pre>
           <div className="mt-6">
             <Link
@@ -56,9 +65,7 @@ export default async function PostDebugPage({
     );
   }
 
-  const requestedSlug = params.slug;
-  const matchedPost = posts.find((p) => p.slug?.current === requestedSlug);
-
+  // If the query worked but no matching slug
   if (!matchedPost) {
     return (
       <main className="min-h-screen bg-slate-50">
@@ -76,7 +83,7 @@ export default async function PostDebugPage({
             Debug: article not found
           </h1>
 
-          <p className="text-sm text-slate-700 mb-4">
+          <p className="text-sm text-slate-700 mb-2">
             Requested slug from URL:
           </p>
           <p className="text-sm font-mono bg-slate-100 px-3 py-2 rounded mb-6">
@@ -106,15 +113,15 @@ export default async function PostDebugPage({
           )}
 
           <p className="text-xs text-slate-500">
-            Once we see these values match up, we will swap this debug page out
-            for the real article layout.
+            Once we see these values line up with the homepage links, we will
+            replace this debug page with the final article layout.
           </p>
         </div>
       </main>
     );
   }
 
-  // If we DO have a match, render a simple version of the article so you see it works
+  // If we DO have a match, render a simple article so you can see it working
   return (
     <main className="min-h-screen bg-slate-50">
       <div className="max-w-3xl mx-auto px-6 py-10">
@@ -126,3 +133,37 @@ export default async function PostDebugPage({
             ← Back to articles
           </Link>
         </nav>
+
+        <article>
+          <header className="mb-6">
+            <p className="text-xs font-semibold tracking-[0.18em] text-emerald-700 uppercase mb-2">
+              Trusted Home Essentials
+            </p>
+            <h1 className="text-3xl font-extrabold text-slate-900 mb-2">
+              {matchedPost.title}
+            </h1>
+            {matchedPost.authorName && (
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+                By {matchedPost.authorName}
+              </p>
+            )}
+          </header>
+
+          <section className="bg-blue-50 border-l-4 border-blue-500 rounded-r-md px-4 py-3 mb-8">
+            <p className="text-[11px] font-bold text-blue-700 uppercase tracking-[0.18em] mb-1">
+              Quick answer
+            </p>
+            <p className="text-sm text-slate-800 leading-relaxed">
+              {matchedPost.quickAnswer}
+            </p>
+          </section>
+
+          <p className="text-sm text-slate-600">
+            This is the debug article view. Once we are happy with the data
+            connection, we will replace it with the final layout.
+          </p>
+        </article>
+      </div>
+    </main>
+  );
+}
