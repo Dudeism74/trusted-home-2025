@@ -1,46 +1,101 @@
-import { client } from "../../sanity/client";
 import Link from "next/link";
+import { client } from "../../sanity/client";
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
-  const post = await client.fetch(
+export const dynamic = "force-dynamic";
+
+type Post = {
+  title: string;
+  publishedAt?: string;
+  quickAnswer: string;
+  authorName?: string;
+};
+
+async function getPost(slug: string): Promise<Post | null> {
+  return client.fetch(
     `*[_type == "post" && slug.current == $slug][0]{
       title,
       publishedAt,
       quickAnswer,
       "authorName": author->name
     }`,
-    { slug: params.slug }
+    { slug }
   );
+}
 
-  if (!post) return <div className="p-10 text-center text-slate-600">Article not found.</div>;
+export default async function PostPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const post = await getPost(params.slug);
+
+  if (!post) {
+    return (
+      <main className="min-h-screen bg-slate-50">
+        <div className="max-w-3xl mx-auto px-6 py-16 text-center">
+          <p className="text-xs font-semibold tracking-[0.18em] text-slate-500 uppercase mb-3">
+            Trusted Home Essentials
+          </p>
+          <h1 className="text-2xl font-bold text-slate-900 mb-4">
+            Article not found
+          </h1>
+          <Link
+            href="/"
+            className="text-sm font-semibold text-emerald-700 hover:text-emerald-900"
+          >
+            ← Back to articles
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
-    <main className="min-h-screen bg-[#F9FAFB] font-sans">
-      <nav className="max-w-4xl mx-auto px-6 py-6">
-        <Link href="/" className="text-slate-500 hover:text-[#1A3C2F] text-sm font-semibold">
-          ← Back to Articles
-        </Link>
-      </nav>
+    <main className="min-h-screen bg-slate-50">
+      <div className="max-w-3xl mx-auto px-6 py-10">
+        <nav className="mb-6">
+          <Link
+            href="/"
+            className="text-xs font-semibold text-slate-500 hover:text-slate-800"
+          >
+            ← Back to articles
+          </Link>
+        </nav>
 
-      <article className="max-w-3xl mx-auto px-6 pb-20">
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-slate-900 leading-tight">{post.title}</h1>
-        <div className="flex items-center gap-2 text-slate-500 mb-10 text-sm font-medium">
-          <span className="uppercase tracking-wider text-slate-700">{post.authorName}</span>
-          <span>•</span>
-          {post.publishedAt && <span>{new Date(post.publishedAt).toLocaleDateString()}</span>}
-        </div>
+        <article>
+          <header className="mb-8">
+            <p className="text-xs font-semibold tracking-[0.18em] text-emerald-700 uppercase mb-2">
+              Trusted Home Essentials
+            </p>
+            <h1 className="text-3xl font-extrabold text-slate-900 mb-3">
+              {post.title}
+            </h1>
+            {post.authorName && (
+              <p className="text-xs uppercase tracking-[0.18em] text-slate-500 mb-1">
+                By {post.authorName}
+              </p>
+            )}
+          </header>
 
-        {post.quickAnswer && (
-          <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg shadow-sm">
-            <h3 className="text-blue-800 font-bold text-xs uppercase mb-2">Quick Answer</h3>
-            <p className="text-lg text-slate-800">{post.quickAnswer}</p>
-          </div>
-        )}
+          <section className="bg-blue-50 border-l-4 border-blue-500 rounded-r-md px-4 py-3 mb-8">
+            <p className="text-[11px] font-bold text-blue-700 uppercase tracking-[0.18em] mb-1">
+              Quick answer
+            </p>
+            <p className="text-sm text-slate-800 leading-relaxed">
+              {post.quickAnswer}
+            </p>
+          </section>
 
-        <div className="prose prose-lg max-w-none">{/* Body rendering omitted to avoid PortableText issues */}
-          <p className="text-slate-700">Full article content is available in the CMS.</p>
-        </div>
-      </article>
+          <section className="text-slate-700 leading-relaxed text-[15px] space-y-4">
+            <p>
+              Full article body rendering is not wired up yet on this route. The
+              quick answer above is live from Sanity so you can validate the
+              connection and routing. Once you confirm the links work, we can
+              hook up PortableText here to render the entire guide.
+            </p>
+          </section>
+        </article>
+      </div>
     </main>
   );
 }
