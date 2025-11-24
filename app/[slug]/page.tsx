@@ -1,177 +1,66 @@
-import Link from "next/link";
-import { client } from "../../sanity/client";
+import { notFound } from 'next/navigation'
+import { createClient, groq } from 'next-sanity'
 
-export const dynamic = "force-dynamic";
+// Initialize the Sanity client using project ID and dataset from environment
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  apiVersion: '2023-01-01',   // use appropriate API version
+  useCdn: false,             // disable CDN for fresh data
+})
 
-type Post = {
-  _id: string;
-  title: string;
-  quickAnswer: string;
-  slug?: { current: string };
-  authorName?: string;
-};
+export async function generateStaticParams() {
+  // Fetch all post slugs from Sanity (as strings)
+  const slugs: string[] = await client.fetch(
+    groq`*[_type == "post" && defined(slug.current)][].slug.current`
+  )
+  return slugs.map((slug) => ({ slug }))
+}
 
-type PageProps = {
-  params?: { slug?: string };
-};
+export default async function ArticlePage({ params }: { params: { slug: string } }) {
+  const { slug } = params
 
-export default async function PostPage({ params }: PageProps) {
-  // Get the slug only from the route params
-  const requestedSlug = params?.slug ?? "";
+  // GROQ query to find the post by slug (using slug.current field):contentReference[oaicite:4]{index=4}:contentReference[oaicite:5]{index=5}
+  const query = groq`*[_type == "post" && slug.current == $slug][0]{
+    _id,
+    title,
+    "slug": slug.current,
+    quickAnswer,
+    body,
+    author->{name},
+    publishedAt
+  }`
+  const article = await client.fetch(query, { slug })
 
-  let posts: Post[] = [];
-  let fetchError: string | null = null;
-
-  try {
-    posts = await client.fetch(
-      `*[_type == "post"]{
-        _id,
-        title,
-        quickAnswer,
-        slug,
-        "authorName": author->name
-      }`
-    );
-  } catch (err) {
-    fetchError =
-      err instanceof Error
-        ? err.message
-        : typeof err === "string"
-        ? err
-        : String(err);
-  }
-
-  if (fetchError) {
-    return (
-      <main className="min-h-screen bg-slate-50">
-        <div className="max-w-3xl mx-auto px-6 py-10">
-          <nav className="mb-6">
-            <Link
-              href="/"
-              className="text-xs font-semibold text-slate-500 hover:text-slate-800"
-            >
-              ← Back to articles
-            </Link>
-          </nav>
-
-          <h1 className="text-2xl font-bold text-red-700 mb-4">
-            Sanity fetch error
-          </h1>
-          <p className="mb-4 text-sm text-slate-700">
-            There was an error fetching posts from Sanity. Check your project
-            ID, dataset and token.
-          </p>
-          <pre className="text-xs bg-slate-900 text-slate-100 p-4 rounded overflow-x-auto">
-            {fetchError}
-          </pre>
-        </div>
-      </main>
-    );
-  }
-
-  const matchedPost = posts.find((p) => p.slug?.current === requestedSlug);
-
-  if (!matchedPost) {
-    return (
-      <main className="min-h-screen bg-slate-50">
-        <div className="max-w-3xl mx-auto px-6 py-10">
-          <nav className="mb-6">
-            <Link
-              href="/"
-              className="text-xs font-semibold text-slate-500 hover:text-slate-800"
-            >
-              ← Back to articles
-            </Link>
-          </nav>
-
-          <h1 className="text-2xl font-bold text-slate-900 mb-6">
-            Debug: article not found
-          </h1>
-
-          <p className="text-sm text-slate-700 mb-2">
-            Requested slug from route params:
-          </p>
-          <p className="text-sm font-mono bg-slate-100 px-3 py-2 rounded mb-4">
-            "{requestedSlug}" (length{" "}
-            {requestedSlug ? requestedSlug.length : 0})
-          </p>
-
-          <p className="text-sm text-slate-700 mb-3">
-            Slugs returned from Sanity for <code>_type == "post"</code>:
-          </p>
-
-          {posts.length === 0 ? (
-            <p className="text-sm text-red-700">
-              No posts returned. Either the dataset is empty or the query is
-              hitting the wrong dataset.
-            </p>
-          ) : (
-            <ul className="text-sm text-slate-700 space-y-1 mb-6 list-disc list-inside">
-              {posts.map((p) => (
-                <li key={p._id}>
-                  <span className="font-mono bg-slate-100 px-2 py-1 rounded">
-                    "{p.slug?.current || "(no slug)"}"
-                  </span>{" "}
-                  – {p.title} (len{" "}
-                  {p.slug?.current ? p.slug.current.length : 0})
-                </li>
-              ))}
-            </ul>
-          )}
-
-          <p className="text-xs text-slate-500">
-            Once the slug in the URL exactly matches one of the Sanity slugs
-            listed above, this page will automatically switch to the full
-            article layout.
-          </p>
-        </div>
-      </main>
-    );
+  // If no article was found, display 404 not found page:contentReference[oaicite:6]{index=6}
+  if (!article) {
+    notFound()
   }
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      <div className="max-w-3xl mx-auto px-6 py-10">
-        <nav className="mb-6">
-          <Link
-            href="/"
-            className="text-xs font-semibold text-slate-500 hover:text-slate-800"
-          >
-            ← Back to articles
-          </Link>
-        </nav>
+    <main className="prose prose-lg px-4 py-8 mx-auto">
+      {/* Title */}
+      <h1>{article.title}</h1>
 
-        <article>
-          <header className="mb-6">
-            <p className="text-xs font-semibold tracking-[0.18em] text-emerald-700 uppercase mb-2">
-              Trusted Home Essentials
-            </p>
-            <h1 className="text-3xl font-extrabold text-slate-900 mb-2">
-              {matchedPost.title}
-            </h1>
-            {matchedPost.authorName && (
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
-                By {matchedPost.authorName}
-              </p>
-            )}
-          </header>
+      {/* Author name and publish date */}
+      <p className="text-sm text-gray-600">
+        By {article.author?.name} — {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : ''}
+      </p>
 
-          <section className="bg-blue-50 border-l-4 border-blue-500 rounded-r-md px-4 py-3 mb-8">
-            <p className="text-[11px] font-bold text-blue-700 uppercase tracking-[0.18em] mb-1">
-              Quick answer
-            </p>
-            <p className="text-sm text-slate-800 leading-relaxed">
-              {matchedPost.quickAnswer}
-            </p>
-          </section>
+      {/* Quick Answer snippet highlighted */}
+      {article.quickAnswer && (
+        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 my-4">
+          <strong>Quick Answer: </strong>{article.quickAnswer}
+        </div>
+      )}
 
-          <p className="text-sm text-slate-600">
-            This is the simple article view rendered from Sanity. Once you are
-            happy with the data flow, we can expand this with the full layout
-            and sections.
-          </p>
-        </article>
-      </div>
+      {/* Full body content (currently placeholder since Portable Text rendering isn't implemented) */}
+      {article.body ? (
+        <div>
+          {/* TODO: Render Portable Text content here */}
+          <p><em>Full article content is available in the CMS.</em></p>
+        </div>
+      ) : null}
     </main>
-  );
+  )
 }
