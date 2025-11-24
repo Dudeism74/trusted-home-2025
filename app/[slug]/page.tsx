@@ -1,66 +1,73 @@
-import { notFound } from 'next/navigation'
-import { createClient, groq } from 'next-sanity'
+import { notFound } from "next/navigation";
+import { createClient } from "next-sanity";
 
-// Initialize the Sanity client using project ID and dataset from environment
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  apiVersion: '2023-01-01',   // use appropriate API version
-  useCdn: false,             // disable CDN for fresh data
-})
+  apiVersion: "2023-01-01",
+  useCdn: false,
+});
+
+type PageProps = {
+  params: { slug: string };
+};
+
+type Article = {
+  _id: string;
+  title: string;
+  quickAnswer?: string;
+  slug: string;
+  author?: { name: string };
+  publishedAt?: string;
+};
 
 export async function generateStaticParams() {
-  // Fetch all post slugs from Sanity (as strings)
   const slugs: string[] = await client.fetch(
-    groq`*[_type == "post" && defined(slug.current)][].slug.current`
-  )
-  return slugs.map((slug) => ({ slug }))
+    `*[_type == "post" && defined(slug.current)][].slug.current`
+  );
+  return slugs.map((slug) => ({ slug }));
 }
 
-export default async function ArticlePage({ params }: { params: { slug: string } }) {
-  const { slug } = params
+export default async function ArticlePage({ params }: PageProps) {
+  const { slug } = params;
 
-  // GROQ query to find the post by slug (using slug.current field):contentReference[oaicite:4]{index=4}:contentReference[oaicite:5]{index=5}
-  const query = groq`*[_type == "post" && slug.current == $slug][0]{
+  // Inline the slug directly in GROQ to support static generation
+  const query = `*[_type == "post" && slug.current == "${slug}"][0]{
     _id,
     title,
     "slug": slug.current,
     quickAnswer,
-    body,
-    author->{name},
-    publishedAt
-  }`
-  const article = await client.fetch(query, { slug })
+    publishedAt,
+    author->{name}
+  }`;
 
-  // If no article was found, display 404 not found page:contentReference[oaicite:6]{index=6}
+  const article: Article | null = await client.fetch(query);
+
   if (!article) {
-    notFound()
+    notFound();
   }
 
   return (
     <main className="prose prose-lg px-4 py-8 mx-auto">
-      {/* Title */}
       <h1>{article.title}</h1>
+      {article.author?.name && (
+        <p className="text-sm text-gray-600">
+          By {article.author.name} —{" "}
+          {article.publishedAt
+            ? new Date(article.publishedAt).toLocaleDateString()
+            : ""}
+        </p>
+      )}
 
-      {/* Author name and publish date */}
-      <p className="text-sm text-gray-600">
-        By {article.author?.name} — {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : ''}
-      </p>
-
-      {/* Quick Answer snippet highlighted */}
       {article.quickAnswer && (
-        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 my-4">
-          <strong>Quick Answer: </strong>{article.quickAnswer}
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 my-4 rounded">
+          <strong>Quick Answer:</strong> {article.quickAnswer}
         </div>
       )}
 
-      {/* Full body content (currently placeholder since Portable Text rendering isn't implemented) */}
-      {article.body ? (
-        <div>
-          {/* TODO: Render Portable Text content here */}
-          <p><em>Full article content is available in the CMS.</em></p>
-        </div>
-      ) : null}
+      <p className="text-sm text-gray-500">
+        Article body not yet wired in — placeholder only.
+      </p>
     </main>
-  )
+  );
 }
