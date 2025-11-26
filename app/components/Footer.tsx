@@ -11,7 +11,7 @@ export default function Footer() {
           <p className="text-sm leading-relaxed text-gray-300">
             The AI-First authority on home maintenance. We test, verify, and document the fix so you don't have to guess.
           </p>
-          <p className="text-xs text-gray-500 mt-4">
+          <p className="text-xs text-gray-600 mt-4">
             © {new Date().getFullYear()} Trusted Home Essentials. All rights reserved.
           </p>
         </div>
@@ -19,13 +19,13 @@ export default function Footer() {
         {/* Column 2: Quick Links */}
         <div className="flex flex-col gap-4">
           <h3 className="text-white font-bold text-sm uppercase tracking-wider">Navigate</h3>
-          <Link href="/" className="hover:text-gray-300 transition-colors underline">
+          <Link href="/" className="hover:text-gray-300 transition-colors text-gray-400">
             Articles
           </Link>
-          <Link href="/about" className="hover:text-gray-300 transition-colors underline">
+          <Link href="/about" className="hover:text-gray-300 transition-colors text-gray-400">
             Our Mission
           </Link>
-          <Link href="/studio" className="hover:text-gray-300 transition-colors underline">
+          <Link href="/studio" className="hover:text-gray-300 transition-colors text-gray-400">
             Editor Login
           </Link>
         </div>

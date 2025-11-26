@@ -26,10 +26,12 @@ export default async function Home() {
           </p>
         </div>
 
+        {/* This is the fixed grid layout that will restore the columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {posts.map((post: any) => (
             <article 
               key={post._id} 
+              // Card Styling: White background, border, shadow, and flex for button alignment
               className="bg-white border border-gray-300 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all flex flex-col h-full"
             >
               <h2 className="text-xl font-bold mb-2 text-slate-900 leading-tight">
@@ -40,6 +42,7 @@ export default async function Home() {
                 By {post.authorName}
               </p>
 
+              {/* Quick Answer Box Styling */}
               <div className="bg-blue-50 p-4 rounded-lg mb-6 border-l-4 border-blue-500 flex-grow">
                 <p className="text-xs text-blue-700 font-bold uppercase mb-2">
                   Quick Answer
@@ -49,6 +52,7 @@ export default async function Home() {
                 </p>
               </div>
 
+              {/* Button Styling */}
               <Link 
                 href={`/${post.slug.current}`} 
                 className="text-sm font-bold text-white bg-[#1A3C2F] hover:bg-[#142f25] py-3 px-4 rounded-lg text-center mt-auto transition-colors block"
