@@ -4,8 +4,13 @@ import { Metadata } from "next";
 import ArticlesPage from "./ArticlesPage";
 
 export const metadata: Metadata = {
-  title: "All Guides | Trusted Home Essentials",
-  description: "Browse our complete collection of expert home maintenance guides.",
+  title: "Home Maintenance Articles | Trusted Home Essentials",
+  description: "Browse our complete collection of expert home maintenance guides, product reviews, and DIY advice.",
+  openGraph: {
+    title: "Home Maintenance Articles | Trusted Home Essentials",
+    description: "Browse our complete collection of expert home maintenance guides, product reviews, and DIY advice.",
+    type: "website",
+  },
 };
 
 const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc) {

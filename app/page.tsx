@@ -3,12 +3,26 @@ import PostCard from "../components/PostCard";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Trusted Home Essentials - Expert Home Advice",
-  description: "Your trusted source for home maintenance guides, product reviews, and expert advice.",
+  title: "Trusted Home Essentials | Expert Guides & Reviews",
+  description: "Your trusted source for expert home maintenance guides, product reviews, and DIY advice. Verified by professionals.",
   openGraph: {
-    title: "Trusted Home Essentials - Expert Home Advice",
-    description: "Your trusted source for home maintenance guides, product reviews, and expert advice.",
+    title: "Trusted Home Essentials | Expert Guides & Reviews",
+    description: "Your trusted source for expert home maintenance guides, product reviews, and DIY advice. Verified by professionals.",
     type: "website",
+    images: [
+      {
+        url: "/hero-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Trusted Home Essentials Hero",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Trusted Home Essentials | Expert Guides & Reviews",
+    description: "Your trusted source for expert home maintenance guides, product reviews, and DIY advice. Verified by professionals.",
+    images: ["/hero-image.jpg"],
   },
 };
 

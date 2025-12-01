@@ -177,7 +177,10 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
       <div className="min-h-[50vh] flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-slate-900 mb-4">Article Not Found</h1>
-          <Link href="/" className="text-blue-600 hover:underline">Return Home</Link>
+          <Link href="/" className="text-blue-600 hover:underline flex items-center gap-2 justify-center group">
+            <span className="group-hover:-translate-x-1 transition-transform">←</span>
+            Back to All Guides
+          </Link>
         </div>
       </div>
     );
@@ -188,8 +191,37 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
     { label: post.title, href: `/${post.slug.current}` }
   ];
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.quickAnswer || post.problemIntro,
+    image: post.mainImage ? [post.mainImage] : [],
+    datePublished: post.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: post.authorName || 'Trusted Expert',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Trusted Home Essentials',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://trusted-home-2025.vercel.app/icon.svg',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://trusted-home-2025.vercel.app/${post.slug.current}`,
+    },
+  };
+
   return (
     <main className="min-h-screen bg-white font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Sticky Navigation Bar */}
       <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-4xl mx-auto px-6 h-16 flex items-center">
