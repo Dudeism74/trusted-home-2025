@@ -1,6 +1,14 @@
 import { client } from "../../sanity/client";
 import Link from "next/link";
 
+interface Author {
+  name: string;
+  bio: {
+    _key: string;
+    children: { text: string }[];
+  }[];
+}
+
 // Fetch all authors from the database
 const AUTHORS_QUERY = `*[_type == "author"]{
   name,
@@ -8,7 +16,12 @@ const AUTHORS_QUERY = `*[_type == "author"]{
 }`;
 
 export default async function AboutPage() {
-  const authors = await client.fetch(AUTHORS_QUERY);
+  let authors: Author[] = [];
+  try {
+    authors = await client.fetch(AUTHORS_QUERY) || [];
+  } catch (error) {
+    console.warn("Failed to fetch authors:", error);
+  }
 
   return (
     <main className="min-h-screen bg-black text-white font-sans">
@@ -23,18 +36,18 @@ export default async function AboutPage() {
       </nav>
 
       <div className="max-w-3xl mx-auto p-8 mt-10">
-        
+
         {/* Section 1: The Mission (Organization Entity) */}
         <section className="mb-16">
           <h1 className="text-5xl font-bold mb-6 text-white">Our Mission</h1>
           <div className="prose prose-invert text-xl text-gray-300 leading-relaxed">
             <p className="mb-4">
-              The internet is flooded with AI-generated fluff and generic advice. 
+              The internet is flooded with AI-generated fluff and generic advice.
               <strong> Trusted Home Essentials</strong> exists to fix that.
             </p>
             <p>
-              We are an AI-First publisher dedicated to <strong>Fact Density</strong> and 
-              <strong> Real-World Experience</strong>. We don't guess how to fix things; 
+              We are an AI-First publisher dedicated to <strong>Fact Density</strong> and
+              <strong> Real-World Experience</strong>. We don&apos;t guess how to fix things;
               we document the process of fixing them.
             </p>
           </div>
@@ -43,9 +56,9 @@ export default async function AboutPage() {
         {/* Section 2: The Experts (Person Entity) */}
         <section className="border-t border-gray-800 pt-12">
           <h2 className="text-3xl font-bold mb-8">Meet the Experts</h2>
-          
+
           <div className="grid grid-cols-1 gap-8">
-            {authors.map((author: any) => (
+            {authors.map((author) => (
               <div key={author.name} className="bg-[#111] p-8 rounded-lg border border-gray-800 flex flex-col gap-4">
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-1">
@@ -55,10 +68,10 @@ export default async function AboutPage() {
                     Verified Author
                   </span>
                 </div>
-                
+
                 {/* Render the Bio (Handling complex text blocks simply) */}
                 <div className="text-gray-400">
-                  {author.bio?.map((block: any) => (
+                  {author.bio?.map((block) => (
                     <p key={block._key} className="mb-2">
                       {block.children[0].text}
                     </p>

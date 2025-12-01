@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'post',
@@ -25,12 +25,13 @@ export default defineType({
       description: 'The 40-50 word direct answer for AI snippets. (Rule #3)',
       type: 'text',
       rows: 3,
+      validation: (Rule) => Rule.max(280),
     }),
     defineField({
       name: 'author',
       title: 'Author',
       type: 'reference',
-      to: {type: 'author'},
+      to: { type: 'author' },
     }),
     defineField({
       name: 'mainImage',
@@ -44,7 +45,7 @@ export default defineType({
       name: 'categories',
       title: 'Categories',
       type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
+      of: [{ type: 'reference', to: { type: 'category' } }],
     }),
     defineField({
       name: 'publishedAt',
@@ -52,12 +53,82 @@ export default defineType({
       type: 'datetime',
     }),
     defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'reference',
+      to: { type: 'category' },
+    }),
+    defineField({
+      name: 'difficulty',
+      title: 'Difficulty',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Easy', value: 'Easy' },
+          { title: 'Intermediate', value: 'Intermediate' },
+          { title: 'Advanced', value: 'Advanced' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'estimatedTime',
+      title: 'Estimated Time',
+      type: 'string',
+    }),
+    defineField({
+      name: 'problemIntro',
+      title: 'Problem Intro',
+      type: 'text',
+    }),
+    defineField({
+      name: 'steps',
+      title: 'Steps',
+      type: 'array',
+      of: [{ type: 'block' }, { type: 'image' }],
+    }),
+    defineField({
+      name: 'tools',
+      title: 'Tools',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
+      name: 'products',
+      title: 'Products',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'name', type: 'string', title: 'Name' },
+            { name: 'url', type: 'url', title: 'URL' },
+            { name: 'affiliateTag', type: 'string', title: 'Affiliate Tag' },
+            { name: 'notes', type: 'text', title: 'Notes' },
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'faq',
+      title: 'FAQ',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'question', type: 'string', title: 'Question' },
+            { name: 'answer', type: 'text', title: 'Answer' },
+          ],
+        },
+      ],
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'array',
       of: [
-        {type: 'block'},
-        {type: 'image'}
+        { type: 'block' },
+        { type: 'image' }
       ]
     }),
   ],

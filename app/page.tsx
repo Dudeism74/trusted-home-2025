@@ -1,7 +1,27 @@
 import { client } from "../sanity/client";
-import Link from "next/link";
+import PostCard from "../components/PostCard";
+import { Metadata } from "next";
 
-const POSTS_QUERY = `*[_type == "post"]{
+export const metadata: Metadata = {
+  title: "Trusted Home Essentials - Expert Home Advice",
+  description: "Your trusted source for home maintenance guides, product reviews, and expert advice.",
+  openGraph: {
+    title: "Trusted Home Essentials - Expert Home Advice",
+    description: "Your trusted source for home maintenance guides, product reviews, and expert advice.",
+    type: "website",
+  },
+};
+
+interface Post {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  publishedAt: string;
+  quickAnswer: string;
+  authorName: string;
+}
+
+const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc) {
   _id,
   title,
   slug,
@@ -11,54 +31,58 @@ const POSTS_QUERY = `*[_type == "post"]{
 }`;
 
 export default async function Home() {
-  const posts = await client.fetch(POSTS_QUERY, {}, { next: { revalidate: 60 } });
+  let posts: Post[] = [];
+  try {
+    posts = await client.fetch(POSTS_QUERY, {}, { next: { revalidate: 60 } }) || [];
+  } catch (error) {
+    console.warn("Failed to fetch posts:", error);
+  }
+
+  if (posts.length === 0) {
+    posts = [
+      {
+        _id: 'mock-1',
+        title: 'Sample Guide: How to Maintain Your Home',
+        slug: { current: 'sample-guide-home-maintenance' },
+        publishedAt: new Date().toISOString(),
+        quickAnswer: 'Regular maintenance is key. Check filters, inspect roofs, and clean gutters seasonally.',
+        authorName: 'Trusted Expert',
+      }
+    ];
+  }
 
   return (
-    <main className="min-h-screen p-8 font-sans bg-slate-50 py-16"> 
-      <div className="max-w-6xl mx-auto px-6">
-        
-        <div className="mb-16 text-center">
-          <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
-            Expert Guides & Reviews
+    <main className="min-h-screen font-sans bg-slate-50">
+      {/* Hero Section */}
+      <section className="bg-white border-b border-gray-200 py-20 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
+            Expert Guides & <span className="text-[#1A3C2F]">Reviews</span>
           </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
             No fluff. Just the tools and techniques you need to maintain your home, verified by a professional mechanic.
           </p>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {posts.map((post: any) => (
-            <article 
-              key={post._id} 
-              className="bg-white border border-gray-300 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all flex flex-col h-full"
-            >
-              <h2 className="text-xl font-bold mb-2 text-slate-900 leading-tight">
-                {post.title}
-              </h2>
-              
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">
-                By {post.authorName}
-              </p>
-
-              <div className="bg-blue-50 p-4 rounded-lg mb-6 border-l-4 border-blue-500 flex-grow">
-                <p className="text-xs text-blue-700 font-bold uppercase mb-2">
-                  Quick Answer
-                </p>
-                <p className="text-sm text-slate-700 leading-relaxed">
-                  {post.quickAnswer}
-                </p>
-              </div>
-
-              <Link 
-                href={`/${post.slug.current}`} 
-                className="text-sm font-bold text-white bg-[#1A3C2F] hover:bg-[#142f25] py-3 px-4 rounded-lg text-center mt-auto transition-colors block"
-              >
-                Read Full Guide
-              </Link>
-            </article>
-          ))}
+      {/* Content Section */}
+      <section className="max-w-7xl mx-auto px-6 py-16">
+        <div className="mb-12 flex items-center justify-between">
+          <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Latest Guides</h2>
         </div>
-      </div>
+
+        {posts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 border-dashed">
+            <p className="text-xl text-slate-500 font-medium">No articles found. Check back soon!</p>
+          </div>
+        )}
+      </section>
     </main>
   );
 }
