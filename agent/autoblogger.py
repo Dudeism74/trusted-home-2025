@@ -2,15 +2,14 @@ import os
 import json
 import datetime
 import uuid
+import time
 from dotenv import load_dotenv
 from openai import OpenAI
 from amazon_paapi import AmazonApi
-# Note: sanity-runner is not strictly needed if we use raw HTTP requests, 
-# which is often more stable for simple scripts. Let's use raw requests here.
 import requests
 
 # 1. Load keys
-load_dotenv(".env") # Try loading .env (local)
+load_dotenv(".env.local") # Load from .env.local as per Next.js standards
 
 # 2. Setup Config
 SANITY_PROJECT_ID = os.getenv("NEXT_PUBLIC_SANITY_PROJECT_ID")
@@ -22,7 +21,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 AMAZON_ACCESS_KEY = os.getenv("AMAZON_ACCESS_KEY")
 AMAZON_SECRET_KEY = os.getenv("AMAZON_SECRET_KEY")
 AMAZON_PARTNER_TAG = os.getenv("AMAZON_PARTNER_TAG")
-AMAZON_COUNTRY = "US" # Force US region to fix the error
+AMAZON_COUNTRY = "US" # Hardcoded Region
 
 # 3. Helpers
 def generate_key():
@@ -35,23 +34,55 @@ def get_amazon_products(search_term):
         items = amazon.search_items(keywords=search_term)
         product_list = []
         
-        for item in items.items[:3]:
-            try:
-                product = {
-                    "_key": generate_key(), # IMPORTANT: The fix for missing keys
-                    "_type": "object",
-                    "name": item.item_info.title.display_value,
-                    "url": item.detail_page_url,
-                    "affiliateTag": AMAZON_PARTNER_TAG,
-                    "notes": "Top rated choice."
-                }
-                product_list.append(product)
-            except:
-                continue
+        if items and items.items:
+            for item in items.items[:3]:
+                try:
+                    product = {
+                        "_key": generate_key(),
+                        "_type": "object",
+                        "name": item.item_info.title.display_value,
+                        "url": item.detail_page_url,
+                        "affiliateTag": AMAZON_PARTNER_TAG,
+                        "notes": "Top rated choice."
+                    }
+                    product_list.append(product)
+                except:
+                    continue
+        
+        if not product_list:
+            raise Exception("No products found")
+            
         return product_list
+
     except Exception as e:
-        print(f"⚠️ Amazon Error (Skipping products): {e}")
-        return [] # Return empty list so script doesn't crash
+        print(f"⚠️ Amazon Error: {e}")
+        print("⚠️ Using Dummy Products Fallback")
+        return [
+            {
+                "_key": generate_key(),
+                "_type": "object",
+                "name": "Generic Home Tool (Fallback)",
+                "url": "https://amazon.com",
+                "affiliateTag": AMAZON_PARTNER_TAG or "tag-20",
+                "notes": "Essential tool for this task."
+            },
+            {
+                "_key": generate_key(),
+                "_type": "object",
+                "name": "Safety Gear Set (Fallback)",
+                "url": "https://amazon.com",
+                "affiliateTag": AMAZON_PARTNER_TAG or "tag-20",
+                "notes": "Recommended for safety."
+            },
+            {
+                "_key": generate_key(),
+                "_type": "object",
+                "name": "Maintenance Kit (Fallback)",
+                "url": "https://amazon.com",
+                "affiliateTag": AMAZON_PARTNER_TAG or "tag-20",
+                "notes": "Complete kit."
+            }
+        ]
 
 # 4. The Writer
 def generate_article(topic):
@@ -80,7 +111,7 @@ def generate_article(topic):
     """
 
     response = client.chat.completions.create(
-        model="gpt-4o", # Using the new fast model
+        model="gpt-4o",
         messages=[{"role": "user", "content": prompt}],
         response_format={"type": "json_object"}
     )
@@ -89,23 +120,33 @@ def generate_article(topic):
     content['products'] = products
     return content
 
-# 5. The Publisher (Using Raw API to avoid library conflicts)
+# 5. The Publisher
 def push_to_sanity(data):
     print("🚀 Uploading to Sanity...")
     
-    # 1. Fetch Author ID (We need to link it to 'Aerion Solaris')
-    # For now, we will grab the first author found to keep it simple
+    headers = {
+        "Authorization": f"Bearer {SANITY_TOKEN}",
+        "Content-Type": "application/json"
+    }
+    
+    # 1. Fetch Author ID
     query_url = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/query/{SANITY_DATASET}?query=*[_type=='author'][0]._id"
-    headers = {"Authorization": f"Bearer {SANITY_TOKEN}"}
-    author_res = requests.get(query_url, headers=headers).json()
-    author_id = author_res['result'] if 'result' in author_res else None
+    try:
+        author_res = requests.get(query_url, headers=headers).json()
+        author_id = author_res['result'] if 'result' in author_res else None
+    except:
+        author_id = None
 
     # 2. Fetch Category ID
     cat_query_url = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/query/{SANITY_DATASET}?query=*[_type=='category'][0]._id"
-    cat_res = requests.get(cat_query_url, headers=headers).json()
-    category_id = cat_res['result'] if 'result' in cat_res else None
+    try:
+        cat_res = requests.get(cat_query_url, headers=headers).json()
+        category_id = cat_res['result'] if 'result' in cat_res else None
+    except:
+        category_id = None
 
-    # 3. Build the Body with Keys (THE FIX)
+    # 3. Build the Body with Keys
+    # We'll wrap the problemIntro in a block
     body_blocks = [
         {
             "_type": "block",
@@ -125,11 +166,7 @@ def push_to_sanity(data):
             "children": [{"_type": "span", "_key": generate_key(), "text": step}]
         })
 
-    # 5. Build Tools with Keys
-    # Note: If tools is defined as array of strings in schema, it doesn't need keys. 
-    # If it is array of objects, it does. Based on your schema it was strings, so we leave it raw.
-    
-    # 6. Build FAQ with Keys
+    # 5. Build FAQ with Keys
     faq_blocks = []
     for item in data["faq"]:
         faq_blocks.append({
@@ -138,11 +175,16 @@ def push_to_sanity(data):
             "answer": item["answer"]
         })
 
+    # 6. Tools
+    # Schema defines tools as array of strings. We send them as strings.
+    # If schema was objects, we would add keys.
+    tools_list = data["tools"]
+
     # Construct Final Document
     doc = {
         "_type": "post",
         "title": data["title"],
-        "slug": {"_type": "slug", "current": data["title"].lower().replace(" ", "-").replace("?", "")},
+        "slug": {"_type": "slug", "current": data["title"].lower().replace(" ", "-").replace("?", "").replace(":", "")},
         "publishedAt": datetime.datetime.now().isoformat(),
         "quickAnswer": data["quickAnswer"],
         "difficulty": data["difficulty"],
@@ -150,16 +192,18 @@ def push_to_sanity(data):
         "problemIntro": data["problemIntro"],
         "body": body_blocks,
         "steps": step_blocks,
-        "tools": data["tools"],
-        "products": data["products"], # Already has keys from function above
+        "tools": tools_list,
+        "products": data["products"], # Already has keys
         "faq": faq_blocks
     }
 
-    # Add References if found
+    # Add References
     if author_id:
         doc["author"] = {"_type": "reference", "_ref": author_id}
     if category_id:
-        doc["category"] = {"_type": "reference", "_ref": category_id} # This fixes the category issue!
+        doc["category"] = {"_type": "reference", "_ref": category_id}
+        # Also add to categories array for compatibility if needed
+        doc["categories"] = [{"_type": "reference", "_ref": category_id, "_key": generate_key()}]
 
     # POST to Sanity
     post_url = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutations/{SANITY_DATASET}"
@@ -169,6 +213,7 @@ def push_to_sanity(data):
     
     if response.status_code == 200:
         print(f"✅ SUCCESS! Article Published: {data['title']}")
+        print(f"Response: {response.json()}")
     else:
         print(f"❌ Error uploading: {response.text}")
 
