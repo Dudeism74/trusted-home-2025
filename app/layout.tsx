@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://trusted-home-2025.vercel.app'),
+  metadataBase: new URL('https://trustedhomeessentials.com'),
   title: {
     template: '%s | Trusted Home Essentials',
     default: 'Trusted Home Essentials',
