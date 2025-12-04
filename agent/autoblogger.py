@@ -2,112 +2,138 @@ import os
 import json
 import datetime
 import uuid
-import time
+import requests
+import random
 from dotenv import load_dotenv
 from openai import OpenAI
 from amazon_paapi import AmazonApi
-import requests
+from duckduckgo_search import DDGS
 
 # 1. Load keys
-load_dotenv(".env.local") # Load from .env.local as per Next.js standards
+load_dotenv(".env")
 
-# 2. Setup Config
 SANITY_PROJECT_ID = os.getenv("NEXT_PUBLIC_SANITY_PROJECT_ID")
 SANITY_DATASET = os.getenv("NEXT_PUBLIC_SANITY_DATASET")
 SANITY_TOKEN = os.getenv("SANITY_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-# Amazon Config
 AMAZON_ACCESS_KEY = os.getenv("AMAZON_ACCESS_KEY")
 AMAZON_SECRET_KEY = os.getenv("AMAZON_SECRET_KEY")
 AMAZON_PARTNER_TAG = os.getenv("AMAZON_PARTNER_TAG")
-AMAZON_COUNTRY = "US" # Hardcoded Region
+# Hardcode Region/Country to US to fix region errors
+AMAZON_COUNTRY = "US" 
+os.environ['AWS_DEFAULT_REGION'] = 'us-east-1' # Safety fix for some boto3 underlying issues
 
-# 3. Helpers
+# 2. Helpers
 def generate_key():
     return str(uuid.uuid4())
 
-def get_amazon_products(search_term):
-    print(f"🛒 Searching Amazon for: {search_term}...")
+# 3. The Researcher (With Backup)
+def find_winning_topic():
+    print("🕵️  Scanning the web for Home Repair topics...")
+    
+    backup_topics = [
+        "How to Fix a Running Toilet Fill Valve",
+        "Best Cordless Drills for Homeowners 2025",
+        "How to Patch Drywall Like a Pro",
+        "Water Heater Maintenance Checklist",
+        "Unclogging a Kitchen Sink Drain"
+    ]
+    
+    titles = []
     try:
-        amazon = AmazonApi(AMAZON_ACCESS_KEY, AMAZON_SECRET_KEY, AMAZON_PARTNER_TAG, AMAZON_COUNTRY, throttling=1)
-        items = amazon.search_items(keywords=search_term)
-        product_list = []
+        search_queries = ["diy home repair guides", "common house problems fixes", "home maintenance tips 2025"]
+        query = random.choice(search_queries)
+        print(f"   Searching for: {query}")
         
-        if items and items.items:
-            for item in items.items[:3]:
-                try:
-                    product = {
-                        "_key": generate_key(),
-                        "_type": "object",
-                        "name": item.item_info.title.display_value,
-                        "url": item.detail_page_url,
-                        "affiliateTag": AMAZON_PARTNER_TAG,
-                        "notes": "Top rated choice."
-                    }
-                    product_list.append(product)
-                except:
-                    continue
-        
-        if not product_list:
-            raise Exception("No products found")
+        # Robust Search with Try/Except
+        results = list(DDGS().text(query, max_results=5))
+        if results:
+            titles = [r['title'] for r in results]
+            print(f"   Found {len(titles)} articles via Search.")
+        else:
+            print("   Search returned 0 results.")
             
-        return product_list
-
     except Exception as e:
-        print(f"⚠️ Amazon Error: {e}")
-        print("⚠️ Using Dummy Products Fallback")
-        return [
-            {
-                "_key": generate_key(),
-                "_type": "object",
-                "name": "Generic Home Tool (Fallback)",
-                "url": "https://amazon.com",
-                "affiliateTag": AMAZON_PARTNER_TAG or "tag-20",
-                "notes": "Essential tool for this task."
-            },
-            {
-                "_key": generate_key(),
-                "_type": "object",
-                "name": "Safety Gear Set (Fallback)",
-                "url": "https://amazon.com",
-                "affiliateTag": AMAZON_PARTNER_TAG or "tag-20",
-                "notes": "Recommended for safety."
-            },
-            {
-                "_key": generate_key(),
-                "_type": "object",
-                "name": "Maintenance Kit (Fallback)",
-                "url": "https://amazon.com",
-                "affiliateTag": AMAZON_PARTNER_TAG or "tag-20",
-                "notes": "Complete kit."
-            }
-        ]
+        print(f"   (Search failed: {e})")
+    
+    # THE SAFETY NET: If search fails or returns nothing, use backup
+    if not titles:
+        print("   ⚠️ Search found nothing or failed. Switching to Backup Topics.")
+        titles = backup_topics
 
-# 4. The Writer
+    print("   Checking duplicates and picking topic...")
+    
+    # Pick Topic
+    try:
+        client = OpenAI(api_key=OPENAI_API_KEY)
+        prompt = f"""
+        Potential topics: {titles}
+        
+        Task: Pick ONE topic related to PHYSICAL HOME REPAIR.
+        Return ONLY the Title string. No "Here is the topic".
+        """
+        
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        
+        topic = response.choices[0].message.content.strip().replace('"', '')
+        print(f"🎯 Selected Topic: {topic}")
+        return topic
+    except Exception as e:
+        print(f"   Error picking topic: {e}")
+        return random.choice(backup_topics) # Ultimate fallback
+
+# 4. Amazon Helper
+def get_amazon_products(tool_name):
+    print(f"   🛒 Shopping Amazon for '{tool_name}'...")
+    try:
+        # Full Try/Except for Amazon
+        amazon = AmazonApi(AMAZON_ACCESS_KEY, AMAZON_SECRET_KEY, AMAZON_PARTNER_TAG, AMAZON_COUNTRY, throttling=1)
+        items = amazon.search_items(keywords=tool_name, item_count=1) 
+        if items and items.items:
+            item = items.items[0]
+            return {
+                "_key": generate_key(),
+                "_type": "object",
+                "name": item.item_info.title.display_value,
+                "url": item.detail_page_url,
+                "affiliateTag": AMAZON_PARTNER_TAG,
+                "notes": "Top Rated"
+            }
+    except Exception as e:
+        print(f"   (Amazon error: {e})")
+    
+    # Fallback product object
+    return {
+        "_key": generate_key(),
+        "_type": "object",
+        "name": f"Search: {tool_name}",
+        "url": f"https://www.amazon.com/s?k={tool_name}&tag={AMAZON_PARTNER_TAG}",
+        "affiliateTag": AMAZON_PARTNER_TAG,
+        "notes": "Check Price"
+    }
+
+# 5. The Writer
 def generate_article(topic):
-    print(f"🤖 Writing article about: {topic}...")
+    print(f"🤖 Writing content for: {topic}...")
     client = OpenAI(api_key=OPENAI_API_KEY)
     
-    # Get products first
-    products = get_amazon_products(topic)
-    product_names = [p['name'] for p in products]
-    
     prompt = f"""
-    Write a home maintenance article about: "{topic}".
-    Use these Amazon products: {product_names}
-    
-    Return strictly valid JSON with this schema:
-    {{
-        "title": "Title",
-        "quickAnswer": "40-60 word summary",
+    Write a guide for: "{topic}".
+    JSON Schema: {{ 
+        "title": "{topic}", 
+        "quickAnswer": "40 words", 
         "difficulty": "Easy", 
-        "estimatedTime": "30 mins",
-        "problemIntro": "Intro paragraph",
-        "tools": ["Tool 1", "Tool 2"],
-        "steps": ["Step 1 text", "Step 2 text"],
-        "faq": [{{"question": "Q", "answer": "A"}}]
+        "estimatedTime": "30 mins", 
+        "problemIntro": "Intro", 
+        "tools": ["Tool1", "Tool2"], 
+        "steps": ["Step1", "Step2"], 
+        "faq": [{{"question":"Q", "answer":"A"}}] 
     }}
+    Ensure 'steps' is an array of strings.
     """
 
     response = client.chat.completions.create(
@@ -116,75 +142,55 @@ def generate_article(topic):
         response_format={"type": "json_object"}
     )
     
-    content = json.loads(response.choices[0].message.content)
-    content['products'] = products
-    return content
+    data = json.loads(response.choices[0].message.content)
+    
+    print("💰 Monetizing...")
+    real_products = []
+    # Limit to 3 tools to save time/api calls
+    for tool in data.get("tools", [])[:3]: 
+        real_products.append(get_amazon_products(tool))
+    data['products'] = real_products
+    return data
 
-# 5. The Publisher
+# 6. The Publisher
 def push_to_sanity(data):
-    print("🚀 Uploading to Sanity...")
+    print("🚀 Publishing...")
     
-    headers = {
-        "Authorization": f"Bearer {SANITY_TOKEN}",
-        "Content-Type": "application/json"
-    }
-    
-    # 1. Fetch Author ID
-    query_url = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/query/{SANITY_DATASET}?query=*[_type=='author'][0]._id"
-    try:
-        author_res = requests.get(query_url, headers=headers).json()
-        author_id = author_res['result'] if 'result' in author_res else None
-    except:
-        author_id = None
-
-    # 2. Fetch Category ID
-    cat_query_url = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/query/{SANITY_DATASET}?query=*[_type=='category'][0]._id"
-    try:
-        cat_res = requests.get(cat_query_url, headers=headers).json()
-        category_id = cat_res['result'] if 'result' in cat_res else None
-    except:
-        category_id = None
-
-    # 3. Build the Body with Keys
-    # We'll wrap the problemIntro in a block
+    # Construct blocks with unique keys
     body_blocks = [
         {
-            "_type": "block",
-            "_key": generate_key(),
-            "style": "normal",
-            "children": [{"_type": "span", "_key": generate_key(), "text": data["problemIntro"]}]
+            "_type": "block", 
+            "_key": generate_key(), 
+            "style": "normal", 
+            "children": [
+                {"_type": "span", "_key": generate_key(), "text": data["problemIntro"]}
+            ]
         }
     ]
     
-    # 4. Build Steps with Keys
     step_blocks = []
-    for step in data["steps"]:
+    for s in data.get("steps", []):
         step_blocks.append({
-            "_type": "block",
-            "_key": generate_key(),
-            "style": "normal",
-            "children": [{"_type": "span", "_key": generate_key(), "text": step}]
+            "_type": "block", 
+            "_key": generate_key(), 
+            "style": "normal", 
+            "children": [
+                {"_type": "span", "_key": generate_key(), "text": s}
+            ]
         })
-
-    # 5. Build FAQ with Keys
+        
     faq_blocks = []
-    for item in data["faq"]:
+    for q in data.get("faq", []):
         faq_blocks.append({
-            "_key": generate_key(),
-            "question": item["question"],
-            "answer": item["answer"]
+            "_key": generate_key(), 
+            "question": q["question"], 
+            "answer": q["answer"]
         })
 
-    # 6. Tools
-    # Schema defines tools as array of strings. We send them as strings.
-    # If schema was objects, we would add keys.
-    tools_list = data["tools"]
-
-    # Construct Final Document
     doc = {
         "_type": "post",
         "title": data["title"],
-        "slug": {"_type": "slug", "current": data["title"].lower().replace(" ", "-").replace("?", "").replace(":", "")},
+        "slug": {"_type": "slug", "current": data["title"].lower().replace(" ", "-").replace(":", "").replace("?", "")},
         "publishedAt": datetime.datetime.now().isoformat(),
         "quickAnswer": data["quickAnswer"],
         "difficulty": data["difficulty"],
@@ -192,32 +198,42 @@ def push_to_sanity(data):
         "problemIntro": data["problemIntro"],
         "body": body_blocks,
         "steps": step_blocks,
-        "tools": tools_list,
-        "products": data["products"], # Already has keys
+        "tools": data["tools"],
+        "products": data["products"],
         "faq": faq_blocks
     }
 
-    # Add References
-    if author_id:
-        doc["author"] = {"_type": "reference", "_ref": author_id}
-    if category_id:
-        doc["category"] = {"_type": "reference", "_ref": category_id}
-        # Also add to categories array for compatibility if needed
-        doc["categories"] = [{"_type": "reference", "_ref": category_id, "_key": generate_key()}]
+    headers = {"Authorization": f"Bearer {SANITY_TOKEN}"}
+    # CORRECTED URL: data/mutate instead of data/mutations
+    url = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutate/{SANITY_DATASET}"
+    
+    # Fetch Author ID (Optional safety)
+    try:
+        q_url = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/query/{SANITY_DATASET}?query=*[_type=='author'][0]._id"
+        author_res = requests.get(q_url, headers=headers).json()
+        if 'result' in author_res and author_res['result']:
+            doc["author"] = {"_type": "reference", "_ref": author_res['result']}
+    except Exception as e:
+        print(f"   (Author fetch failed: {e})")
 
-    # POST to Sanity
-    post_url = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutations/{SANITY_DATASET}"
-    mutation = {"mutations": [{"create": doc}]}
+    # Sanity Mutate API expects 'mutations' array wrapper
+    payload = {"mutations": [{"create": doc}]}
     
-    response = requests.post(post_url, headers=headers, json=mutation)
-    
-    if response.status_code == 200:
-        print(f"✅ SUCCESS! Article Published: {data['title']}")
-        print(f"Response: {response.json()}")
-    else:
-        print(f"❌ Error uploading: {response.text}")
+    try:
+        res = requests.post(url, headers=headers, json=payload)
+        
+        if res.status_code == 200:
+            print(f"✅ SUCCESS! Article Published: {data['title']}")
+            print(f"   Response: {res.json()}")
+        else:
+            print(f"❌ Error {res.status_code}: {res.text}")
+    except Exception as e:
+        print(f"❌ Publishing failed: {e}")
 
 if __name__ == "__main__":
-    topic = input("Enter a topic: ")
-    article = generate_article(topic)
-    push_to_sanity(article)
+    try:
+        topic = find_winning_topic() 
+        article_data = generate_article(topic)
+        push_to_sanity(article_data)
+    except Exception as e:
+        print(f"❌ Fatal Script Error: {e}")
