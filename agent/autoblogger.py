@@ -26,43 +26,32 @@ AMAZON_SECRET_KEY = os.getenv("AMAZON_SECRET_KEY")
 AMAZON_PARTNER_TAG = os.getenv("AMAZON_PARTNER_TAG")
 AMAZON_COUNTRY = "US"
 
-# 3. The Researcher (Now Generates Infinite Topics)
+# 3. The Researcher
 def find_winning_topic():
-    print("🕵️  Scanning for fresh Home Repair topics...")
-    client = OpenAI(api_key=OPENAI_API_KEY)
-    
-    # Get existing topics to avoid duplicates
-    headers = {"Authorization": f"Bearer {SANITY_TOKEN}"}
-    try:
-        query_url = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/query/{SANITY_DATASET}?query=*[_type=='post'].title"
-        existing_posts = requests.get(query_url, headers=headers).json().get('result', [])
-    except:
-        existing_posts = []
-
-    # Try Web Search
+    print("🕵️  Scanning for High-Value Repair Topics...")
     titles = []
     try:
-        query = random.choice(["diy home repair common problems", "household maintenance guide", "fix it yourself home repair"])
-        # Add backend='api' to try to bypass some blocks
+        query = random.choice([
+            "refrigerator not cooling troubleshooting", 
+            "washing machine won't drain fix", 
+            "toilet keeps running repair", 
+            "garbage disposal stuck fix",
+            "electric dryer not heating repair"
+        ])
         with DDGS() as ddgs:
-            results = [r for r in ddgs.text(query, max_results=5, backend="api")]
+            results = [r for r in ddgs.text(query, max_results=5)]
             titles = [r['title'] for r in results]
     except: pass
     
-    # THE FIX: If search fails, ask AI to INVENT a topic instead of using a static list
-    search_context = f"Found these trending online: {titles}" if titles else "Web search failed, please invent a trending topic."
+    if not titles:
+        titles = ["How to Replace a Leaking Garbage Disposal", "Fixing a Wobbly Ceiling Fan", "Troubleshoot AC Not Cooling"]
 
+    client = OpenAI(api_key=OPENAI_API_KEY)
     prompt = f"""
-    Context: {search_context}
-    My Existing Articles (DO NOT REPEAT): {existing_posts}
-
-    Task: Generate ONE unique, specific, high-value home repair topic.
-    It must be a physical fix (Plumbing, Electrical, Carpentry, Appliance).
-    Examples of good topics: "How to Replace a Faulty Light Switch", "Fixing a Slow Draining Bathtub".
-    
+    Potential topics: {titles}
+    Task: Pick ONE specific, physical home repair problem. 
     Return ONLY the Title string.
     """
-    
     response = client.chat.completions.create(model="gpt-4o", messages=[{"role": "user", "content": prompt}])
     return response.choices[0].message.content.strip().replace('"', '')
 
@@ -70,10 +59,12 @@ def find_winning_topic():
 def generate_key(): return str(uuid.uuid4())
 
 def get_amazon_products(tool_data):
-    # tool_data is: {'name': 'Generic Name', 'model': 'Specific Brand Model'}
+    # tool_data is now a dict: {'name': 'Screwdriver', 'model': 'Klein Tools 11-in-1'}
     search_query = tool_data['model'] 
+    display_name = tool_data['name']
     
     print(f"   🛒 Shopping Amazon for '{search_query}'...")
+    
     try:
         amazon = AmazonApi(AMAZON_ACCESS_KEY, AMAZON_SECRET_KEY, AMAZON_PARTNER_TAG, AMAZON_COUNTRY, throttling=1)
         items = amazon.search_items(keywords=search_query, item_count=1) 
@@ -81,50 +72,56 @@ def get_amazon_products(tool_data):
             item = items.items[0]
             return {
                 "_key": generate_key(), "_type": "object",
-                "name": item.item_info.title.display_value[:60] + "...", # Truncate title
+                "name": f"Top Rated {display_name}: {item.item_info.title.display_value[:30]}...", 
                 "url": item.detail_page_url,
                 "affiliateTag": AMAZON_PARTNER_TAG,
-                "notes": f"Top Rated: {tool_data['model']}"
+                "notes": f"Pro Pick: {tool_data['model']}"
             }
-    except: pass
+    except:
+        pass
     
-    # Fallback
     search_url = f"https://www.amazon.com/s?k={search_query.replace(' ', '+')}&tag={AMAZON_PARTNER_TAG}"
     return {
-        "_key": generate_key(), "_type": "object",
+        "_key": generate_key(),
+        "_type": "object",
         "name": f"Recommended: {tool_data['model']}",
         "url": search_url,
         "affiliateTag": AMAZON_PARTNER_TAG,
         "notes": "Check Price"
     }
 
-# 5. The Writer (Fixing the Repetition & Formatting)
+# 5. The Writer (Updated for Detail)
 def generate_article(topic):
     print(f"🤖 Writing EXPERT content for: {topic}...")
     client = OpenAI(api_key=OPENAI_API_KEY)
     
     prompt = f"""
-    You are a Class A Maintenance Mechanic. Write a guide for: "{topic}".
+    You are a Class A Maintenance Mechanic. Write a detailed repair guide for: "{topic}".
     
-    CRITICAL FORMATTING RULES:
-    1. **Tool Logic:** Return a list of objects. "name" = Generic (e.g. Drill). "model" = Specific Brand (e.g. DeWalt 20V).
-    2. **Body Text:** Write a single, cohesive "Deep Dive" section (3-4 paragraphs). Do NOT number the paragraphs. Do NOT repeat the "Problem Intro". Focus on the "Why" and the mechanics of the fix.
-    3. **Quick Answer:** 40-60 words. Pure fact. No brands.
-    4. **FAQ:** Exactly 3 questions.
+    CRITICAL INSTRUCTIONS:
+    1. **Quick Answer:** Make it 80-100 words. Do not just give the first step. Explain the diagnosis, the primary fix, AND a critical warning. It must be comprehensive.
+    2. **Tool Logic:** Provide 'Generic Name' AND 'Best Model'.
+    3. **Body Text:** 4 detailed paragraphs.
     
     JSON Schema: 
     {{ 
         "title": "{topic}", 
-        "quickAnswer": "Direct answer...", 
+        "quickAnswer": "80-100 word detailed summary. Explain the 'Why' and the 'How'.", 
         "categoryName": "Repairs",
         "difficulty": "Intermediate", 
         "estimatedTime": "45 mins", 
-        "problemIntro": "2 sentences on symptoms.", 
-        "contentBody": "Full text of the deep dive section. Write this as one long string with \\n\\n for paragraph breaks.",
+        "problemIntro": "2 sentences identifying the symptoms.", 
+        "contentBody": [
+            "Paragraph 1: Deep dive into the mechanics...",
+            "Paragraph 2: The logic of the repair...",
+            "Paragraph 3: Safety steps...",
+            "Paragraph 4: Prevention..."
+        ],
         "tools": [
-            {{ "name": "Generic Tool", "model": "Specific Brand Model" }}
+            {{ "name": "Generic Tool 1", "model": "Specific Brand/Model 1" }},
+            {{ "name": "Generic Tool 2", "model": "Specific Brand/Model 2" }}
         ], 
-        "steps": ["Step 1", "Step 2", "Step 3"], 
+        "steps": ["Step 1", "Step 2", "Step 3", "Step 4"], 
         "faq": [
             {{"question":"Q1", "answer":"A1"}},
             {{"question":"Q2", "answer":"A2"}},
@@ -142,7 +139,9 @@ def generate_article(topic):
     data = json.loads(response.choices[0].message.content)
     
     print("💰 Monetizing...")
+    data['tools_display'] = [t['name'] for t in data.get("tools", [])]
     data['products'] = [get_amazon_products(tool) for tool in data.get("tools", [])[:3]]
+    
     return data
 
 # 6. Category Manager
@@ -167,22 +166,26 @@ def get_category_id(cat_name):
 def push_to_sanity(data):
     print("🚀 Publishing...")
     
-    # Fix Body Text (Split by newlines so it's not one giant block)
-    body_paragraphs = data["contentBody"].split("\n\n")
     body_blocks = []
-    for p in body_paragraphs:
-        if p.strip():
-            body_blocks.append({
-                "_type": "block", "_key": generate_key(), "style": "normal", 
-                "children": [{"_type": "span", "_key": generate_key(), "text": p.strip()}]
-            })
-            
-    step_blocks = [{"_type": "block", "_key": generate_key(), "style": "normal", "children": [{"_type": "span", "_key": generate_key(), "text": s}]} for s in data["steps"]]
+    for paragraph in data["contentBody"]:
+        body_blocks.append({
+            "_type": "block", 
+            "_key": generate_key(), 
+            "style": "normal", 
+            "children": [{"_type": "span", "_key": generate_key(), "text": paragraph}]
+        })
+    
+    step_blocks = []
+    for step in data["steps"]:
+        step_blocks.append({
+            "_type": "block", 
+            "_key": generate_key(), 
+            "style": "normal", 
+            "children": [{"_type": "span", "_key": generate_key(), "text": step}]
+        })
+
     faq_blocks = [{"_key": generate_key(), "question": q["question"], "answer": q["answer"]} for q in data.get("faq", [])]
     cat_id = get_category_id(data.get("categoryName", "General"))
-
-    # Display Tools: Only show the Generic Name to the reader
-    display_tools = [t['name'] for t in data.get("tools", [])]
 
     doc = {
         "_type": "post",
@@ -195,7 +198,7 @@ def push_to_sanity(data):
         "problemIntro": data["problemIntro"],
         "body": body_blocks, 
         "steps": step_blocks,
-        "tools": display_tools, 
+        "tools": data["tools_display"], 
         "products": data["products"],
         "faq": faq_blocks
     }
@@ -205,7 +208,6 @@ def push_to_sanity(data):
     headers = {"Authorization": f"Bearer {SANITY_TOKEN}"}
     url = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/mutate/{SANITY_DATASET}"
     
-    # Author Link (Optional)
     try:
         q = f"https://{SANITY_PROJECT_ID}.api.sanity.io/v2021-06-07/data/query/{SANITY_DATASET}?query=*[_type=='author'][0]._id"
         res = requests.get(q, headers=headers).json()
@@ -215,7 +217,7 @@ def push_to_sanity(data):
     res = requests.post(url, headers=headers, json={"mutations": [{"create": doc}]})
     
     if res.status_code == 200:
-        print(f"✅ SUCCESS! Published: {data['title']}")
+        print(f"✅ SUCCESS! Article Published: {data['title']}")
     else:
         print(f"❌ Error {res.status_code}: {res.text}")
 
