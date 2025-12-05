@@ -1,0 +1,39 @@
+name: Daily Content Robot
+
+on:
+  schedule:
+    # Runs at 13:00 UTC (9:00 AM EST) every Tuesday and Thursday
+    # You can change this to '0 13 * * *' for every day
+    - cron: '0 13 * * 2,4'
+  workflow_dispatch: # Allows you to click a "Run Now" button manually
+
+jobs:
+  write-article:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r agent/requirements.txt
+
+      - name: Run AutoBlogger
+        env:
+          # We pull these keys from GitHub Secrets
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+          AMAZON_ACCESS_KEY: ${{ secrets.AMAZON_ACCESS_KEY }}
+          AMAZON_SECRET_KEY: ${{ secrets.AMAZON_SECRET_KEY }}
+          AMAZON_PARTNER_TAG: ${{ secrets.AMAZON_PARTNER_TAG }}
+          AMAZON_REGION: "US"
+        run: python agent/autoblogger.py
