@@ -2,7 +2,7 @@ name: Daily Content Robot
 
 on:
   schedule:
-    - cron: '0 13 * * 2,4'
+    - cron: '0 14 * * 2,4' # Changed time to force update
   workflow_dispatch:
 
 jobs:
