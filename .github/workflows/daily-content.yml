@@ -26,6 +26,7 @@ jobs:
           pip install duckduckgo-search
 
       - name: Run AutoBlogger
+        # THIS SECTION WAS MISSING OR INCOMPLETE
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
