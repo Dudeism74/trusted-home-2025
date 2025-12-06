@@ -2,9 +2,8 @@ name: Daily Content Robot
 
 on:
   schedule:
-    # Runs at 13:00 UTC (9:00 AM EST) every Tuesday and Thursday
     - cron: '0 13 * * 2,4'
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   write-article:
