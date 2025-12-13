@@ -1,10 +1,7 @@
 import { MetadataRoute } from 'next'
 import { client } from '../sanity/client'
 
-const POSTS_QUERY = `*[_type == "post"] {
-  slug,
-  publishedAt
-}`
+const POSTS_QUERY = `*[_type == "post"] { slug, publishedAt }`
 
 interface SitemapPost {
     slug: { current: string }
@@ -15,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = 'https://trustedhomeessentials.com'
 
     // FIX: Added "|| []" to prevent crash if fetch returns null
-    const posts = await client.fetch(POSTS_QUERY) || []
+    const posts = (await client.fetch(POSTS_QUERY)) || []
 
     const postUrls = posts.map((post: SitemapPost) => ({
         url: `${baseUrl}/${post.slug.current}`,
@@ -25,12 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
 
     return [
-        {
-            url: baseUrl,
-            lastModified: new Date(),
-            changeFrequency: 'daily',
-            priority: 1,
-        },
+        { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
         {
             url: `${baseUrl}/articles`,
             lastModified: new Date(),
