@@ -131,5 +131,14 @@ export default defineType({
         { type: 'image' }
       ]
     }),
+    // --- NEW FIELD ADDED BELOW ---
+    defineField({
+      name: 'schemaCode',
+      title: 'Schema Markup (JSON-LD)',
+      type: 'text',
+      description: 'Auto-generated JSON-LD for SEO. Do not edit unless you know what you are doing.',
+      readOnly: true, 
+      rows: 10
+    }),
   ],
 })
