@@ -2,6 +2,7 @@ import { client } from "../sanity/client";
 import PostCard from "../components/PostCard";
 import { Metadata } from "next";
 import Link from "next/link";
+import ChecklistModal from "../components/ChecklistModal";
 
 export const metadata: Metadata = {
   title: "Trusted Home Essentials | Expert Guides & Reviews",
@@ -61,14 +62,7 @@ export default async function Home() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <section className="mb-16">
           <div className="flex flex-col items-center gap-4 text-center">
-            <a
-              href="https://docs.google.com/document/d/1UJzzMSoXQDbRZke7Hn4aS429CFy_7y16u8yA9Nf3Doo/edit?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-white transition-all duration-200 bg-[#1A3C2F] rounded-full hover:bg-[#142f25]"
-            >
-              Download Free Maintenance Checklist
-            </a>
+            <ChecklistModal />
           </div>
         </section>
 
