@@ -9,7 +9,7 @@ interface SitemapPost {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://trustedhomeessentials.com'
+    const baseUrl = 'https://www.trustedhomeessentials.com'
 
     // FIX: Added "|| []" to prevent crash if fetch returns null
     const posts = (await client.fetch(POSTS_QUERY)) || []
