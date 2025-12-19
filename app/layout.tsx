@@ -13,11 +13,6 @@ export const metadata: Metadata = {
     template: '%s | Trusted Home Essentials',
     default: 'Trusted Home Essentials | Expert Guides & Reviews',
   },
-  verification: {
-    other: {
-      "impact-site-verification": "e510ce3d-e83d-49e9-b9b8-7165af87095c",
-    },
-  },
   description:
     'No-nonsense home maintenance guides and tool reviews. Verified by professional mechanics for homeowners who want to fix it right the first time.',
   icons: {
@@ -33,6 +28,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'PmOG1Gfuwa-NIkUkGzwN-pXa-wIzmczPuWMqLgv4XKY',
+    other: {
+      "impact-site-verification": "e510ce3d-e83d-49e9-b9b8-7165af87095c",
+    },
   },
 };
 
