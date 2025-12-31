@@ -39,6 +39,11 @@ export default function Footer() {
           <p className="text-xs leading-relaxed text-slate-500 border-l-2 border-slate-700 pl-4">
             As an Amazon Associate, we earn from qualifying purchases at no extra cost to you.
           </p>
+          
+          {/* ADDED: Privacy Policy Link */}
+          <Link href="/privacy-policy" className="text-xs text-slate-400 hover:text-white mt-2 underline decoration-slate-700 underline-offset-4">
+            Privacy Policy
+          </Link>
         </div>
 
       </div>
