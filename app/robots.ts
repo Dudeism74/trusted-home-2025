@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: "*",
             allow: "/",
         },
-        sitemap: "https://trustedhomeessentials.com/sitemap.xml",
+        sitemap: "https://www.trustedhomeessentials.com/sitemap.xml",
     };
 }
