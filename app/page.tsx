@@ -3,6 +3,7 @@ import PostCard from "../components/PostCard";
 import { Metadata } from "next";
 import Link from "next/link";
 import ChecklistModal from "../components/ChecklistModal";
+import FeaturedProducts from "../components/FeaturedProducts";
 
 export const metadata: Metadata = {
   title: "Trusted Home Essentials | Expert Guides & Reviews",
@@ -65,6 +66,7 @@ export default async function Home() {
             <ChecklistModal />
           </div>
         </section>
+        <FeaturedProducts />
 
         {uniqueCategories.length > 0 && (
           <section className="mb-20 border-b border-gray-200 pb-12">
