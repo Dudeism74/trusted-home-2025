@@ -30,8 +30,8 @@ const PRODUCTS = [
     name: "Affresh Washer Cleaner",
     tag: "Maintenance Must-Have",
     price: "$11.98",
-    image: "https://m.media-amazon.com/images/I/71W-LhF4hUL._AC_SX679_.jpg",
-    link: "https://amazon.com",
+    image: "/affreshwashercleaner.jpg",
+    link: "https://amzn.to/49qrZBD",
   },
 ];
 
