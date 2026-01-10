@@ -13,9 +13,9 @@ const PRODUCTS = [
     id: 2,
     name: "Scrub Daddy 3-Pack",
     tag: "Cleaning Essential",
-    price: "$14.99",
-    image: "https://m.media-amazon.com/images/I/81B+0s+j+AL._AC_SX679_.jpg",
-    link: "https://amazon.com",
+    price: "$13.99",
+    image: "/scrubdaddy.jpg",
+    link: "https://amzn.to/4suJ2LL",
   },
   {
     id: 3,
