@@ -5,6 +5,7 @@ const PRODUCTS = [
     id: 1,
     name: "Roborock S8 Pro Ultra",
     tag: "Top Rated Vacuum",
+    price: "$459.99",
     image: "/vacuum.jpg", 
     link: "https://amzn.to/3NcEids", // Replace with your affiliate link later
   },
