@@ -19,11 +19,11 @@ const PRODUCTS = [
   },
   {
     id: 3,
-    name: "Bissell Little Green",
+    name: "Bissell Little Green Max",
     tag: "Viral Favorite",
-    price: "$123.59",
-    image: "https://m.media-amazon.com/images/I/71jG+e7roXL._AC_SX679_.jpg",
-    link: "https://amazon.com",
+    price: "$159.99",
+    image: "bisselllittlegreenmax.jpg",
+    link: "https://amzn.to/3LFSSK3",
   },
   {
     id: 4,
