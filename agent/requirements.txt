@@ -1,6 +1,0 @@
-openai
-
-python-dotenv
-python-amazon-paapi
-requests
-duckduckgo-search
