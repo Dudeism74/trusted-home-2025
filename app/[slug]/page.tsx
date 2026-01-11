@@ -35,6 +35,7 @@ interface Post {
   products?: { name: string; url: string; affiliateTag?: string; notes?: string }[];
   faq?: { question: string; answer: string }[];
   relatedPosts?: RelatedPost[];
+  schemaCode?: string; // MECHANIC UPGRADE: Added schema field
 }
 
 const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
@@ -54,6 +55,7 @@ const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   tools,
   products,
   faq,
+  schemaCode, // MECHANIC UPGRADE: Fetching the schema
   "relatedPosts": *[_type == "post" && category._ref == ^.category._ref && slug.current != ^.slug.current][0...3]{
     _id,
     title,
@@ -191,36 +193,46 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
     { label: post.title, href: `/${post.slug.current}` }
   ];
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: post.title,
-    description: post.quickAnswer || post.problemIntro,
-    image: post.mainImage ? [post.mainImage] : [],
-    datePublished: post.publishedAt,
-    author: {
-      '@type': 'Person',
-      name: post.authorName || 'Trusted Expert',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Trusted Home Essentials',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://trusted-home-2025.vercel.app/icon.svg',
+  // MECHANIC UPGRADE: Prioritize Custom GEO Schema
+  let schemaData = "";
+
+  if (post.schemaCode) {
+    // Strategy: If the Python engine sent us a schema, use it directly.
+    schemaData = post.schemaCode;
+  } else {
+    // Fallback: Generate basic schema if the field is empty (Safety Net).
+    const defaultSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: post.title,
+      description: post.quickAnswer || post.problemIntro,
+      image: post.mainImage ? [post.mainImage] : [],
+      datePublished: post.publishedAt,
+      author: {
+        '@type': 'Person',
+        name: post.authorName || 'Trusted Expert',
       },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://trusted-home-2025.vercel.app/${post.slug.current}`,
-    },
-  };
+      publisher: {
+        '@type': 'Organization',
+        name: 'Trusted Home Essentials',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://trusted-home-2025.vercel.app/icon.svg',
+        },
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': `https://trusted-home-2025.vercel.app/${post.slug.current}`,
+      },
+    };
+    schemaData = JSON.stringify(defaultSchema);
+  }
 
   return (
     <main className="min-h-screen bg-white font-sans">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: schemaData }}
       />
       {/* Sticky Navigation Bar */}
       <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100">

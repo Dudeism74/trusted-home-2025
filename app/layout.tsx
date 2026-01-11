@@ -8,13 +8,29 @@ import Footer from "./components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.trustedhomeessentials.com'),
   title: {
     template: '%s | Trusted Home Essentials',
-    default: 'Trusted Home Essentials',
+    default: 'Trusted Home Essentials | Expert Guides & Reviews',
   },
-  description: 'The AI-First Home Maintenance Authority.',
+  description:
+    'No-nonsense home maintenance guides and tool reviews. Verified by professional mechanics for homeowners who want to fix it right the first time.',
   icons: {
     icon: '/icon.svg',
+  },
+  openGraph: {
+    title: 'Trusted Home Essentials',
+    description: 'Expert home maintenance guides verified by professionals.',
+    url: 'https://www.trustedhomeessentials.com',
+    siteName: 'Trusted Home Essentials',
+    locale: 'en_US',
+    type: 'website',
+  },
+  verification: {
+    google: 'PmOG1Gfuwa-NIkUkGzwN-pXa-wIzmczPuWMqLgv4XKY',
+    other: {
+      "impact-site-verification": "e510ce3d-e83d-49e9-b9b8-7165af87095c",
+    },
   },
 };
 
