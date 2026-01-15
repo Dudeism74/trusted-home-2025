@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // ---------------------------------------------------------
-      // 1. EXISTING REDIRECTS (These were already correct)
+      // 1. EXISTING REDIRECTS (These are working)
       // ---------------------------------------------------------
       {
         source: '/roborock-s8-maxv-ultra-review-worth-it',
@@ -66,63 +66,74 @@ const nextConfig: NextConfig = {
       },
 
       // ---------------------------------------------------------
-      // 2. NEW REDIRECTS (From your Jan 8th Traffic Report)
-      // These stop the "Article Not Found" errors for the emoji links
+      // 2. TAG & CATEGORY FIXES (Redirect to /articles for SEO safety)
       // ---------------------------------------------------------
-      
-      // Catch-all for old Wordpress Tags & Categories
       {
         source: '/tag/:slug*',
-        destination: '/', 
+        destination: '/articles', 
         permanent: true,
       },
       {
         source: '/category/:slug*',
-        destination: '/', 
+        destination: '/articles', 
         permanent: true,
       },
 
-      // Specific "Emoji" URL Fixes
+      // ---------------------------------------------------------
+      // 3. EMOJI URL FIXES (Percent-Encoded for Googlebot)
+      // We use the encoded version (%) because Google cannot read raw emojis in code.
+      // ---------------------------------------------------------
+      
+      // 🌿 Eco Friendly
       {
-        source: '/🌿-eco-friendly-cleaning-swaps-that-actually-work',
+        source: '/%F0%9F%8C%BF-eco-friendly-cleaning-swaps-that-actually-work',
         destination: '/',
         permanent: true,
       },
+      // 🧠 ADHD / Executive Dysfunction
       {
-        source: '/🧠-how-to-stay-on-top-of-housework-with-adhd-or-executive-dysfunction',
+        source: '/%F0%9F%A7%A0-how-to-stay-on-top-of-housework-with-adhd-or-executive-dysfunction',
         destination: '/',
         permanent: true,
       },
+      // 🧰 Home Repair Tools
       {
-        source: '/🧰-home-repair-tools-that-make-life-easier',
+        source: '/%F0%9F%A7%B0-home-repair-tools-that-make-life-easier',
         destination: '/',
         permanent: true,
       },
+      // 🧠 Smart Home Essentials (Note: Same emoji as ADHD, ensure slug is unique)
       {
-        source: '/🧠-smart-home-essentials-that-actually-work',
+        source: '/%F0%9F%A7%A0-smart-home-essentials-that-actually-work',
         destination: '/',
         permanent: true,
       },
+      // 🧼 Minimalist Cleaning Kits
       {
-        source: '/🧼-minimalist-cleaning-kits-that-actually-work-and-what-to-leave-out',
+        source: '/%F0%9F%A7%BC-minimalist-cleaning-kits-that-actually-work-and-what-to-leave-out',
         destination: '/',
         permanent: true,
       },
+      // 🌬️ Air Purifiers (Includes Variation Selector)
       {
-        source: '/🌬️-the-best-air-purifiers-of-2025-that-actually-work',
+        source: '/%F0%9F%8C%AC%EF%B8%8F-the-best-air-purifiers-of-2025-that-actually-work',
         destination: '/',
         permanent: true,
       },
+      // 🧼 Cleaning the Machines
       {
-        source: '/🧼-how-to-clean-the-cleaning-machines-so-they-dont-break-down-on-you',
+        source: '/%F0%9F%A7%BC-how-to-clean-the-cleaning-machines-so-they-dont-break-down-on-you',
         destination: '/',
         permanent: true,
       },
+      // 🏡 Clean House Secret
       {
-        source: '/🏡-how-do-some-people-always-have-a-clean-house-heres-the-real-secret',
+        source: '/%F0%9F%8F%A1-how-do-some-people-always-have-a-clean-house-heres-the-real-secret',
         destination: '/',
         permanent: true,
       },
+      
+      // Standard Text Fixes
       {
         source: '/how-to-choose-cleaning-tools-that-save-your-back',
         destination: '/',
