@@ -19,6 +19,25 @@ const nextConfig: NextConfig = {
       // ---------------------------------------------------------
       // 1. EXISTING REDIRECTS (These are working)
       // ---------------------------------------------------------
+      // --- FIX: Redirect the Duplicate Garage Storage Page ---
+    {
+      source: '/garage-storage-essentials-clutter-free',
+      destination: '/garage-storage-essentials-that-actually-keep-the-clutter-away',
+      permanent: true,
+    },
+
+    // --- FIX: Kill the RSS Feed "Bloat" ---
+    // This forces Google to stop indexing /feed/ pages and sends them to your articles instead.
+    {
+      source: '/feed',
+      destination: '/articles',
+      permanent: true,
+    },
+    {
+      source: '/:path*/feed',
+      destination: '/articles',
+      permanent: true,
+    },
       {
         source: '/roborock-s8-maxv-ultra-review-worth-it',
         destination: '/articles',
