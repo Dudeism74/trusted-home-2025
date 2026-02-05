@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { client } from "../../sanity/client";
 import { PortableText, type PortableTextComponents, type PortableTextBlock } from "next-sanity";
 import Link from "next/link";
@@ -174,18 +175,8 @@ export default async function PostPage(props: { params: Promise<{ slug: string }
     post = getMockPost();
   }
 
-  if (!post) {
-    return (
-      <div className="min-h-[50vh] flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-slate-900 mb-4">Article Not Found</h1>
-          <Link href="/" className="text-blue-600 hover:underline flex items-center gap-2 justify-center group">
-            <span className="group-hover:-translate-x-1 transition-transform">←</span>
-            Back to All Guides
-          </Link>
-        </div>
-      </div>
-    );
+if (!post) {
+    notFound();
   }
 
   const breadcrumbs = [
