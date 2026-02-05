@@ -25,7 +25,14 @@ const nextConfig: NextConfig = {
       destination: '/garage-storage-essentials-that-actually-keep-the-clutter-away',
       permanent: true,
     },
-
+      
+      // *** NEW FIX: Redirect old /home links to root ***
+      {
+        source: '/home',
+        destination: '/',
+        permanent: true,
+      },
+      // ... keep existing feed redirects ...
     // --- FIX: Kill the RSS Feed "Bloat" ---
     // This forces Google to stop indexing /feed/ pages and sends them to your articles instead.
     {
