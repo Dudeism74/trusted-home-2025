@@ -51,6 +51,8 @@ export default function RootLayout({
       {/* Google Analytics */}
       <GoogleAnalytics gaId="G-C48XPCKD7E" />
       
-      {/* Google AdSense - THIS WAS MISSING */}
+      {/* Google AdSense */}
       <GoogleAdSense publisherId="pub-2173466789348999" />
     </html>
+  );
+}
