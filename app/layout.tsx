@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { GoogleAnalytics, GoogleAdSense } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google'; // Removed GoogleAdSense
+import Script from "next/script"; // Added this
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -48,11 +49,18 @@ export default function RootLayout({
         </div>
         <Footer />
       </body>
-      {/* Google Analytics */}
+      
+      {/* Google Analytics - Kept from library */}
       <GoogleAnalytics gaId="G-C48XPCKD7E" />
       
-      {/* Google AdSense */}
-      <GoogleAdSense publisherId="pub-2173466789348999" />
+      {/* Google AdSense - Manual Script Implementation */}
+      <Script
+        id="adsense-init"
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2173466789348999"
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
+      />
     </html>
   );
 }
