@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics, GoogleAdSense } from '@next/third-parties/google'
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -50,6 +50,7 @@ export default function RootLayout({
       </body>
       {/* Google Analytics */}
       <GoogleAnalytics gaId="G-C48XPCKD7E" />
+      
+      {/* Google AdSense - THIS WAS MISSING */}
+      <GoogleAdSense publisherId="pub-2173466789348999" />
     </html>
-  );
-}
