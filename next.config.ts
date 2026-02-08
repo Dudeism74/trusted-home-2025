@@ -57,14 +57,16 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
+      // ... inside next.config.ts ...
+
       {
         source: '/dryer-not-heating-fix-easy',
-        destination: '/appliances',
+        destination: '/articles', // <--- CHANGED from '/appliances'
         permanent: true,
       },
       {
         source: '/diagnosing-a-bad-refrigerator-compressor',
-        destination: '/appliances',
+        destination: '/articles', // <--- CHANGED from '/appliances'
         permanent: true,
       },
       {
