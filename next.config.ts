@@ -65,6 +65,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/dryer-not-heating-properly-common-causes-and-solutions',
+        destination: '/articles',
+        permanent: true,
+      },
+      {
         source: '/diagnosing-a-bad-refrigerator-compressor',
         destination: '/articles', // <--- CHANGED from '/appliances'
         permanent: true,
