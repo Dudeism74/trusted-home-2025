@@ -168,6 +168,43 @@ const nextConfig: NextConfig = {
       {
         source: '/top-5-cleaning-essentials-every-home-should-have',
         destination: '/',
+          permanent: true, },
+        // ... keep your existing redirects ...
+
+      // --- ADD THESE NEW RULES BELOW ---
+      
+      // 1. Fix the "Our Blog" ghost page
+      {
+        source: '/our-blog',
+        destination: '/articles', // or '/' if you prefer the homepage
+        permanent: true,
+      },
+      
+      // 2. Fix the "Best Vacuums" 404
+      {
+        source: '/best-vacuums-that-actually-work',
+        destination: '/', // Redirect to homepage (or a specific vacuum article if you have one)
+        permanent: true,
+      },
+      
+      // 3. Fix the "Dryer" 404
+      {
+        source: '/dryer-not-heating-fix-easy',
+        destination: '/appliances', 
+        permanent: true,
+      },
+      
+      // 4. Fix the "Refrigerator" 404
+      {
+        source: '/diagnosing-a-bad-refrigerator-compressor',
+        destination: '/appliances',
+        permanent: true,
+      },
+      
+      // 5. Fix the "Clean House Secret" 404
+      {
+        source: '/how-do-some-people-always-have-a-clean-house-heres-the-real-secret',
+        destination: '/',
         permanent: true,
       },
     ];
