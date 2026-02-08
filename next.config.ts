@@ -1,3 +1,4 @@
+import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -10,41 +11,72 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "cdn.sanity.io",
         port: "",
-        pathname: "/images/**",
+        pathname: "/images/**/*",
       },
     ],
   },
   async redirects() {
     return [
       // ---------------------------------------------------------
-      // 1. EXISTING REDIRECTS (These are working)
+      // 1. CRITICAL FIXES (Soft 404s & Broken Pages)
       // ---------------------------------------------------------
-      // --- FIX: Redirect the Duplicate Garage Storage Page ---
-    {
-      source: '/garage-storage-essentials-clutter-free',
-      destination: '/garage-storage-essentials-that-actually-keep-the-clutter-away',
-      permanent: true,
-    },
-      
-      // *** NEW FIX: Redirect old /home links to root ***
+      {
+        source: '/garage-storage-essentials-clutter-free',
+        destination: '/garage-storage-essentials-that-actually-keep-the-clutter-away',
+        permanent: true,
+      },
       {
         source: '/home',
         destination: '/',
         permanent: true,
       },
-      // ... keep existing feed redirects ...
-    // --- FIX: Kill the RSS Feed "Bloat" ---
-    // This forces Google to stop indexing /feed/ pages and sends them to your articles instead.
-    {
-      source: '/feed',
-      destination: '/articles',
-      permanent: true,
-    },
-    {
-      source: '/:path*/feed',
-      destination: '/articles',
-      permanent: true,
-    },
+      {
+        source: '/our-blog',
+        destination: '/articles',
+        permanent: true,
+      },
+      
+      // ---------------------------------------------------------
+      // 2. RSS FEED CLEANUP
+      // ---------------------------------------------------------
+      {
+        source: '/feed',
+        destination: '/articles',
+        permanent: true,
+      },
+      {
+        source: '/:path*/feed',
+        destination: '/articles',
+        permanent: true,
+      },
+
+      // ---------------------------------------------------------
+      // 3. SPECIFIC BROKEN ARTICLES (Soft 404 Fixes)
+      // ---------------------------------------------------------
+      {
+        source: '/best-vacuums-that-actually-work',
+        destination: '/', 
+        permanent: true,
+      },
+      {
+        source: '/dryer-not-heating-fix-easy',
+        destination: '/appliances', 
+        permanent: true,
+      },
+      {
+        source: '/diagnosing-a-bad-refrigerator-compressor',
+        destination: '/appliances',
+        permanent: true,
+      },
+      {
+        source: '/how-do-some-people-always-have-a-clean-house-heres-the-real-secret',
+        destination: '/',
+        permanent: true,
+      },
+
+      // ---------------------------------------------------------
+      // 4. RESTORED REDIRECTS (Old Articles & Pages)
+      // ---------------------------------------------------------
       {
         source: '/roborock-s8-maxv-ultra-review-worth-it',
         destination: '/articles',
@@ -92,24 +124,22 @@ const nextConfig: NextConfig = {
       },
 
       // ---------------------------------------------------------
-      // 2. TAG & CATEGORY FIXES (Redirect to /articles for SEO safety)
+      // 5. TAG & CATEGORY FIXES
       // ---------------------------------------------------------
       {
         source: '/tag/:slug*',
-        destination: '/articles', 
+        destination: '/articles',
         permanent: true,
       },
       {
         source: '/category/:slug*',
-        destination: '/articles', 
+        destination: '/articles',
         permanent: true,
       },
 
       // ---------------------------------------------------------
-      // 3. EMOJI URL FIXES (Percent-Encoded for Googlebot)
-      // We use the encoded version (%) because Google cannot read raw emojis in code.
+      // 6. EMOJI URL FIXES (Percent-Encoded for Googlebot)
       // ---------------------------------------------------------
-      
       // 🌿 Eco Friendly
       {
         source: '/%F0%9F%8C%BF-eco-friendly-cleaning-swaps-that-actually-work',
@@ -128,7 +158,7 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
-      // 🧠 Smart Home Essentials (Note: Same emoji as ADHD, ensure slug is unique)
+      // 🧠 Smart Home Essentials
       {
         source: '/%F0%9F%A7%A0-smart-home-essentials-that-actually-work',
         destination: '/',
@@ -140,7 +170,7 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
-      // 🌬️ Air Purifiers (Includes Variation Selector)
+      // 🌬️ Air Purifiers
       {
         source: '/%F0%9F%8C%AC%EF%B8%8F-the-best-air-purifiers-of-2025-that-actually-work',
         destination: '/',
@@ -152,13 +182,12 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
-      // 🏡 Clean House Secret
+      // 🏡 Clean House Secret (Emoji Version)
       {
         source: '/%F0%9F%8F%A1-how-do-some-people-always-have-a-clean-house-heres-the-real-secret',
         destination: '/',
         permanent: true,
       },
-      
       // Standard Text Fixes
       {
         source: '/how-to-choose-cleaning-tools-that-save-your-back',
@@ -168,47 +197,29 @@ const nextConfig: NextConfig = {
       {
         source: '/top-5-cleaning-essentials-every-home-should-have',
         destination: '/',
-          permanent: true, },
-        // ... keep your existing redirects ...
-
-      // --- ADD THESE NEW RULES BELOW ---
-      
-      // 1. Fix the "Our Blog" ghost page
-      {
-        source: '/our-blog',
-        destination: '/articles', // or '/' if you prefer the homepage
         permanent: true,
-      },
-      
-      // 2. Fix the "Best Vacuums" 404
-      {
-        source: '/best-vacuums-that-actually-work',
-        destination: '/', // Redirect to homepage (or a specific vacuum article if you have one)
-        permanent: true,
-      },
-      
-      // 3. Fix the "Dryer" 404
-      {
-        source: '/dryer-not-heating-fix-easy',
-        destination: '/appliances', 
-        permanent: true,
-      },
-      
-      // 4. Fix the "Refrigerator" 404
-      {
-        source: '/diagnosing-a-bad-refrigerator-compressor',
-        destination: '/appliances',
-        permanent: true,
-      },
-      
-      // 5. Fix the "Clean House Secret" 404
-      {
-        source: '/how-do-some-people-always-have-a-clean-house-heres-the-real-secret',
-        destination: '/',
-        permanent: true,
-      },
+      }
     ];
   },
 };
 
-export default nextConfig;
+// This is the CORRECT way to wrap Sentry in next.config.ts
+export default withSentryConfig(
+  nextConfig,
+  {
+    // For all available options, see:
+    // https://github.com/getsentry/sentry-webpack-plugin#options
+    silent: true,
+    org: "trusted-home",
+    project: "trusted-home-essentials",
+  },
+  {
+    // For all available options, see:
+    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+    widenClientFileUpload: true,
+    transpileClientSDK: true,
+    tunnelRoute: "/monitoring",
+    hideSourceMaps: true,
+    disableLogger: true,
+  }
+);
