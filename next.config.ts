@@ -1,4 +1,3 @@
-import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -35,7 +34,7 @@ const nextConfig: NextConfig = {
         destination: '/articles',
         permanent: true,
       },
-      
+
       // ---------------------------------------------------------
       // 2. RSS FEED CLEANUP
       // ---------------------------------------------------------
@@ -55,12 +54,12 @@ const nextConfig: NextConfig = {
       // ---------------------------------------------------------
       {
         source: '/best-vacuums-that-actually-work',
-        destination: '/', 
+        destination: '/',
         permanent: true,
       },
       {
         source: '/dryer-not-heating-fix-easy',
-        destination: '/appliances', 
+        destination: '/appliances',
         permanent: true,
       },
       {
@@ -203,23 +202,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-// This is the CORRECT way to wrap Sentry in next.config.ts
-export default withSentryConfig(
-  nextConfig,
-  {
-    // For all available options, see:
-    // https://github.com/getsentry/sentry-webpack-plugin#options
-    silent: true,
-    org: "trusted-home",
-    project: "trusted-home-essentials",
-  },
-  {
-    // For all available options, see:
-    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-    widenClientFileUpload: true,
-    transpileClientSDK: true,
-    tunnelRoute: "/monitoring",
-    hideSourceMaps: true,
-    disableLogger: true,
-  }
-);
+export default nextConfig;
