@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEVOIT Core 400S-P | Pure Air, Smart Living</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        levoit: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        slate: {
+                            850: '#1e293b',
+                            950: '#020617',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: radial-gradient(circle at top right, #f0f9ff 0%, #ffffff 40%, #e0f2fe 100%);
+            min-height: 100vh;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        .video-container {
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-slate-900 antialiased overflow-x-hidden">
+
+    <!-- Header Navigation -->
+    <nav class="px-6 py-8 max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <span class="text-2xl font-display font-bold tracking-tight levoit-900">LEVOIT</span>
+            <span class="h-1.5 w-1.5 rounded-full bg-levoit-600 animate-pulse-slow"></span>
+        </div>
+        <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600 uppercase tracking-widest">
+            <span class="hover:text-levoit-600 transition-colors cursor-pointer">Performance</span>
+            <span class="hover:text-levoit-600 transition-colors cursor-pointer">Smart Tech</span>
+            <span class="hover:text-levoit-600 transition-colors cursor-pointer">Design</span>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 pt-4 pb-20">
+        <!-- Hero Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+            <!-- Left Side: Copy -->
+            <div class="lg:col-span-5 order-2 lg:order-1 space-y-8">
+                <div
+                    class="inline-block px-4 py-1.5 rounded-full bg-levoit-100 text-levoit-700 text-xs font-bold tracking-widest uppercase">
+                    Core 400S-P Series
+                </div>
+
+                <h1 class="text-5xl md:text-6xl font-display font-bold leading-[1.1] text-slate-950">
+                    Breathe easy in your <span class="text-gradient">large home.</span>
+                </h1>
+
+                <p class="text-xl text-slate-600 leading-relaxed font-light">
+                    Smart HEPA filtration removes pet allergens, smoke, and dust, <span
+                        class="font-semibold text-slate-900">silently</span>. Elevate your living environment with
+                    medical-grade purification.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="https://amzn.to/4lm04s5" target="_blank" rel="noopener noreferrer"
+                        class="px-8 py-4 bg-levoit-900 text-white rounded-2xl font-semibold shadow-xl inline-block text-center">
+                        Experience Pure Air
+                    </a>
+                    <a href="https://amzn.to/4lm04s5" target="_blank" rel="noopener noreferrer"
+                        class="px-8 py-4 glass-card text-levoit-900 rounded-2xl font-semibold inline-block text-center">
+                        Learn More
+                    </a>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="pt-8 flex items-center space-x-6 border-t border-slate-200">
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-bold text-slate-950 tracking-tight">99.97%</span>
+                        <span class="text-xs text-slate-500 uppercase tracking-wider">Filtration Rate</span>
+                    </div>
+                    <div class="w-px h-10 bg-slate-200"></div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-bold text-slate-950 tracking-tight">Silent</span>
+                        <span class="text-xs text-slate-500 uppercase tracking-wider">Night Mode</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Media (Video) -->
+            <div class="lg:col-span-7 order-1 lg:order-2">
+                <div class="relative">
+                    <!-- Background Decoration -->
+                    <div
+                        class="absolute -top-12 -right-12 w-64 h-64 bg-levoit-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float">
+                    </div>
+                    <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-levoit-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float"
+                        style="animation-delay: 2s;"></div>
+
+                    <div
+                        class="video-container aspect-video md:aspect-[4/3] lg:aspect-square xl:aspect-video glass-card p-2">
+                        <video src='https://opal.google/board/blobs/baa4bd51-08e2-49bb-9854-db6699ac173e'
+                            alt='LEVOIT Core 400S-P Showcase' autoplay loop muted playsinline
+                            class="rounded-2xl"></video>
+
+                        <!-- Floating Tech Card -->
+                        <div
+                            class="absolute bottom-6 left-6 right-6 sm:right-auto sm:w-64 glass-card p-4 rounded-xl flex items-center space-x-4 animate-float">
+                            <div class="h-10 w-10 bg-levoit-600 rounded-lg flex items-center justify-center text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-tighter">VortexAir™ Tech
+                                </p>
+                                <p class="text-sm font-semibold text-slate-900">360° Air Intake</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Bento Grid -->
+        <div class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div
+                class="glass-card p-8 rounded-[2.5rem] flex flex-col justify-between hover:border-levoit-600/30 transition-all duration-500 group">
+                <div
+                    class="h-12 w-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-levoit-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <div class="mt-12">
+                    <h3 class="text-xl font-display font-bold mb-2">H13 True HEPA</h3>
+                    <p class="text-slate-500 font-light">Captures 99.97% of airborne particles as small as 0.3 microns.
+                    </p>
+                </div>
+            </div>
+
+            <div
+                class="glass-card p-8 rounded-[2.5rem] flex flex-col justify-between bg-levoit-900 text-white md:scale-105 shadow-2xl shadow-levoit-900/20">
+                <div class="h-12 w-12 bg-levoit-800 rounded-2xl flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <div class="mt-12">
+                    <h3 class="text-xl font-display font-bold mb-2 text-white">Smart App Control</h3>
+                    <p class="text-levoit-100 font-light">Monitor air quality in real-time and control settings from
+                        anywhere.</p>
+                </div>
+            </div>
+
+            <div
+                class="glass-card p-8 rounded-[2.5rem] flex flex-col justify-between hover:border-levoit-600/30 transition-all duration-500 group">
+                <div
+                    class="h-12 w-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-levoit-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.828a5 5 0 117.072 0" />
+                    </svg>
+                </div>
+                <div class="mt-12">
+                    <h3 class="text-xl font-display font-bold mb-2">WhisperQuiet™</h3>
+                    <p class="text-slate-500 font-light">Operating at levels as low as 24dB, perfect for undisturbed
+                        sleep.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Simple intersection observer for reveal animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.glass-card').forEach(el => {
+            el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>
