@@ -21,7 +21,7 @@ export default async function CommentModerationPage() {
     notFound();
   }
 
-  const db = getDb();
+  const db = await getDb();
   const rows = await db
     .select({
       id: comments.id,

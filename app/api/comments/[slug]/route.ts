@@ -33,7 +33,7 @@ export async function GET(
       return Response.json({ error: "Guide not found." }, { status: 404 });
     }
 
-    const db = getDb();
+    const db = await getDb();
     const rows = await db
       .select({
         id: comments.id,
@@ -100,7 +100,7 @@ export async function POST(
     }
 
     const ipHash = await fingerprint(request);
-    const db = getDb();
+    const db = await getDb();
     const [recent] = await db
       .select({ value: count() })
       .from(comments)

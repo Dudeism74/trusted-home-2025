@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const db = getDb();
+    const db = await getDb();
     await db
       .insert(subscribers)
       .values({ email, source })

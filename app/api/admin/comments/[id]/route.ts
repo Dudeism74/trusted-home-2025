@@ -26,7 +26,7 @@ export async function POST(
     return Response.json({ error: "Invalid moderation request." }, { status: 400 });
   }
 
-  const db = getDb();
+  const db = await getDb();
   const [updated] = await db
     .update(comments)
     .set({
