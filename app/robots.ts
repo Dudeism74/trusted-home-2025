@@ -29,7 +29,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin/", "/api/admin/"],
       },
     ],
-    sitemap: "https://trustedhomeessentials.com/sitemap.xml",
-    host: "https://trustedhomeessentials.com",
+    sitemap: "https://www.trustedhomeessentials.com/sitemap.xml",
+    host: "https://www.trustedhomeessentials.com",
   };
 }

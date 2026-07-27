@@ -1,0 +1,39 @@
+name: Notify IndexNow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "app/**"
+      - "public/**"
+      - "scripts/submit-indexnow.mjs"
+      - ".github/workflows/indexnow.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow-production
+  cancel-in-progress: true
+
+jobs:
+  submit:
+    name: Submit production URLs
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out site
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Notify IndexNow after deployment
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          SITE_URL: https://www.trustedhomeessentials.com
+        run: node scripts/submit-indexnow.mjs

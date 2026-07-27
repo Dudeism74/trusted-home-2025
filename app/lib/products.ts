@@ -1,4 +1,4 @@
-export const SITE_URL = "https://trustedhomeessentials.com";
+export const SITE_URL = "https://www.trustedhomeessentials.com";
 export const SITE_NAME = "Trusted Home Essentials";
 export const REVIEWED_DATE = "2026-07-27";
 export const REVIEWED_DATE_LABEL = "July 27, 2026";

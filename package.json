@@ -11,6 +11,8 @@
     "build": "bash scripts/build-platform.sh",
     "build:sites": "bash scripts/build-verified.sh",
     "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",
+    "indexnow:submit": "node scripts/submit-indexnow.mjs",
+    "indexnow:dry-run": "INDEXNOW_DRY_RUN=1 node scripts/submit-indexnow.mjs",
     "test": "npm run build && node --experimental-loader=./scripts/cloudflare-workers-loader.mjs --test tests/rendered-html.test.mjs",
     "validate:artifact": "bash scripts/validate-artifact.sh",
     "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next",
