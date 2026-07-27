@@ -1,13 +1,35 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-    return {
-        rules: {
-            userAgent: "*",
-            allow: "/",
-            // THIS IS THE MISSING PART: Block the feeds so Google ignores them
-            disallow: ["/feed/", "/*/feed/", "/comments/feed/"],
-        },
-        sitemap: "https://www.trustedhomeessentials.com/sitemap.xml",
-    };
+  return {
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/admin/", "/api/admin/"],
+      },
+      {
+        userAgent: "Googlebot",
+        allow: "/",
+        disallow: ["/admin/", "/api/admin/"],
+      },
+      {
+        userAgent: "Bingbot",
+        allow: "/",
+        disallow: ["/admin/", "/api/admin/"],
+      },
+      {
+        userAgent: "OAI-SearchBot",
+        allow: "/",
+        disallow: ["/admin/", "/api/admin/"],
+      },
+      {
+        userAgent: "ChatGPT-User",
+        allow: "/",
+        disallow: ["/admin/", "/api/admin/"],
+      },
+    ],
+    sitemap: "https://trustedhomeessentials.com/sitemap.xml",
+    host: "https://trustedhomeessentials.com",
+  };
 }

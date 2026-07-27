@@ -1,34 +1,36 @@
-import { MetadataRoute } from 'next'
-import { client } from '../sanity/client'
+import type { MetadataRoute } from "next";
+import { products, REVIEWED_DATE, SITE_URL } from "./lib/products";
 
-const POSTS_QUERY = `*[_type == "post"] { slug, publishedAt }`
+export default function sitemap(): MetadataRoute.Sitemap {
+  const lastModified = new Date(`${REVIEWED_DATE}T12:00:00Z`);
+  const staticPages = [
+    { path: "", priority: 1, changeFrequency: "weekly" as const },
+    { path: "/about", priority: 0.6, changeFrequency: "monthly" as const },
+    {
+      path: "/editorial-policy",
+      priority: 0.6,
+      changeFrequency: "monthly" as const,
+    },
+    {
+      path: "/affiliate-disclosure",
+      priority: 0.4,
+      changeFrequency: "yearly" as const,
+    },
+    { path: "/privacy", priority: 0.4, changeFrequency: "yearly" as const },
+  ];
 
-interface SitemapPost {
-    slug: { current: string }
-    publishedAt: string
-}
-
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = 'https://www.trustedhomeessentials.com'
-
-    // FIX: Added "|| []" to prevent crash if fetch returns null
-    const posts = (await client.fetch(POSTS_QUERY)) || []
-
-    const postUrls = posts.map((post: SitemapPost) => ({
-        url: `${baseUrl}/${post.slug.current}`,
-        lastModified: post.publishedAt || new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-    }))
-
-    return [
-        { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
-        {
-            url: `${baseUrl}/articles`,
-            lastModified: new Date(),
-            changeFrequency: 'daily',
-            priority: 0.9,
-        },
-        ...postUrls,
-    ]
+  return [
+    ...staticPages.map((page) => ({
+      url: `${SITE_URL}${page.path}`,
+      lastModified,
+      changeFrequency: page.changeFrequency,
+      priority: page.priority,
+    })),
+    ...products.map((product) => ({
+      url: `${SITE_URL}/guides/${product.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    })),
+  ];
 }

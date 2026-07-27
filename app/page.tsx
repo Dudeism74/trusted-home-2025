@@ -1,127 +1,250 @@
-import { client } from "../sanity/client";
-import PostCard from "../components/PostCard";
-import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import ChecklistModal from "../components/ChecklistModal";
-import FeaturedProducts from "../components/FeaturedProducts";
+import type { Metadata } from "next";
+import { AffiliateButton } from "./components/affiliate-button";
+import { JsonLd } from "./components/json-ld";
+import { NewsletterForm } from "./components/newsletter-form";
+import { SiteFooter } from "./components/site-footer";
+import { SiteHeader } from "./components/site-header";
+import { products, REVIEWED_DATE, SITE_NAME, SITE_URL } from "./lib/products";
 
 export const metadata: Metadata = {
-  title: "Trusted Home Essentials | Expert Guides & Reviews",
-  description:
-    "Your trusted source for expert home maintenance guides, product reviews, and DIY advice. Verified by professionals.",
+  alternates: { canonical: "/" },
 };
 
-interface Post {
-  _id: string;
-  title: string;
-  slug: { current: string };
-  publishedAt: string;
-  quickAnswer: string;
-  authorName: string;
-  categories: string[];
-}
-
-interface Category {
-  _id: string;
-  title: string;
-  description?: string;
-}
-
-const DATA_QUERY = `{
-  "posts": *[_type == "post"] | order(publishedAt desc)[0...9] {
-    _id,
-    title,
-    slug,
-    publishedAt,
-    quickAnswer,
-    "authorName": author->name,
-    "categories": categories[]->title
-  },
-  "categories": *[_type == "category"] | order(title asc) {
-    _id,
-    title,
-    description
-  }
-}`;
-
-export default async function Home() {
-  let data: { posts: Post[]; categories: Category[] } = { posts: [], categories: [] };
-  try {
-    data =
-      (await client.fetch(DATA_QUERY, {}, { next: { revalidate: 60 } })) ||
-      ({ posts: [], categories: [] } as const);
-  } catch (error) {
-    console.warn("Failed to fetch data:", error);
-  }
-
-  const uniqueCategories = Array.from(
-    new Map(data.categories.map((item) => [item.title, item])).values()
-  );
+export default function Home() {
+  const siteSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: SITE_NAME,
+        description:
+          "Practical product buying guides with sourced facts, fit checks, and honest tradeoffs.",
+        publisher: { "@id": `${SITE_URL}/#organization` },
+      },
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: SITE_NAME,
+        url: SITE_URL,
+        logo: `${SITE_URL}/favicon.svg`,
+      },
+      {
+        "@type": "ItemList",
+        name: "Current Trusted Home Essentials buying guides",
+        itemListElement: products.map((product, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          url: `${SITE_URL}/guides/${product.slug}`,
+          name: product.name,
+        })),
+      },
+    ],
+  };
 
   return (
     <main>
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <section className="mb-16">
-          <div className="flex flex-col items-center gap-4 text-center">
-            <ChecklistModal />
-          </div>
-        </section>
-        <FeaturedProducts />
+      <JsonLd data={siteSchema} />
+      <SiteHeader />
 
-        {uniqueCategories.length > 0 && (
-          <section className="mb-20 border-b border-gray-200 pb-12">
-            <div className="text-center mb-10">
-              <h2 className="text-xs font-bold text-[#1A3C2F] uppercase tracking-widest mb-3">
-                Find Your Fix
-              </h2>
-              <h3 className="text-3xl font-bold text-slate-900">Browse by System</h3>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {uniqueCategories.map((cat) => (
-                <Link
-                  key={cat._id}
-                  href={"/articles?category=" + encodeURIComponent(cat.title)}
-                  className="group bg-white border border-gray-200 hover:border-[#1A3C2F] rounded-xl p-6 text-center transition-all duration-200 hover:shadow-md flex flex-col items-center justify-center gap-2"
-                >
-                  <span className="font-bold text-slate-900 group-hover:text-[#1A3C2F] transition-colors">
-                    {cat.title}
-                  </span>
-                  <span className="text-xs text-slate-400 group-hover:text-slate-500">
-                    View Guides →
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
-
-        <section>
-          <div className="mb-12 flex items-center justify-between">
-            <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
-              Latest Guides
-            </h2>
-            <Link
-              href="/articles"
-              className="text-sm font-bold text-[#1A3C2F] hover:underline"
-            >
-              View All →
+      <section className="hero" id="top">
+        <div className="hero-copy">
+          <p className="eyebrow">Fewer products. Better decisions.</p>
+          <h1>Useful home products, checked before they earn a recommendation.</h1>
+          <p className="hero-lede">
+            We turn published specifications into practical buying guidance. Each
+            guide explains who a product may suit, where it can fall short, and
+            what to confirm before ordering.
+          </p>
+          <div className="hero-actions">
+            <Link className="button button-primary" href="#guides">
+              Explore the current guides
+            </Link>
+            <Link className="text-link" href="/editorial-policy">
+              See how we evaluate products
             </Link>
           </div>
-          {data.posts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {data.posts.map((post) => (
-                <PostCard key={post._id} post={post} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 border-dashed">
-              <p className="text-xl text-slate-500 font-medium">
-                No articles found. Check back soon!
-              </p>
-            </div>
-          )}
-        </section>
+        </div>
+
+        <aside className="answer-card" aria-label="The quick answer">
+          <p className="answer-label">The quick answer</p>
+          <p className="answer-title">
+            The right product depends on the job, the space, and the tradeoffs you
+            will actually notice.
+          </p>
+          <div className="answer-rule" />
+          <p>
+            Start with fit and limitations. Features matter only when they solve
+            your specific problem.
+          </p>
+        </aside>
+      </section>
+
+      <div className="disclosure" role="note">
+        <strong>Affiliate disclosure:</strong> As an Amazon Associate, I earn from
+        qualifying purchases. Assessments are based on published product
+        information, not hands on testing unless a guide explicitly says otherwise.
       </div>
+
+      <section className="products-section" id="guides">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Current buying guides</p>
+            <h2>Four products, four very different jobs</h2>
+          </div>
+          <p>
+            Every guide includes a reason to consider the product, a reason to
+            pause, and the checks that determine whether it fits your situation.
+          </p>
+        </div>
+
+        <div className="product-grid">
+          {products.map((product, index) => (
+            <article
+              className={`product-card ${product.accent}`}
+              id={product.slug}
+              key={product.name}
+            >
+              <div className="product-number" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </div>
+              <Link
+                className="product-image"
+                href={`/guides/${product.slug}`}
+                aria-label={`Read the ${product.name} buying guide`}
+              >
+                <Image
+                  src={product.image}
+                  alt={product.alt}
+                  width={1000}
+                  height={1000}
+                  sizes="(max-width: 720px) 92vw, (max-width: 1120px) 44vw, 520px"
+                  priority={index < 2}
+                  unoptimized
+                />
+              </Link>
+              <div className="product-content">
+                <p className="product-category">{product.category}</p>
+                <h3>
+                  <Link href={`/guides/${product.slug}`}>{product.name}</Link>
+                </h3>
+                <p className="product-answer">{product.quickAnswer}</p>
+
+                <dl>
+                  <div>
+                    <dt>Best fit</dt>
+                    <dd>{product.bestFor}</dd>
+                  </div>
+                  <div>
+                    <dt>Skip if</dt>
+                    <dd>{product.skipIf}</dd>
+                  </div>
+                </dl>
+
+                <ul className="fact-list">
+                  {product.facts.slice(0, 3).map((fact) => (
+                    <li key={fact.label}>{fact.value}</li>
+                  ))}
+                </ul>
+
+                <div className="card-actions">
+                  <Link
+                    className="button button-primary"
+                    href={`/guides/${product.slug}`}
+                  >
+                    Read the complete guide
+                  </Link>
+                  <AffiliateButton
+                    href={product.amazonUrl}
+                    productName={product.name}
+                    amazonAsin={product.amazonAsin}
+                    affiliateTag={product.affiliateTag}
+                    campaignId={product.campaignId}
+                    linkId={product.linkId}
+                  />
+                  <a
+                    className="source-link"
+                    href={product.manufacturerUrl}
+                    rel="noopener"
+                    target="_blank"
+                  >
+                    Source: {product.manufacturerLabel}
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="standards" id="standards">
+        <div>
+          <p className="eyebrow">Our editorial standard</p>
+          <h2>Useful guidance begins with the limits.</h2>
+        </div>
+        <div className="standards-grid">
+          <article>
+            <span>01</span>
+            <h3>Verify the claim</h3>
+            <p>
+              We trace important specifications to the manufacturer or current
+              product listing and avoid unsupported superlatives.
+            </p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Name the tradeoff</h3>
+            <p>
+              Price, size, compatibility, upkeep, and real setup constraints belong
+              beside the benefits, not in the fine print.
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Separate evidence from judgment</h3>
+            <p>
+              Published facts are labeled and sourced. Our conclusions explain how
+              those facts may affect a buying decision.
+            </p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Keep it current</h3>
+            <p>
+              Availability and product details change. Every guide carries a
+              reviewed date and directs readers to confirm the current listing.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section className="authority-strip" aria-label="How the site is built">
+        <div>
+          <strong>4</strong>
+          <span>complete buyer guides</span>
+        </div>
+        <div>
+          <strong>2</strong>
+          <span>primary sources per guide</span>
+        </div>
+        <div>
+          <strong>{REVIEWED_DATE.slice(0, 4)}</strong>
+          <span>current review cycle</span>
+        </div>
+      </section>
+
+      <section className="newsletter">
+        <div>
+          <p className="eyebrow">The useful list</p>
+          <h2>Get new buying guides without the clutter.</h2>
+        </div>
+        <NewsletterForm source="homepage" />
+      </section>
+
+      <SiteFooter />
     </main>
   );
 }

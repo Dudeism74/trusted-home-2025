@@ -1,107 +1,58 @@
-import { client } from "../../sanity/client";
-import Link from "next/link";
+import type { Metadata } from "next";
+import { InfoPage } from "../components/info-page";
 
-interface Author {
-  name: string;
-  bio: {
-    _key: string;
-    children: { text: string }[];
-  }[];
-}
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Meet the editor and learn why Trusted Home Essentials focuses on product fit, sourced facts, and honest limitations.",
+  alternates: { canonical: "/about" },
+};
 
-// Fetch all authors from the database
-const AUTHORS_QUERY = `*[_type == "author"]{
-  name,
-  bio
-}`;
-
-export default async function AboutPage() {
-  let authors: Author[] = [];
-  try {
-    authors = await client.fetch(AUTHORS_QUERY) || [];
-  } catch (error) {
-    console.warn("Failed to fetch authors:", error);
-  }
-
+export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-black text-white font-sans">
-      {/* Navigation */}
-      <nav className="p-6 border-b border-gray-800 flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold">
-          Trusted Home Essentials
-        </Link>
-        <Link href="/" className="text-blue-500 hover:underline text-sm">
-          ← Back to Articles
-        </Link>
-      </nav>
-
-      <div className="max-w-3xl mx-auto p-8 mt-10">
-
-        {/* Section 1: The Mission (Organization Entity) */}
-        <section className="mb-16">
-          <h1 className="text-5xl font-bold mb-6 text-white">Our Mission</h1>
-          <div className="prose prose-invert text-xl text-gray-300 leading-relaxed">
-            <p className="mb-4">
-              The internet is flooded with AI-generated fluff and generic advice.
-              <strong> Trusted Home Essentials</strong> exists to fix that.
-            </p>
-            <p>
-              We are an AI-First publisher dedicated to <strong>Fact Density</strong> and
-              <strong> Real-World Experience</strong>. We don&apos;t guess how to fix things;
-              we document the process of fixing them.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 2: The Experts (Person Entity) */}
-        <section className="border-t border-gray-800 pt-12">
-          <h2 className="text-3xl font-bold mb-8">Meet the Experts</h2>
-
-          <div className="grid grid-cols-1 gap-8">
-            {authors.map((author) => (
-              <div key={author.name} className="bg-[#111] p-8 rounded-lg border border-gray-800 flex flex-col gap-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-1">
-                    {author.name}
-                  </h3>
-                  <span className="text-blue-400 text-xs uppercase tracking-wider font-bold">
-                    Verified Author
-                  </span>
-                </div>
-
-                {/* Render the Bio (Handling complex text blocks simply) */}
-                <div className="text-gray-400">
-                  {author.bio?.map((block) => (
-                    <p key={block._key} className="mb-2">
-                      {block.children[0].text}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Section 3: Trust Signals */}
-        <section className="mt-16 border-t border-gray-800 pt-12 pb-12">
-          <h2 className="text-xl font-bold mb-6">Our Standards</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="bg-[#1a1a1a] p-4 rounded">
-              <h3 className="font-bold text-white mb-2">No Stock Photos</h3>
-              <p className="text-sm text-gray-500">We use real images from real repairs.</p>
-            </div>
-            <div className="bg-[#1a1a1a] p-4 rounded">
-              <h3 className="font-bold text-white mb-2">Fact Checked</h3>
-              <p className="text-sm text-gray-500">Every number and spec is verified.</p>
-            </div>
-            <div className="bg-[#1a1a1a] p-4 rounded">
-              <h3 className="font-bold text-white mb-2">Human Written</h3>
-              <p className="text-sm text-gray-500">AI assists, but humans lead.</p>
-            </div>
-          </div>
-        </section>
-
-      </div>
-    </main>
+    <InfoPage
+      eyebrow="Who is behind the site"
+      title="About Trusted Home Essentials"
+      intro="A smaller, more careful product guide built to help readers rule products in or out before they spend."
+    >
+      <section>
+        <h2>Hi, I am Jim.</h2>
+        <p>
+          I edit Trusted Home Essentials. The site exists because product pages are
+          usually good at listing features and less useful at explaining whether
+          those features solve a real problem. My job here is to turn published
+          product information into a clear decision: who the product may suit, who
+          should probably skip it, and what needs to be checked before ordering.
+        </p>
+      </section>
+      <section>
+        <h2>What this site does</h2>
+        <p>
+          Each guide starts with primary sources, usually the manufacturer and the
+          current product listing. Important specifications are separated from
+          editorial conclusions. Compatibility, upkeep, footprint, operating
+          limits, and other tradeoffs appear beside the benefits.
+        </p>
+      </section>
+      <section>
+        <h2>What this site does not do</h2>
+        <p>
+          We do not invent hands on experience, copy customer reviews as our own,
+          or assign a rating without a documented test. A guide that has not been
+          hands on tested says so directly. We also avoid publishing a large number
+          of thin pages simply to target search terms.
+        </p>
+      </section>
+      <section>
+        <h2>How the site is supported</h2>
+        <p>
+          Trusted Home Essentials uses affiliate links. If a reader follows one of
+          those links and makes a qualifying purchase, the site may earn a
+          commission. That does not change the price paid by the reader. The
+          disclosure appears before product recommendations and the editorial
+          method is published for anyone to inspect.
+        </p>
+      </section>
+    </InfoPage>
   );
 }
