@@ -10,33 +10,46 @@ type PublicComment = {
 };
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
+type CommentLoadState = "idle" | "ready" | "error";
 
 export function CommentSection({ guideSlug }: { guideSlug: string }) {
   const [comments, setComments] = useState<PublicComment[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loadState, setLoadState] = useState<CommentLoadState>("idle");
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     let active = true;
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 8000);
 
-    fetch(`/api/comments/${guideSlug}`)
+    fetch(`/api/comments/${guideSlug}`, { signal: controller.signal })
       .then(async (response) => {
-        if (!response.ok) return { comments: [] };
+        if (!response.ok) {
+          throw new Error("Comments are temporarily unavailable.");
+        }
         return (await response.json()) as { comments: PublicComment[] };
       })
       .then((result) => {
-        if (active) setComments(result.comments ?? []);
+        if (active) {
+          setComments(result.comments ?? []);
+          setLoadState("ready");
+        }
       })
       .catch(() => {
-        if (active) setComments([]);
+        if (active) {
+          setComments([]);
+          setLoadState("error");
+        }
       })
       .finally(() => {
-        if (active) setLoading(false);
+        window.clearTimeout(timeout);
       });
 
     return () => {
       active = false;
+      window.clearTimeout(timeout);
+      controller.abort();
     };
   }, [guideSlug]);
 
@@ -97,9 +110,7 @@ export function CommentSection({ guideSlug }: { guideSlug: string }) {
       <div className="reader-grid">
         <div className="approved-comments">
           <h3>Published comments</h3>
-          {loading ? (
-            <p className="muted">Loading comments...</p>
-          ) : comments.length ? (
+          {comments.length ? (
             comments.map((comment) => (
               <article className="reader-comment" key={comment.id}>
                 <div>
@@ -115,6 +126,11 @@ export function CommentSection({ guideSlug }: { guideSlug: string }) {
                 <p>{comment.body}</p>
               </article>
             ))
+          ) : loadState === "error" ? (
+            <p className="muted">
+              Published comments are temporarily unavailable. You can still submit
+              a useful question for review.
+            </p>
           ) : (
             <p className="muted">
               No published comments yet. You can be the first to ask a useful

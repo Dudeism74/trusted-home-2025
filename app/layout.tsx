@@ -13,22 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://trustedhomeessentials.com"),
+  metadataBase: new URL("https://www.trustedhomeessentials.com"),
   title: {
     default: "Trusted Home Essentials | Practical Product Buying Guides",
     template: "%s | Trusted Home Essentials",
   },
   description:
     "Practical home product buying guides that explain fit, benefits, limitations, and what to confirm before ordering.",
-  keywords: [
-    "home product buying guides",
-    "practical product recommendations",
-    "Solo Stove Pi Prime guide",
-    "Kroozie XL review",
-    "Dreame PM20 guide",
-    "Dreame A3 AWD Pro 3500 guide",
-    "robot lawn mower buying guide",
-  ],
   openGraph: {
     type: "website",
     siteName: "Trusted Home Essentials",

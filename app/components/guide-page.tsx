@@ -55,7 +55,7 @@ export function GuidePage({ product }: { product: ProductGuide }) {
         "@type": "ListItem",
         position: 2,
         name: "Buying guides",
-        item: `${SITE_URL}/#guides`,
+        item: `${SITE_URL}/guides`,
       },
       {
         "@type": "ListItem",
@@ -93,7 +93,7 @@ export function GuidePage({ product }: { product: ProductGuide }) {
           <nav className="breadcrumbs" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span aria-hidden="true">/</span>
-            <Link href="/#guides">Guides</Link>
+            <Link href="/guides">Guides</Link>
             <span aria-hidden="true">/</span>
             <span aria-current="page">{product.shortName}</span>
           </nav>

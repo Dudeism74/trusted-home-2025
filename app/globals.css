@@ -664,6 +664,126 @@ dd {
   font-weight: 720;
 }
 
+.guide-index-hero {
+  display: grid;
+  gap: clamp(38px, 7vw, 110px);
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  margin: 0 auto;
+  max-width: 1600px;
+  padding: clamp(72px, 10vw, 150px) clamp(20px, 5vw, 84px);
+}
+
+.guide-index-hero > *,
+.guide-directory-heading > *,
+.guide-directory-card > *,
+.guide-directory-content {
+  min-width: 0;
+}
+
+.guide-index-hero h1 {
+  font-size: clamp(2.8rem, 6.4vw, 6.8rem);
+}
+
+.guide-index-lede {
+  color: var(--muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.16rem, 1.75vw, 1.55rem);
+  line-height: 1.55;
+  margin: 34px 0 0;
+  max-width: 800px;
+}
+
+.guide-directory {
+  margin: 0 auto;
+  max-width: 1600px;
+  padding: clamp(70px, 9vw, 130px) clamp(20px, 5vw, 84px);
+}
+
+.guide-directory-heading {
+  align-items: end;
+  display: grid;
+  gap: 30px;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  margin-bottom: clamp(42px, 6vw, 78px);
+}
+
+.guide-directory-heading > p {
+  color: var(--muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.04rem, 1.4vw, 1.26rem);
+  line-height: 1.58;
+  margin: 0;
+}
+
+.guide-directory-list {
+  display: grid;
+  gap: clamp(28px, 5vw, 72px);
+}
+
+.guide-directory-card {
+  background: white;
+  border: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.guide-directory-image {
+  align-items: center;
+  background: #f1eee7;
+  border-right: 1px solid var(--ink);
+  display: flex;
+  justify-content: center;
+  min-height: 430px;
+  overflow: hidden;
+  padding: clamp(48px, 6vw, 84px);
+  position: relative;
+}
+
+.guide-directory-image > span {
+  font-size: 0.76rem;
+  font-weight: 820;
+  left: 20px;
+  letter-spacing: 0.14em;
+  position: absolute;
+  top: 20px;
+}
+
+.guide-directory-image img {
+  height: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.guide-directory-card.coral .guide-directory-image {
+  background: #ffd6c8;
+}
+
+.guide-directory-card.cobalt .guide-directory-image {
+  background: #dce5ff;
+}
+
+.guide-directory-card.sage .guide-directory-image {
+  background: #dfe9df;
+}
+
+.guide-directory-card.aqua .guide-directory-image {
+  background: #d9f3f4;
+}
+
+.guide-directory-content {
+  align-self: center;
+  padding: clamp(30px, 5vw, 72px);
+}
+
+.guide-directory-content h2 {
+  font-size: clamp(2rem, 3.8vw, 4.2rem);
+}
+
+.guide-directory-content .button {
+  margin-top: 28px;
+}
+
 .guide-page {
   --guide-accent: var(--coral);
 }
@@ -1294,6 +1414,8 @@ dd {
 
 @media (max-width: 980px) {
   .hero,
+  .guide-index-hero,
+  .guide-directory-heading,
   .section-heading,
   .standards,
   .newsletter,
@@ -1384,6 +1506,37 @@ dd {
 
   .product-grid {
     grid-template-columns: 1fr;
+  }
+
+  .guide-index-hero {
+    padding-top: 62px;
+  }
+
+  .guide-index-hero h1 {
+    font-size: clamp(2.55rem, 11.5vw, 4rem);
+  }
+
+  .guide-directory-card {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-directory-image {
+    border-bottom: 1px solid var(--ink);
+    border-right: 0;
+    min-height: 300px;
+    padding: 46px 28px;
+  }
+
+  .guide-directory-content {
+    padding: 28px 22px 34px;
+  }
+
+  .guide-directory-content h2 {
+    font-size: clamp(1.85rem, 9vw, 3rem);
+  }
+
+  .guide-directory-content .button {
+    width: 100%;
   }
 
   .product-card {
@@ -1526,6 +1679,8 @@ dd {
 
 @media (max-width: 390px) {
   .hero,
+  .guide-index-hero,
+  .guide-directory,
   .products-section,
   .standards,
   .newsletter {

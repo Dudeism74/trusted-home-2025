@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 export default function DreameZ1ProGuide() {
-  redirect("/guides/dreame-a3-awd-pro");
+  permanentRedirect("/guides/dreame-a3-awd-pro");
 }

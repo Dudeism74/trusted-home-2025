@@ -14,6 +14,7 @@ export function SiteFooter() {
         </p>
       </div>
       <div className="footer-links" aria-label="Site information">
+        <Link href="/guides">Buying guides</Link>
         <Link href="/about">About</Link>
         <Link href="/editorial-policy">Editorial policy</Link>
         <Link href="/affiliate-disclosure">Affiliate disclosure</Link>

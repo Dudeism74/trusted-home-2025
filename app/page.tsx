@@ -60,7 +60,7 @@ export default function Home() {
             what to confirm before ordering.
           </p>
           <div className="hero-actions">
-            <Link className="button button-primary" href="#guides">
+            <Link className="button button-primary" href="/guides">
               Explore the current guides
             </Link>
             <Link className="text-link" href="/editorial-policy">
