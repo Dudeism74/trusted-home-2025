@@ -364,10 +364,17 @@ h2 {
   display: inline-flex;
   font-size: 0.68rem;
   font-weight: 850;
+  gap: 8px;
   letter-spacing: 0.12em;
   margin: 0 0 16px;
-  padding: 8px 11px;
+  padding: 7px 11px;
   text-transform: uppercase;
+}
+
+.campaign-brand-icon {
+  flex: 0 0 auto;
+  height: 22px;
+  width: 22px;
 }
 
 .product-content {
