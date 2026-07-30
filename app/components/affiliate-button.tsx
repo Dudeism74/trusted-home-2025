@@ -3,8 +3,8 @@ type AffiliateButtonProps = {
   productName: string;
   amazonAsin: string;
   affiliateTag: string;
-  campaignId: string;
-  linkId: string;
+  campaignId?: string;
+  linkId?: string;
   children?: React.ReactNode;
   className?: string;
 };

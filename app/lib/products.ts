@@ -1,7 +1,7 @@
 export const SITE_URL = "https://www.trustedhomeessentials.com";
 export const SITE_NAME = "Trusted Home Essentials";
-export const REVIEWED_DATE = "2026-07-27";
-export const REVIEWED_DATE_LABEL = "July 27, 2026";
+export const REVIEWED_DATE = "2026-07-29";
+export const REVIEWED_DATE_LABEL = "July 29, 2026";
 
 export type ProductGuide = {
   slug: string;
@@ -10,14 +10,15 @@ export type ProductGuide = {
   category: string;
   image: string;
   alt: string;
-  accent: "coral" | "cobalt" | "sage" | "aqua";
+  accent: "coral" | "cobalt" | "sage" | "aqua" | "lime";
   amazonUrl: string;
   manufacturerUrl: string;
   manufacturerLabel: string;
   amazonAsin: string;
   affiliateTag: string;
-  campaignId: string;
-  linkId: string;
+  campaignId?: string;
+  linkId?: string;
+  campaignEndsAt?: string;
   metaTitle: string;
   metaDescription: string;
   dek: string;
@@ -46,6 +47,7 @@ export const products: ProductGuide[] = [
     affiliateTag: "myfinancials-20",
     campaignId: "amzn1.campaign.QWWLVBYDWL9M",
     linkId: "amzn1.campaign.QWWLVBYDWL9M_1784982844157",
+    campaignEndsAt: "2026-09-01T06:59:59Z",
     amazonUrl:
       "https://www.amazon.com/dp/B0FNPPGKHW?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.QWWLVBYDWL9M&linkCode=tr1&tag=myfinancials-20&linkId=amzn1.campaign.QWWLVBYDWL9M_1784982844157",
     manufacturerUrl:
@@ -246,6 +248,7 @@ export const products: ProductGuide[] = [
     affiliateTag: "myfinancials-20",
     campaignId: "amzn1.campaign.126W4794WNW49",
     linkId: "amzn1.campaign.126W4794WNW49_1785171579666",
+    campaignEndsAt: "2026-09-04T06:59:59Z",
     amazonUrl:
       "https://www.amazon.com/dp/B0F32TGRMR?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.126W4794WNW49&linkCode=tr1&tag=myfinancials-20&linkId=amzn1.campaign.126W4794WNW49_1785171579666",
     manufacturerUrl: "https://global.dreametech.com/products/pm20",
@@ -430,6 +433,105 @@ export const products: ProductGuide[] = [
         question: "Has Trusted Home Essentials tested this mower on a lawn?",
         answer:
           "No. This guide evaluates current published specifications and practical fit constraints. It is not a hands-on mowing test.",
+      },
+    ],
+  },
+  {
+    slug: "shark-wandvac-wv201",
+    name: "Shark WANDVAC WV201",
+    shortName: "WANDVAC WV201",
+    category: "Quick cleanup",
+    image: "/products/shark-wandvac-wv201.png",
+    alt: "Shark WANDVAC WV201 cordless handheld vacuum on its charging dock",
+    accent: "lime",
+    amazonAsin: "B07FX5K4D6",
+    affiliateTag: "sharkwandvacweb-20",
+    campaignEndsAt: "2026-08-22T06:59:59Z",
+    amazonUrl:
+      "https://www.amazon.com/dp/B07FX5K4D6?tag=sharkwandvacweb-20",
+    manufacturerUrl:
+      "https://www.sharkninja.com/shark-wandvac-cordless-handheld-vacuum/WV201.html",
+    manufacturerLabel: "Shark WANDVAC WV201 specifications",
+    metaTitle: "Shark WANDVAC WV201 Guide: Fit, Facts, and Limits",
+    metaDescription:
+      "Evaluate the Shark WANDVAC WV201 handheld vacuum, including its 1.4 pound design, charging dock, small dust cup, included tools, and best uses.",
+    dek: "A specification based guide to the slim handheld vacuum made for small, fast cleanup jobs.",
+    quickAnswer:
+      "The Shark WANDVAC WV201 is a strong fit for quick crumbs, upholstery, car interiors, and other small messes where a full size vacuum feels excessive. Its compact dust cup and handheld format make it a poor substitute for cleaning whole rooms.",
+    bestFor:
+      "Small, frequent cleanups in kitchens, cars, on furniture, and around tight spaces.",
+    skipIf:
+      "You want one vacuum for floors and whole rooms, need a large debris bin, or prefer long cleaning sessions between charges.",
+    bottomLine:
+      "The WANDVAC WV201 makes sense as a convenient second vacuum, not a household's only vacuum. Its slim docked design keeps it visible and charged for fast jobs, while the included tools extend it to crevices and upholstery. The deciding tradeoff is capacity: the small dust cup and handheld body favor speed and access over sustained cleaning.",
+    facts: [
+      { label: "Published weight", value: "About 1.4 pounds" },
+      { label: "Dust cup", value: "0.1 quart" },
+      { label: "Charging", value: "Dock with onboard accessory storage" },
+      { label: "Included narrow tool", value: "Duster Crevice Tool" },
+      { label: "Included fabric tool", value: "Multi Surface Pet Tool" },
+      { label: "Filter", value: "Washable fabric filter" },
+    ],
+    strengths: [
+      "The slim, lightweight body is designed for fast one handed cleanup.",
+      "The charging dock keeps the vacuum powered and stores two accessories.",
+      "One touch debris emptying reduces contact with the contents of the dust cup.",
+      "The included tools target tight spaces, upholstery, and pet hair.",
+    ],
+    tradeoffs: [
+      "The 0.1 quart dust cup will need frequent emptying during larger jobs.",
+      "A handheld vacuum does not provide the floor coverage of a stick or upright vacuum.",
+      "Battery runtime and suction needs vary by debris type and cleaning surface.",
+      "The dock needs an accessible outlet and a practical place to remain between uses.",
+    ],
+    useCases: [
+      {
+        title: "Kitchen and dining messes",
+        detail:
+          "The light handheld format suits crumbs on counters, tables, seats, and nearby floor edges.",
+      },
+      {
+        title: "Car interiors",
+        detail:
+          "The Duster Crevice Tool can reach between seats and into other narrow interior spaces.",
+      },
+      {
+        title: "Furniture and pet hair",
+        detail:
+          "The included Multi Surface Pet Tool is intended for hair and debris on upholstery and similar surfaces.",
+      },
+    ],
+    checks: [
+      "Confirm that the current Amazon variation is model WV201 in the color you expect.",
+      "Check the included tool list because bundles and variations can change.",
+      "Choose a dock location near an outlet where the vacuum remains easy to grab.",
+      "Treat it as a quick cleanup tool rather than a replacement for a full size vacuum.",
+    ],
+    faq: [
+      {
+        question: "How much does the Shark WANDVAC WV201 weigh?",
+        answer:
+          "Shark describes the WANDVAC as a roughly 1.4 pound handheld vacuum. Published page fields can vary, so confirm the current listing if exact weight is important.",
+      },
+      {
+        question: "What comes with the WANDVAC WV201?",
+        answer:
+          "Shark currently lists a charging dock, Duster Crevice Tool, and Multi Surface Pet Tool with the WV201.",
+      },
+      {
+        question: "Can the filter be washed?",
+        answer:
+          "Yes. Shark describes the fabric filter as washable and recommends hand washing it to maintain cleaning performance.",
+      },
+      {
+        question: "Can it replace a full size vacuum?",
+        answer:
+          "It is better suited to small, quick jobs. Its handheld format and 0.1 quart dust cup are not designed for the floor coverage or capacity of a full size vacuum.",
+      },
+      {
+        question: "Has Trusted Home Essentials tested the WV201?",
+        answer:
+          "No. This guide evaluates Shark's published specifications and practical fit constraints. It is not a hands on cleaning test.",
       },
     ],
   },

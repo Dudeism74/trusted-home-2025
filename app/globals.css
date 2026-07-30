@@ -353,6 +353,23 @@ h2 {
   background: #d9f3f4;
 }
 
+.product-card.lime .product-image {
+  background: #edf7b4;
+}
+
+.campaign-countdown {
+  align-items: center;
+  background: var(--lime);
+  border: 1px solid var(--ink);
+  display: inline-flex;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  margin: 0 0 16px;
+  padding: 8px 11px;
+  text-transform: uppercase;
+}
+
 .product-content {
   border-top: 1px solid var(--ink);
   padding: clamp(26px, 4vw, 46px);
@@ -771,6 +788,10 @@ dd {
   background: #d9f3f4;
 }
 
+.guide-directory-card.lime .guide-directory-image {
+  background: #edf7b4;
+}
+
 .guide-directory-content {
   align-self: center;
   padding: clamp(30px, 5vw, 72px);
@@ -798,6 +819,10 @@ dd {
 
 .guide-page.aqua {
   --guide-accent: #197b80;
+}
+
+.guide-page.lime {
+  --guide-accent: #6b7f00;
 }
 
 .guide-shell {

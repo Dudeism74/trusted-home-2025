@@ -1,7 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { AffiliateButton } from "./components/affiliate-button";
+import { FeaturedProductGrid } from "./components/featured-product-grid";
 import { JsonLd } from "./components/json-ld";
 import { NewsletterForm } from "./components/newsletter-form";
 import { SiteFooter } from "./components/site-footer";
@@ -11,6 +10,8 @@ import { products, REVIEWED_DATE, SITE_NAME, SITE_URL } from "./lib/products";
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
+
+export const revalidate = 3600;
 
 export default function Home() {
   const siteSchema = {
@@ -93,7 +94,7 @@ export default function Home() {
         <div className="section-heading">
           <div>
             <p className="eyebrow">Current buying guides</p>
-            <h2>Four products, four very different jobs</h2>
+            <h2>Focused products, very different jobs</h2>
           </div>
           <p>
             Every guide includes a reason to consider the product, a reason to
@@ -101,83 +102,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="product-grid">
-          {products.map((product, index) => (
-            <article
-              className={`product-card ${product.accent}`}
-              id={product.slug}
-              key={product.name}
-            >
-              <div className="product-number" aria-hidden="true">
-                {String(index + 1).padStart(2, "0")}
-              </div>
-              <Link
-                className="product-image"
-                href={`/guides/${product.slug}`}
-                aria-label={`Read the ${product.name} buying guide`}
-              >
-                <Image
-                  src={product.image}
-                  alt={product.alt}
-                  width={1000}
-                  height={1000}
-                  sizes="(max-width: 720px) 92vw, (max-width: 1120px) 44vw, 520px"
-                  priority={index < 2}
-                  unoptimized
-                />
-              </Link>
-              <div className="product-content">
-                <p className="product-category">{product.category}</p>
-                <h3>
-                  <Link href={`/guides/${product.slug}`}>{product.name}</Link>
-                </h3>
-                <p className="product-answer">{product.quickAnswer}</p>
-
-                <dl>
-                  <div>
-                    <dt>Best fit</dt>
-                    <dd>{product.bestFor}</dd>
-                  </div>
-                  <div>
-                    <dt>Skip if</dt>
-                    <dd>{product.skipIf}</dd>
-                  </div>
-                </dl>
-
-                <ul className="fact-list">
-                  {product.facts.slice(0, 3).map((fact) => (
-                    <li key={fact.label}>{fact.value}</li>
-                  ))}
-                </ul>
-
-                <div className="card-actions">
-                  <Link
-                    className="button button-primary"
-                    href={`/guides/${product.slug}`}
-                  >
-                    Read the complete guide
-                  </Link>
-                  <AffiliateButton
-                    href={product.amazonUrl}
-                    productName={product.name}
-                    amazonAsin={product.amazonAsin}
-                    affiliateTag={product.affiliateTag}
-                    campaignId={product.campaignId}
-                    linkId={product.linkId}
-                  />
-                  <a
-                    className="source-link"
-                    href={product.manufacturerUrl}
-                    rel="noopener"
-                    target="_blank"
-                  >
-                    Source: {product.manufacturerLabel}
-                  </a>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+        <FeaturedProductGrid products={products} />
       </section>
 
       <section className="standards" id="standards">
@@ -223,7 +148,7 @@ export default function Home() {
 
       <section className="authority-strip" aria-label="How the site is built">
         <div>
-          <strong>4</strong>
+          <strong>{products.length}</strong>
           <span>complete buyer guides</span>
         </div>
         <div>

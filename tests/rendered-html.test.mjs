@@ -50,6 +50,7 @@ test("renders a dedicated buying guide directory", async () => {
   assert.match(html, /Buying guide library/i);
   assert.match(html, /Solo Stove Pi Prime/i);
   assert.match(html, /Dreame A3 AWD Pro 3500/i);
+  assert.match(html, /Shark WANDVAC WV201/i);
   assert.match(
     html,
     /<link[^>]+\brel=["']canonical["'][^>]+\bhref=["']https:\/\/www\.trustedhomeessentials\.com\/guides["']/i,
@@ -96,13 +97,13 @@ test("unrelated retired articles remain not found instead of soft redirecting", 
   assert.equal(response.headers.get("location"), null);
 });
 
-test("sitemap includes the guide directory and four current guides", async () => {
+test("sitemap includes the guide directory and five current guides", async () => {
   const response = await render("/sitemap.xml");
   const xml = await response.text();
   const urls = xml.match(/<url>/g) ?? [];
 
   assert.equal(response.status, 200);
-  assert.equal(urls.length, 10);
+  assert.equal(urls.length, 11);
   assert.match(
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides<\/loc>/i,
@@ -110,5 +111,9 @@ test("sitemap includes the guide directory and four current guides", async () =>
   assert.match(
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides\/dreame-a3-awd-pro<\/loc>/i,
+  );
+  assert.match(
+    xml,
+    /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides\/shark-wandvac-wv201<\/loc>/i,
   );
 });
