@@ -148,6 +148,7 @@ export const products: ProductGuide[] = [
     affiliateTag: "myfinancials-20",
     campaignId: "amzn1.campaign.35WHM6A6VQKQ6",
     linkId: "amzn1.campaign.35WHM6A6VQKQ6_1784663754602",
+    campaignEndsAt: "2027-04-01T06:59:59Z",
     amazonUrl:
       "https://www.amazon.com/dp/B078XLZ982?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.35WHM6A6VQKQ6&linkCode=tr1&tag=myfinancials-20&linkId=amzn1.campaign.35WHM6A6VQKQ6_1784663754602",
     manufacturerUrl:
@@ -348,6 +349,7 @@ export const products: ProductGuide[] = [
     affiliateTag: "myfinancials-20",
     campaignId: "amzn1.campaign.3JE79Y2H4VDUX",
     linkId: "amzn1.campaign.3JE79Y2H4VDUX_1785171677658",
+    campaignEndsAt: "2026-09-12T06:59:59Z",
     amazonUrl:
       "https://www.amazon.com/dp/B0GR8TQHV9?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.3JE79Y2H4VDUX&linkCode=tr1&tag=myfinancials-20&linkId=amzn1.campaign.3JE79Y2H4VDUX_1785171677658",
     manufacturerUrl:
