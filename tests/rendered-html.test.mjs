@@ -51,6 +51,7 @@ test("renders a dedicated buying guide directory", async () => {
   assert.match(html, /Solo Stove Pi Prime/i);
   assert.match(html, /Dreame A3 AWD Pro 3500/i);
   assert.match(html, /Shark WANDVAC WV201/i);
+  assert.match(html, /Cosori TWINFRY 9 Qt/i);
   assert.match(
     html,
     /<link[^>]+\brel=["']canonical["'][^>]+\bhref=["']https:\/\/www\.trustedhomeessentials\.com\/guides["']/i,
@@ -67,6 +68,22 @@ test("guide HTML has a useful comment fallback before JavaScript loads", async (
   assert.match(
     html,
     /https:\/\/www\.trustedhomeessentials\.com\/guides\/solo-stove-pi-prime/i,
+  );
+});
+
+test("Cosori guide keeps the accepted campaign attribution and editorial disclosure", async () => {
+  const response = await render("/guides/cosori-twinfry-9qt");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /Cosori TWINFRY 9 Qt/i);
+  assert.match(html, /B0GLX9TGJV/i);
+  assert.match(html, /amzn1\.campaign\.3RW31B8BPFG3K/i);
+  assert.match(html, /myfinancials-20/i);
+  assert.match(html, /not a hands-on cooking test/i);
+  assert.match(
+    html,
+    /https:\/\/cosori\.com\/products\/cosori-twinfry-9-quart-double-air-fryer/i,
   );
 });
 
@@ -97,13 +114,13 @@ test("unrelated retired articles remain not found instead of soft redirecting", 
   assert.equal(response.headers.get("location"), null);
 });
 
-test("sitemap includes the guide directory and five current guides", async () => {
+test("sitemap includes the guide directory and six current guides", async () => {
   const response = await render("/sitemap.xml");
   const xml = await response.text();
   const urls = xml.match(/<url>/g) ?? [];
 
   assert.equal(response.status, 200);
-  assert.equal(urls.length, 11);
+  assert.equal(urls.length, 12);
   assert.match(
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides<\/loc>/i,
@@ -115,5 +132,9 @@ test("sitemap includes the guide directory and five current guides", async () =>
   assert.match(
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides\/shark-wandvac-wv201<\/loc>/i,
+  );
+  assert.match(
+    xml,
+    /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides\/cosori-twinfry-9qt<\/loc>/i,
   );
 });

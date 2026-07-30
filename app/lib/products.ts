@@ -1,7 +1,7 @@
 export const SITE_URL = "https://www.trustedhomeessentials.com";
 export const SITE_NAME = "Trusted Home Essentials";
-export const REVIEWED_DATE = "2026-07-29";
-export const REVIEWED_DATE_LABEL = "July 29, 2026";
+export const REVIEWED_DATE = "2026-07-30";
+export const REVIEWED_DATE_LABEL = "July 30, 2026";
 
 export type ProductGuide = {
   slug: string;
@@ -534,6 +534,107 @@ export const products: ProductGuide[] = [
         question: "Has Trusted Home Essentials tested the WV201?",
         answer:
           "No. This guide evaluates Shark's published specifications and practical fit constraints. It is not a hands on cleaning test.",
+      },
+    ],
+  },
+  {
+    slug: "cosori-twinfry-9qt",
+    name: "Cosori TWINFRY 9 Qt",
+    shortName: "TWINFRY 9 Qt",
+    category: "Kitchen cooking",
+    image: "/products/cosori-twinfry-9qt.webp",
+    alt: "Cosori TWINFRY 9 Qt air fryer with its divided cooking basket open",
+    accent: "coral",
+    amazonAsin: "B0GLX9TGJV",
+    affiliateTag: "myfinancials-20",
+    campaignId: "amzn1.campaign.3RW31B8BPFG3K",
+    linkId: "amzn1.campaign.3RW31B8BPFG3K_1785441515192",
+    campaignEndsAt: "2027-05-01T06:59:59Z",
+    amazonUrl:
+      "https://www.amazon.com/dp/B0GLX9TGJV?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.3RW31B8BPFG3K&linkCode=tr1&tag=myfinancials-20&linkId=amzn1.campaign.3RW31B8BPFG3K_1785441515192",
+    manufacturerUrl:
+      "https://cosori.com/products/cosori-twinfry-9-quart-double-air-fryer",
+    manufacturerLabel: "Cosori TWINFRY 9 Qt specifications",
+    metaTitle: "Cosori TWINFRY 9 Qt Guide: Divider, Capacity, and Fit",
+    metaDescription:
+      "Evaluate the Cosori TWINFRY 9 Qt air fryer, including its removable divider, dual 4.5 quart zones, six modes, Sync and Match controls, and fit checks.",
+    dek: "A specification based guide to a flexible air fryer that switches between two cooking zones and one large basket.",
+    quickAnswer:
+      "The Cosori TWINFRY 9 Qt is a strong fit for households that regularly cook a main dish and side at once or need one large basket for a bigger batch. Its removable divider and Sync and Match controls are less valuable if you usually cook one small portion.",
+    bestFor:
+      "Families and meal preppers who will use both independent 4.5 quart zones as well as the full 9 quart basket.",
+    skipIf:
+      "Counter space is tight, your usual portions are small, or you do not need separate cooking settings for two foods.",
+    bottomLine:
+      "The TWINFRY earns consideration because its removable divider changes the appliance from two 4.5 quart zones into one 9 quart basket. That is a practical distinction for buyers who alternate between complete meals and larger single batches. Measure the countertop footprint and confirm that you will use both configurations before choosing it over a smaller air fryer.",
+    facts: [
+      { label: "Capacity", value: "9 quarts total" },
+      { label: "Basket setup", value: "Two 4.5 quart zones or one 9 quart basket" },
+      { label: "Temperature range", value: "95°F to 465°F" },
+      { label: "Cooking modes", value: "Six functions" },
+      { label: "Rated power", value: "1,750 watts" },
+      { label: "Dimensions", value: "19.0 by 11.1 by 11.9 inches" },
+    ],
+    strengths: [
+      "The removable divider supports two independent 4.5 quart zones or one open 9 quart basket.",
+      "Sync can coordinate different settings so two foods finish together, while Match copies settings across both zones.",
+      "Cosori specifies PFAS-free ceramic coating on the basket and crisper plate.",
+      "The basket and crisper plate are described as dishwasher safe for easier cleanup.",
+    ],
+    tradeoffs: [
+      "The 19 inch width requires more countertop space than many compact air fryers.",
+      "The dual-zone design adds the most value only when two foods or larger batches are common.",
+      "The 1,750 watt rating should be considered when choosing an outlet and sharing a kitchen circuit.",
+      "Cooking times still vary with food size, load, arrangement, and starting temperature.",
+    ],
+    useCases: [
+      {
+        title: "Main dish and side",
+        detail:
+          "Use the divider and separate settings for two foods, then use Sync when they require different cooking times but should finish together.",
+      },
+      {
+        title: "One larger batch",
+        detail:
+          "Remove the divider to use the full 9 quart basket for a larger single recipe or food that needs more open space.",
+      },
+      {
+        title: "Meal prep and gatherings",
+        detail:
+          "The larger format can suit batch cooking and mixed menus when its countertop footprint and electrical needs fit the kitchen.",
+      },
+    ],
+    checks: [
+      "Measure the 19.0 by 11.1 inch footprint and allow the clearances required by the manual.",
+      "Decide whether you will regularly use both the divided and open-basket configurations.",
+      "Confirm that the intended outlet and kitchen circuit suit a 1,750 watt appliance.",
+      "Check the current Amazon variation, included accessories, warranty, and return terms before ordering.",
+    ],
+    faq: [
+      {
+        question: "Can the Cosori TWINFRY work as one large air fryer?",
+        answer:
+          "Yes. Cosori specifies a removable divider that converts the two 4.5 quart cooking zones into one 9 quart basket.",
+      },
+      {
+        question: "Can both sides use different settings?",
+        answer:
+          "Yes. The divided basket supports independent settings. The Sync function is designed to have two foods finish together, while Match duplicates settings across both zones.",
+      },
+      {
+        question: "What cooking functions are included?",
+        answer:
+          "Cosori lists Air Fry, Roast, Bake, Broil, Reheat, and Dry as the six cooking functions.",
+      },
+      {
+        question: "Are the basket and crisper plate dishwasher safe?",
+        answer:
+          "Cosori describes both as dishwasher safe and specifies a PFAS-free ceramic coating.",
+      },
+      {
+        question: "Has Trusted Home Essentials cooked with the TWINFRY?",
+        answer:
+          "No. This guide evaluates Cosori's published specifications and practical fit constraints. It is not a hands-on cooking test.",
       },
     ],
   },
