@@ -303,8 +303,8 @@ h2 {
 .product-card {
   background: white;
   border: 1px solid var(--ink);
-  display: grid;
-  grid-template-rows: auto minmax(300px, 0.9fr) auto;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   position: relative;
 }
@@ -372,6 +372,9 @@ h2 {
 
 .product-content {
   border-top: 1px solid var(--ink);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: clamp(26px, 4vw, 46px);
 }
 
@@ -452,7 +455,8 @@ dd {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 30px;
+  margin-top: auto;
+  padding-top: 30px;
 }
 
 .source-link {
@@ -1562,10 +1566,6 @@ dd {
 
   .guide-directory-content .button {
     width: 100%;
-  }
-
-  .product-card {
-    grid-template-rows: auto;
   }
 
   .product-image {
