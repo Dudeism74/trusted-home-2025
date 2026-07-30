@@ -19,7 +19,7 @@ function campaignMessage(product: ProductGuide, now: number) {
   }
 
   const days = Math.ceil(remaining / DAY_MS);
-  return days <= 1 ? "Last day on THE" : `${days} days left on THE`;
+  return days <= 1 ? "Last day" : `${days} days left`;
 }
 
 export function FeaturedProductGrid({
@@ -85,8 +85,21 @@ export function FeaturedProductGrid({
             <div className="product-content">
               <p className="product-category">{product.category}</p>
               {countdown ? (
-                <p className="campaign-countdown" aria-live="polite">
-                  {countdown}
+                <p
+                  className="campaign-countdown"
+                  aria-label={`${countdown} on Trusted Home Essentials`}
+                  aria-live="polite"
+                >
+                  <span>{countdown} on</span>
+                  <Image
+                    aria-hidden="true"
+                    className="campaign-brand-icon"
+                    src="/favicon.svg"
+                    alt=""
+                    width={22}
+                    height={22}
+                    unoptimized
+                  />
                 </p>
               ) : null}
               <h3>
