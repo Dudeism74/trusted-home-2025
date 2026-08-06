@@ -1,6 +1,29 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { OpenAIAdsTracking } from "./components/openai-ads-tracking";
 import "./globals.css";
+
+const OPENAI_ADS_PIXEL_ID = "CJt53jFYSRyQWMHHfozm12";
+
+const openAIAdsPixelSetup = `
+(function (w, d, s, u) {
+  if (w.oaiq) return;
+  var q = function () {
+    q.q.push(arguments);
+  };
+  q.q = [];
+  w.oaiq = q;
+  var js = d.createElement(s);
+  js.async = true;
+  js.src = u;
+  var f = d.getElementsByTagName(s)[0];
+  f.parentNode.insertBefore(js, f);
+})(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
+
+oaiq("init", {
+  pixelId: "${OPENAI_ADS_PIXEL_ID}",
+});
+`;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,10 +77,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          data-openai-ads-pixel={OPENAI_ADS_PIXEL_ID}
+          dangerouslySetInnerHTML={{ __html: openAIAdsPixelSetup }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <OpenAIAdsTracking />
       </body>
     </html>
   );
