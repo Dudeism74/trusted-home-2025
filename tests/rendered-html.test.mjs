@@ -40,6 +40,8 @@ test("renders the homepage without obsolete keyword metadata", async () => {
   assert.match(html, developmentPreviewMeta);
   assert.doesNotMatch(html, /<meta[^>]+\bname=["']keywords["'][^>]*>/i);
   assert.match(html, /href=["']\/guides["']/i);
+  assert.match(html, /CJt53jFYSRyQWMHHfozm12/i);
+  assert.match(html, /https:\/\/bzrcdn\.openai\.com\/sdk\/oaiq\.min\.js/i);
 });
 
 test("renders a dedicated buying guide directory", async () => {
@@ -69,6 +71,20 @@ test("guide HTML has a useful comment fallback before JavaScript loads", async (
     html,
     /https:\/\/www\.trustedhomeessentials\.com\/guides\/solo-stove-pi-prime/i,
   );
+  assert.match(html, /data-product-name=["']Solo Stove Pi Prime["']/i);
+  assert.match(html, /data-amazon-asin=["']B0FNPPGKHW["']/i);
+});
+
+test("privacy page discloses OpenAI Ads conversion measurement", async () => {
+  const response = await render("/privacy");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /OpenAI Ads measurement pixel/i);
+  assert.match(html, /clicks from our guides to Amazon/i);
+  assert.match(html, /Automatic advanced matching is enabled/i);
+  assert.match(html, /Raw contact information is not sent to OpenAI/i);
+  assert.match(html, /does not tell Trusted Home Essentials.*purchases on Amazon/is);
 });
 
 test("Cosori guide keeps the accepted campaign attribution and editorial disclosure", async () => {

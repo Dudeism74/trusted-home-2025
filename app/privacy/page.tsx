@@ -48,6 +48,20 @@ export default function PrivacyPage() {
           Trusted Home Essentials does not ask visitors to submit sensitive
           personal information.
         </p>
+        <p>
+          The OpenAI Ads measurement pixel records visits that follow a ChatGPT ad
+          and clicks from our guides to Amazon. It may use a first party attribution
+          cookie and receives the page and event details needed to connect those
+          actions to an ad. This measurement does not tell Trusted Home Essentials
+          what a visitor purchases on Amazon.
+        </p>
+        <p>
+          Automatic advanced matching is enabled for this pixel. When a visitor
+          enters supported contact information into a form, the pixel may normalize
+          and hash it in the browser before including it with conversion events. Raw
+          contact information is not sent to OpenAI through automatic advanced
+          matching.
+        </p>
       </section>
       <section>
         <h2>Your choices</h2>
