@@ -295,6 +295,11 @@ export function GuidePage({ product }: { product: ProductGuide }) {
                     href={product.amazonUrl}
                     target="_blank"
                     rel="sponsored nofollow noopener"
+                    data-product-name={product.name}
+                    data-amazon-asin={product.amazonAsin}
+                    data-affiliate-tag={product.affiliateTag}
+                    data-campaign-id={product.campaignId}
+                    data-link-id={product.linkId}
                   >
                     Current Amazon listing for {product.name}
                   </a>
