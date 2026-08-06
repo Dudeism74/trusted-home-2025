@@ -26,6 +26,7 @@ export function AffiliateButton({
       rel="sponsored nofollow noopener"
       target="_blank"
       aria-label={`${children} for ${productName}`}
+      data-product-name={productName}
       data-amazon-asin={amazonAsin}
       data-affiliate-tag={affiliateTag}
       data-campaign-id={campaignId}
