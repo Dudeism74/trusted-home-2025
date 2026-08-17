@@ -1,5 +1,11 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
+
+const googleVerificationToken =
+  "FlYTM9Sap79Z8WW7NmGJ1S3UTSU3h8Z-Km5IcBDWcGw";
+const googleVerificationFile =
+  "google-site-verification: google7d9b156696884744.html";
 
 const developmentPreviewMeta =
   /<meta(?=[^>]*\bname=["']codex-preview["'])(?=[^>]*\bcontent=["']development["'])[^>]*>/i;
@@ -42,6 +48,25 @@ test("renders the homepage without obsolete keyword metadata", async () => {
   assert.match(html, /href=["']\/guides["']/i);
   assert.match(html, /CJt53jFYSRyQWMHHfozm12/i);
   assert.match(html, /https:\/\/bzrcdn\.openai\.com\/sdk\/oaiq\.min\.js/i);
+  assert.match(
+    html,
+    new RegExp(
+      `<meta(?=[^>]*\\bname=["']google-site-verification["'])(?=[^>]*\\bcontent=["']${googleVerificationToken}["'])[^>]*>`,
+      "i",
+    ),
+  );
+});
+
+test("packages the permanent Google Search Console verification file", async () => {
+  const contents = await readFile(
+    new URL(
+      "../dist/client/google7d9b156696884744.html",
+      import.meta.url,
+    ),
+    "utf8",
+  );
+
+  assert.equal(contents.trim(), googleVerificationFile);
 });
 
 test("renders a dedicated buying guide directory", async () => {
@@ -124,10 +149,11 @@ test("legacy equivalents use permanent redirects", async () => {
   }
 });
 
-test("unrelated retired articles remain not found instead of soft redirecting", async () => {
+test("unrelated retired root articles return Gone instead of soft redirecting", async () => {
   const response = await render("/fix-leaking-kitchen-faucet-guide");
-  assert.equal(response.status, 404);
+  assert.equal(response.status, 410);
   assert.equal(response.headers.get("location"), null);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex");
 });
 
 test("sitemap includes the guide directory and six current guides", async () => {
