@@ -19,6 +19,8 @@ export type ProductGuide = {
   campaignId?: string;
   linkId?: string;
   campaignEndsAt?: string;
+  reviewedDate?: string;
+  reviewedDateLabel?: string;
   metaTitle: string;
   metaDescription: string;
   dek: string;
@@ -439,6 +441,117 @@ export const products: ProductGuide[] = [
     ],
   },
   {
+    slug: "labigo-portable-carpet-cleaner",
+    name: "LABIGO Portable Carpet Cleaner",
+    shortName: "LABIGO Carpet Cleaner",
+    category: "Spot and upholstery cleaning",
+    image: "/products/labigo-portable-carpet-cleaner.jpg",
+    alt: "LABIGO portable carpet and upholstery cleaner with dual water tanks and cleaning tools",
+    accent: "lime",
+    amazonAsin: "B0FNRPHPLD",
+    affiliateTag: "labigoweb-20",
+    campaignId: "amzn1.campaign.3P9W9BCD0E7W9",
+    linkId: "amzn1.campaign.3P9W9BCD0E7W9_1786997235871",
+    campaignEndsAt: "2027-08-01T06:59:59Z",
+    reviewedDate: "2026-08-17",
+    reviewedDateLabel: "August 17, 2026",
+    amazonUrl:
+      "https://www.amazon.com/dp/B0FNRPHPLD?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.3P9W9BCD0E7W9&linkCode=tr1&tag=labigoweb-20&linkId=amzn1.campaign.3P9W9BCD0E7W9_1786997235871",
+    manufacturerUrl: "https://labigo-home.com/product/b0fnrphpld/",
+    manufacturerLabel: "LABIGO B0FNRPHPLD product information",
+    metaTitle:
+      "LABIGO Portable Carpet Cleaner: Specification-Based Guide",
+    metaDescription:
+      "See who the LABIGO portable carpet cleaner may suit, its listed 18 kPa suction, target surfaces, limitations, and checks to make before buying.",
+    dek: "A specification based guide to the compact spot cleaner marketed for rugs, couches, stairs, upholstery, and car seats.",
+    quickAnswer:
+      "The LABIGO portable carpet cleaner is worth considering for shoppers comparing a compact machine marketed for rugs, couches, stairs, upholstery, and car seats. Its listing states 18 kPa suction, but real stain removal, drying time, noise, durability, and ease of cleaning cannot be confirmed without hands on testing.",
+    bestFor:
+      "Targeted spills and upholstery or car interior cleaning for buyers who want a portable machine rather than a full size upright carpet washer.",
+    skipIf:
+      "You need independently tested stain removal performance, whole room carpet washing, or verified long term durability before ordering.",
+    bottomLine:
+      "The LABIGO earns consideration as a compact targeted cleaner with broad surface marketing and a clearly stated 18 kPa suction figure. The decision hinges on whether its tank sizes, hose and cord reach, included tools, solution compatibility, and untested real world performance suit the job.",
+    facts: [
+      { label: "Product type", value: "Portable carpet and upholstery cleaner" },
+      { label: "Listed suction", value: "18 kPa" },
+      {
+        label: "Listed surfaces",
+        value: "Rugs, couches, upholstery, stairs, and car seats",
+      },
+      { label: "Clean water tank", value: "1,800 milliliters" },
+      { label: "Dirty water tank", value: "650 milliliters" },
+      { label: "Listed weight", value: "About 8.1 pounds" },
+    ],
+    strengths: [
+      "The compact portable format targets smaller, location specific cleaning jobs without a full size carpet washer setup.",
+      "The listing covers upholstery, stairs, and car seats as well as rugs.",
+      "The published 18 kPa figure gives shoppers a stated suction pressure to compare, although it does not prove cleaning results.",
+      "Separate clean and recovered water tanks keep the two water streams apart during use.",
+    ],
+    tradeoffs: [
+      "Trusted Home Essentials has not tested its stain removal, drying time, noise, durability, or ease of cleaning.",
+      "An 18 kPa specification is not directly comparable across brands unless the test methods are consistent.",
+      "The compact 650 milliliter dirty water tank may require frequent emptying during larger jobs.",
+      "A portable spot cleaner is not a full size whole room carpet washer.",
+    ],
+    useCases: [
+      {
+        title: "Couch and upholstery spots",
+        detail:
+          "The listing positions the machine for targeted cleaning on couches and other upholstery rather than broad floor coverage.",
+      },
+      {
+        title: "Stairs and area rugs",
+        detail:
+          "Its portable format can make more sense than a full size upright when the job involves stairs or a smaller rug area.",
+      },
+      {
+        title: "Car seats and interiors",
+        detail:
+          "The listed surface range includes car seats, subject to the vehicle material and cleaner instructions.",
+      },
+    ],
+    checks: [
+      "Confirm that the selected Amazon variation is eligible for the campaign and includes the tools you expect.",
+      "Verify the current tank capacities, hose and cord lengths, dimensions, and listed weight.",
+      "Check cleaning solution compatibility, material care instructions, and drying requirements before use.",
+      "Review the current warranty, return terms, seller, price, and availability before ordering.",
+    ],
+    faq: [
+      {
+        question: "What is the LABIGO B0FNRPHPLD designed to clean?",
+        answer:
+          "The current listing markets it for targeted cleaning on rugs, couches, upholstery, stairs, and car seats.",
+      },
+      {
+        question: "Is the LABIGO a spot cleaner or a full size carpet washer?",
+        answer:
+          "The listing presents it as a portable machine for targeted rug, upholstery, stair, couch, and car seat cleaning. It should not be assumed to replace a full size whole room carpet washer.",
+      },
+      {
+        question: "What does 18 kPa suction mean?",
+        answer:
+          "It is the suction pressure stated on the product listing. The number can help describe the machine, but it is not by itself proof of stain removal or a reliable cross brand performance comparison.",
+      },
+      {
+        question: "Has Trusted Home Essentials tested this cleaner?",
+        answer:
+          "No. This is a specification based assessment of published product and campaign information, not a hands on cleaning test.",
+      },
+      {
+        question: "What should I verify before buying?",
+        answer:
+          "Confirm the current variation, included tools, dimensions, tank capacities, hose and cord lengths, solution compatibility, warranty, returns, seller, price, and availability.",
+      },
+      {
+        question: "Where can I check current LABIGO availability?",
+        answer:
+          "Use the Amazon listing linked in this guide to confirm the current seller, eligible variation, price, availability, and return terms.",
+      },
+    ],
+  },
+  {
     slug: "shark-wandvac-wv201",
     name: "Shark WANDVAC WV201",
     shortName: "WANDVAC WV201",
@@ -639,6 +752,10 @@ export const products: ProductGuide[] = [
     ],
   },
 ];
+
+export const homepageProducts = products.filter(
+  (product) => product.slug !== "shark-wandvac-wv201",
+);
 
 export function getProduct(slug: string) {
   return products.find((product) => product.slug === slug);

@@ -16,14 +16,16 @@ import { SiteHeader } from "./site-header";
 
 export function GuidePage({ product }: { product: ProductGuide }) {
   const articleUrl = `${SITE_URL}/guides/${product.slug}`;
+  const reviewedDate = product.reviewedDate ?? REVIEWED_DATE;
+  const reviewedDateLabel = product.reviewedDateLabel ?? REVIEWED_DATE_LABEL;
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: product.metaTitle,
     description: product.metaDescription,
     image: `${SITE_URL}${product.image}`,
-    datePublished: REVIEWED_DATE,
-    dateModified: REVIEWED_DATE,
+    datePublished: reviewedDate,
+    dateModified: reviewedDate,
     mainEntityOfPage: articleUrl,
     author: {
       "@type": "Person",
@@ -86,6 +88,12 @@ export function GuidePage({ product }: { product: ProductGuide }) {
       <div className="disclosure compact" role="note">
         <strong>Affiliate disclosure:</strong> As an Amazon Associate, I earn from
         qualifying purchases.
+        {product.campaignId ? (
+          <>
+            {" "}This guide supports an Amazon Creator Connections campaign, so
+            qualifying purchases may earn an enhanced commission.
+          </>
+        ) : null}
       </div>
 
       <article className={`guide-page ${product.accent}`}>
@@ -105,7 +113,7 @@ export function GuidePage({ product }: { product: ProductGuide }) {
               <p className="guide-dek">{product.dek}</p>
               <div className="review-meta">
                 <span>By Jim</span>
-                <span>Reviewed {REVIEWED_DATE_LABEL}</span>
+                <span>Reviewed {reviewedDateLabel}</span>
                 <span>Published specification assessment</span>
               </div>
               <AffiliateButton
@@ -276,7 +284,7 @@ export function GuidePage({ product }: { product: ProductGuide }) {
             </div>
             <div>
               <p>
-                Specifications were reviewed on {REVIEWED_DATE_LABEL}. We separate
+                Specifications were reviewed on {reviewedDateLabel}. We separate
                 manufacturer claims from our editorial judgment and do not present
                 this guide as hands on testing.
               </p>

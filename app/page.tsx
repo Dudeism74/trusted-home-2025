@@ -5,7 +5,13 @@ import { JsonLd } from "./components/json-ld";
 import { NewsletterForm } from "./components/newsletter-form";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
-import { products, REVIEWED_DATE, SITE_NAME, SITE_URL } from "./lib/products";
+import {
+  homepageProducts,
+  products,
+  REVIEWED_DATE,
+  SITE_NAME,
+  SITE_URL,
+} from "./lib/products";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -36,7 +42,7 @@ export default function Home() {
       {
         "@type": "ItemList",
         name: "Current Trusted Home Essentials buying guides",
-        itemListElement: products.map((product, index) => ({
+        itemListElement: homepageProducts.map((product, index) => ({
           "@type": "ListItem",
           position: index + 1,
           url: `${SITE_URL}/guides/${product.slug}`,
@@ -102,7 +108,7 @@ export default function Home() {
           </p>
         </div>
 
-        <FeaturedProductGrid products={products} />
+        <FeaturedProductGrid products={homepageProducts} />
       </section>
 
       <section className="standards" id="standards">

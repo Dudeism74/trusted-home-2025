@@ -29,7 +29,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...products.map((product) => ({
       url: `${SITE_URL}/guides/${product.slug}`,
-      lastModified,
+      lastModified: new Date(
+        `${product.reviewedDate ?? REVIEWED_DATE}T12:00:00Z`,
+      ),
       changeFrequency: "monthly" as const,
       priority: 0.9,
     })),
