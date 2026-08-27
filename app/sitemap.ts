@@ -1,31 +1,67 @@
 import type { MetadataRoute } from "next";
 import { products, REVIEWED_DATE, SITE_URL } from "./lib/products";
+import { resources, RESOURCE_REVIEWED_DATE } from "./lib/resources";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date(`${REVIEWED_DATE}T12:00:00Z`);
+  const productLastModified = new Date(`${REVIEWED_DATE}T12:00:00Z`);
+  const resourceLastModified = new Date(`${RESOURCE_REVIEWED_DATE}T12:00:00Z`);
   const staticPages = [
-    { path: "", priority: 1, changeFrequency: "weekly" as const },
-    { path: "/guides", priority: 0.9, changeFrequency: "weekly" as const },
-    { path: "/about", priority: 0.6, changeFrequency: "monthly" as const },
+    {
+      path: "",
+      priority: 1,
+      changeFrequency: "weekly" as const,
+      lastModified: resourceLastModified,
+    },
+    {
+      path: "/troubleshooting",
+      priority: 0.95,
+      changeFrequency: "weekly" as const,
+      lastModified: resourceLastModified,
+    },
+    {
+      path: "/guides",
+      priority: 0.75,
+      changeFrequency: "weekly" as const,
+      lastModified: productLastModified,
+    },
+    {
+      path: "/about",
+      priority: 0.7,
+      changeFrequency: "monthly" as const,
+      lastModified: resourceLastModified,
+    },
     {
       path: "/editorial-policy",
-      priority: 0.6,
+      priority: 0.7,
       changeFrequency: "monthly" as const,
+      lastModified: resourceLastModified,
     },
     {
       path: "/affiliate-disclosure",
       priority: 0.4,
       changeFrequency: "yearly" as const,
+      lastModified: productLastModified,
     },
-    { path: "/privacy", priority: 0.4, changeFrequency: "yearly" as const },
+    {
+      path: "/privacy",
+      priority: 0.4,
+      changeFrequency: "yearly" as const,
+      lastModified: productLastModified,
+    },
   ];
 
   return [
     ...staticPages.map((page) => ({
       url: `${SITE_URL}${page.path}`,
-      lastModified,
+      lastModified: page.lastModified,
       changeFrequency: page.changeFrequency,
       priority: page.priority,
+    })),
+    ...resources.map((resource) => ({
+      url: `${SITE_URL}/${resource.slug}`,
+      lastModified: resourceLastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
     })),
     ...products.map((product) => ({
       url: `${SITE_URL}/guides/${product.slug}`,
@@ -33,7 +69,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         `${product.reviewedDate ?? REVIEWED_DATE}T12:00:00Z`,
       ),
       changeFrequency: "monthly" as const,
-      priority: 0.9,
+      priority: product.slug === "dreame-pm20" ? 0.85 : 0.65,
     })),
   ];
 }
