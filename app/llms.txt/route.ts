@@ -1,11 +1,9 @@
 import { products, REVIEWED_DATE_LABEL, SITE_URL } from "../lib/products";
-import {
-  resources,
-  RESOURCE_REVIEWED_DATE_LABEL,
-} from "../lib/resources";
+import { allResources } from "../lib/all-resources";
+import { RESOURCE_REVIEWED_DATE_LABEL } from "../lib/resources";
 
 export function GET() {
-  const resourceLines = resources
+  const resourceLines = allResources
     .map(
       (resource) =>
         `### ${resource.title}\n${SITE_URL}/${resource.slug}\n${resource.metaDescription}`,
