@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { InfoPage } from "../components/info-page";
 
@@ -18,8 +19,14 @@ export default function EditorialPolicyPage() {
       <section>
         <h2>1. Diagnose before recommending</h2>
         <p>
-          A symptom is not automatically a failed part. Troubleshooting content
-          starts by separating plausible causes and identifying checks that can
+          A symptom is not automatically a failed part. The{" "}
+          <Link
+            href="/troubleshooting"
+            style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
+          >
+            troubleshooting guides
+          </Link>{" "}
+          start by separating plausible causes and identifying checks that can
           narrow the problem. Replacement is presented as one possible outcome,
           not the default answer.
         </p>
@@ -58,9 +65,16 @@ export default function EditorialPolicyPage() {
         <h2>5. Product testing status is explicit</h2>
         <p>
           We never imply hands on product use when it did not happen. A
-          specification based assessment says so near the top of the guide and
-          again in the method section. If hands on testing is added later, the
-          method, conditions, observations, and date will be documented.
+          specification based assessment in the{" "}
+          <Link
+            href="/guides"
+            style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
+          >
+            buying guide library
+          </Link>{" "}
+          says so near the top of the guide and again in the method section. If
+          hands on testing is added later, the method, conditions, observations,
+          and date will be documented.
         </p>
       </section>
       <section>

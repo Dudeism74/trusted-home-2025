@@ -57,7 +57,15 @@ export default function GuidesIndex() {
           <p className="guide-index-lede">
             These guides turn published specifications into practical decisions.
             Each one explains who a product may suit, where it can fall short, and
-            what to confirm before ordering.
+            what to confirm before ordering. If you are here because something in
+            the house stopped working, start with the{" "}
+            <Link
+              href="/troubleshooting"
+              style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
+            >
+              home troubleshooting library
+            </Link>{" "}
+            before shopping for a replacement.
           </p>
         </div>
         <aside className="answer-card" aria-label="How to use these guides">

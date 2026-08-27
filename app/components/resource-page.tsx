@@ -1,9 +1,15 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { JsonLd } from "./json-ld";
 import { NewsletterForm } from "./newsletter-form";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 import { getAnyResource } from "../lib/all-resources";
+import {
+  contextualAnchorTerms,
+  getRelatedResourceSlugs,
+  supplementalContextualLinks,
+} from "../lib/internal-links";
 import {
   RESOURCE_REVIEWED_DATE,
   RESOURCE_REVIEWED_DATE_LABEL,
@@ -13,9 +19,81 @@ import { SITE_NAME, SITE_URL } from "../lib/products";
 
 export function ResourcePage({ resource }: { resource: TroubleshootingResource }) {
   const articleUrl = `${SITE_URL}/${resource.slug}`;
-  const relatedResources = resource.relatedSlugs
+  const relatedSlugs = getRelatedResourceSlugs(
+    resource.slug,
+    resource.relatedSlugs,
+  );
+  const relatedResources = relatedSlugs
     .map((slug) => getAnyResource(slug))
     .filter((item): item is TroubleshootingResource => Boolean(item));
+
+  const contextualTargets = [
+    ...relatedSlugs.map((slug) => ({
+      key: `resource:${slug}`,
+      href: `/${slug}`,
+      terms: contextualAnchorTerms[slug] ?? [],
+    })),
+    ...(supplementalContextualLinks[resource.slug] ?? []).map((link) => ({
+      key: `supplemental:${link.href}`,
+      href: link.href,
+      terms: link.terms,
+    })),
+  ];
+
+  const linkedContextTargets = new Set<string>();
+  let internalLinkSequence = 0;
+
+  const linkContextually = (text: string): ReactNode => {
+    let nodes: ReactNode[] = [text];
+
+    for (const target of contextualTargets) {
+      if (linkedContextTargets.has(target.key) || target.terms.length === 0) {
+        continue;
+      }
+
+      let inserted = false;
+      for (const term of target.terms) {
+        for (let index = 0; index < nodes.length; index += 1) {
+          const node = nodes[index];
+          if (typeof node !== "string") {
+            continue;
+          }
+
+          const matchIndex = node.toLowerCase().indexOf(term.toLowerCase());
+          if (matchIndex < 0) {
+            continue;
+          }
+
+          const before = node.slice(0, matchIndex);
+          const matchedText = node.slice(matchIndex, matchIndex + term.length);
+          const after = node.slice(matchIndex + term.length);
+          internalLinkSequence += 1;
+          nodes.splice(
+            index,
+            1,
+            before,
+            <Link
+              href={target.href}
+              key={`contextual-${internalLinkSequence}`}
+              style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
+            >
+              {matchedText}
+            </Link>,
+            after,
+          );
+          linkedContextTargets.add(target.key);
+          inserted = true;
+          break;
+        }
+
+        if (inserted) {
+          break;
+        }
+      }
+    }
+
+    return <>{nodes}</>;
+  };
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -105,7 +183,7 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
           <section className="quick-answer" aria-labelledby="quick-answer-title">
             <p className="answer-label">The quick answer</p>
             <h2 id="quick-answer-title">What should you do first?</h2>
-            <p>{resource.quickAnswer}</p>
+            <p>{linkContextually(resource.quickAnswer)}</p>
           </section>
 
           <section className="guide-section">
@@ -118,7 +196,7 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
                     <span>{String(index + 1).padStart(2, "0")}</span>
                     <div>
                       <h3>{step.title}</h3>
-                      <p>{step.detail}</p>
+                      <p>{linkContextually(step.detail)}</p>
                     </div>
                   </li>
                 ))}
@@ -132,7 +210,7 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
               <div>
                 <h2>{section.title}</h2>
                 {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+                  <p key={paragraph}>{linkContextually(paragraph)}</p>
                 ))}
               </div>
             </section>
@@ -147,7 +225,7 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
               {resource.faq.map((item) => (
                 <details key={item.question}>
                   <summary>{item.question}</summary>
-                  <p>{item.answer}</p>
+                  <p>{linkContextually(item.answer)}</p>
                 </details>
               ))}
             </div>
