@@ -142,10 +142,8 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
               <div className="section-kicker">{section.kicker}</div>
               <div>
                 <h2>{section.title}</h2>
-                {section.paragraphs.map((paragraph, index) => (
-                  <p className={index === 0 ? "large-copy" : undefined} key={paragraph}>
-                    {paragraph}
-                  </p>
+                {section.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
             </section>
