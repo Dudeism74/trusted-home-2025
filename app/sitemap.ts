@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { products, REVIEWED_DATE, SITE_URL } from "./lib/products";
-import { resources, RESOURCE_REVIEWED_DATE } from "./lib/resources";
+import { allResources } from "./lib/all-resources";
+import { RESOURCE_REVIEWED_DATE } from "./lib/resources";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const productLastModified = new Date(`${REVIEWED_DATE}T12:00:00Z`);
@@ -57,7 +58,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: page.changeFrequency,
       priority: page.priority,
     })),
-    ...resources.map((resource) => ({
+    ...allResources.map((resource) => ({
       url: `${SITE_URL}/${resource.slug}`,
       lastModified: resourceLastModified,
       changeFrequency: "monthly" as const,
