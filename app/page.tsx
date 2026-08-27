@@ -5,8 +5,9 @@ import { JsonLd } from "./components/json-ld";
 import { NewsletterForm } from "./components/newsletter-form";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
+import { allResources } from "./lib/all-resources";
 import { products, SITE_NAME, SITE_URL } from "./lib/products";
-import { featuredResources, resources } from "./lib/resources";
+import { featuredResources } from "./lib/resources";
 
 export const metadata: Metadata = {
   description:
@@ -97,13 +98,13 @@ export default function Home() {
       <section className="products-section" id="troubleshooting">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Current troubleshooting</p>
+            <p className="eyebrow">Featured troubleshooting</p>
             <h2>Problems worth diagnosing before replacement.</h2>
           </div>
           <p>
-            The first cluster focuses on air movement, bathroom ventilation,
-            moisture, and comfort. The subjects connect technically and support a
-            deeper answer than isolated product recommendations.
+            The featured cluster focuses on air movement, bathroom ventilation,
+            moisture, and comfort. The full troubleshooting library now also covers
+            appliance, plumbing, hot-water, and electrical problems.
           </p>
         </div>
 
@@ -183,8 +184,9 @@ export default function Home() {
           </div>
           <p>
             The Dreame PM20 is the current product guide most closely connected to
-            this first topical cluster. Its published CADR can be checked against
-            room volume instead of relying only on a square-foot coverage headline.
+            the original air and comfort cluster. Its published CADR can be checked
+            against room volume instead of relying only on a square-foot coverage
+            headline.
           </p>
         </div>
 
@@ -199,7 +201,7 @@ export default function Home() {
 
       <section className="authority-strip" aria-label="How the site is built">
         <div>
-          <strong>{resources.length}</strong>
+          <strong>{allResources.length}</strong>
           <span>focused troubleshooting resources</span>
         </div>
         <div>
