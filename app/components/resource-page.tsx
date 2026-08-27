@@ -3,8 +3,8 @@ import { JsonLd } from "./json-ld";
 import { NewsletterForm } from "./newsletter-form";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
+import { getAnyResource } from "../lib/all-resources";
 import {
-  getResource,
   RESOURCE_REVIEWED_DATE,
   RESOURCE_REVIEWED_DATE_LABEL,
   type TroubleshootingResource,
@@ -14,7 +14,7 @@ import { SITE_NAME, SITE_URL } from "../lib/products";
 export function ResourcePage({ resource }: { resource: TroubleshootingResource }) {
   const articleUrl = `${SITE_URL}/${resource.slug}`;
   const relatedResources = resource.relatedSlugs
-    .map((slug) => getResource(slug))
+    .map((slug) => getAnyResource(slug))
     .filter((item): item is TroubleshootingResource => Boolean(item));
 
   const articleSchema = {
@@ -22,9 +22,11 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
     "@type": "Article",
     headline: resource.title,
     description: resource.metaDescription,
+    articleSection: resource.eyebrow,
     datePublished: RESOURCE_REVIEWED_DATE,
     dateModified: RESOURCE_REVIEWED_DATE,
     mainEntityOfPage: articleUrl,
+    isAccessibleForFree: true,
     author: {
       "@type": "Person",
       name: "Jim",
@@ -62,22 +64,9 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
     ],
   };
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: resource.faq.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
-  };
-
   return (
     <main>
-      <JsonLd data={[articleSchema, breadcrumbSchema, faqSchema]} />
+      <JsonLd data={[articleSchema, breadcrumbSchema]} />
       <SiteHeader />
 
       <article className={`guide-page ${resource.accent}`}>
