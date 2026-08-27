@@ -38,24 +38,24 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.trustedhomeessentials.com"),
   title: {
-    default: "Trusted Home Essentials | Practical Product Buying Guides",
+    default: "Trusted Home Essentials | Practical Home Troubleshooting",
     template: "%s | Trusted Home Essentials",
   },
   description:
-    "Practical home product buying guides that explain fit, benefits, limitations, and what to confirm before ordering.",
+    "Practical home troubleshooting, maintenance guidance, and source-backed product analysis. Diagnose the problem before replacing what may be repairable.",
   openGraph: {
     type: "website",
     siteName: "Trusted Home Essentials",
-    title: "Trusted Home Essentials | Practical Product Buying Guides",
+    title: "Trusted Home Essentials | Practical Home Troubleshooting",
     description:
-      "Useful home product guidance with benefits, tradeoffs, and clearly sourced specifications.",
+      "Diagnose home problems, understand the equipment, and replace only what the evidence points to.",
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
     title: "Trusted Home Essentials",
     description:
-      "Useful home product guidance with benefits, tradeoffs, and clearly sourced specifications.",
+      "Practical home troubleshooting and buying guidance built around diagnosing the problem first.",
   },
   other: {
     "codex-preview": "development",
