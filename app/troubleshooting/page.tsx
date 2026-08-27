@@ -131,7 +131,7 @@ export default function TroubleshootingPage() {
                   <span className="product-number">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <div className="product-content">
+                  <div className="product-content" style={{ paddingTop: "58px" }}>
                     <p className="product-category">{resource.eyebrow}</p>
                     <h3>{resource.title}</h3>
                     <p className="product-answer">{resource.dek}</p>
