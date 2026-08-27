@@ -1,34 +1,55 @@
 import { products, REVIEWED_DATE_LABEL, SITE_URL } from "../lib/products";
+import {
+  resources,
+  RESOURCE_REVIEWED_DATE_LABEL,
+} from "../lib/resources";
 
 export function GET() {
+  const resourceLines = resources
+    .map(
+      (resource) =>
+        `### ${resource.title}\n${SITE_URL}/${resource.slug}\n${resource.metaDescription}`,
+    )
+    .join("\n\n");
+
   const guideLines = products
     .map(
       (product) =>
-        `- ${product.name}: ${SITE_URL}/guides/${product.slug}\n  ${product.metaDescription}`,
+        `### ${product.name}\n${SITE_URL}/guides/${product.slug}\n${product.metaDescription}`,
     )
-    .join("\n");
+    .join("\n\n");
 
   const body = `# Trusted Home Essentials
 
-Trusted Home Essentials publishes practical, specification based product buying guides.
+Trusted Home Essentials publishes practical home troubleshooting, maintenance guidance, and source-backed product analysis. The editorial approach is to diagnose the problem before recommending replacement.
 
 ## Editorial method
 
-- Primary sources anchor factual specifications.
-- Editorial conclusions name best fit, reasons to skip, and practical tradeoffs.
-- Guides clearly state when no hands on testing was completed.
-- Price and availability must be confirmed on the current retailer listing.
-- Affiliate disclosure: As an Amazon Associate, I earn from qualifying purchases.
+Troubleshooting starts with the symptom and separates plausible failure modes before parts or equipment are recommended.
 
+Authoritative and primary sources anchor factual claims. Technical reasoning and calculations are identified as interpretation rather than measured results.
+
+Product guides clearly state when no hands on testing was completed.
+
+Safety instructions, manufacturer guidance, and applicable codes take priority over general troubleshooting guidance.
+
+Affiliate disclosure: As an Amazon Associate, I earn from qualifying purchases. Affiliate relationships do not decide whether repair or replacement is recommended.
+
+Troubleshooting hub: ${SITE_URL}/troubleshooting
 Editorial policy: ${SITE_URL}/editorial-policy
 About the editor: ${SITE_URL}/about
 Affiliate disclosure: ${SITE_URL}/affiliate-disclosure
 
-## Current guides
+## Troubleshooting and maintenance resources
+
+${resourceLines}
+
+## Product buying guides
 
 ${guideLines}
 
-Last reviewed: ${REVIEWED_DATE_LABEL}
+Troubleshooting resources last reviewed: ${RESOURCE_REVIEWED_DATE_LABEL}
+Product guide review cycle: ${REVIEWED_DATE_LABEL}
 `;
 
   return new Response(body, {

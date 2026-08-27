@@ -5,21 +5,19 @@ import { JsonLd } from "./components/json-ld";
 import { NewsletterForm } from "./components/newsletter-form";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
-import {
-  homepageProducts,
-  products,
-  REVIEWED_DATE,
-  SITE_NAME,
-  SITE_URL,
-} from "./lib/products";
+import { products, SITE_NAME, SITE_URL } from "./lib/products";
+import { featuredResources, resources } from "./lib/resources";
 
 export const metadata: Metadata = {
+  description:
+    "Practical home troubleshooting and maintenance guidance that helps diagnose the problem before replacement, plus source-backed buying analysis when new equipment is the right answer.",
   alternates: { canonical: "/" },
 };
 
 export const revalidate = 3600;
 
 export default function Home() {
+  const pm20 = products.find((product) => product.slug === "dreame-pm20")!;
   const siteSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -29,7 +27,7 @@ export default function Home() {
         url: SITE_URL,
         name: SITE_NAME,
         description:
-          "Practical product buying guides with sourced facts, fit checks, and honest tradeoffs.",
+          "Practical home troubleshooting, maintenance guidance, and source-backed product analysis.",
         publisher: { "@id": `${SITE_URL}/#organization` },
       },
       {
@@ -41,12 +39,12 @@ export default function Home() {
       },
       {
         "@type": "ItemList",
-        name: "Current Trusted Home Essentials buying guides",
-        itemListElement: homepageProducts.map((product, index) => ({
+        name: "Featured Trusted Home Essentials troubleshooting resources",
+        itemListElement: featuredResources.map((resource, index) => ({
           "@type": "ListItem",
           position: index + 1,
-          url: `${SITE_URL}/guides/${product.slug}`,
-          name: product.name,
+          url: `${SITE_URL}/${resource.slug}`,
+          name: resource.title,
         })),
       },
     ],
@@ -59,118 +57,165 @@ export default function Home() {
 
       <section className="hero" id="top">
         <div className="hero-copy">
-          <p className="eyebrow">Fewer products. Better decisions.</p>
-          <h1>Useful home products, checked before they earn a recommendation.</h1>
+          <p className="eyebrow">Diagnose first. Buy second.</p>
+          <h1>Practical home troubleshooting before you replace what might be fixable.</h1>
           <p className="hero-lede">
-            We turn published specifications into practical buying guidance. Each
-            guide explains who a product may suit, where it can fall short, and
-            what to confirm before ordering.
+            Start with the symptom, isolate the likely causes, and use source-backed
+            checks to decide whether the answer is cleaning, adjustment, repair, or
+            replacement. When buying is the right move, our product guides explain
+            fit and tradeoffs without pretending we tested what we did not.
           </p>
           <div className="hero-actions">
-            <Link className="button button-primary" href="/guides">
-              Explore the current guides
+            <Link className="button button-primary" href="/troubleshooting">
+              Start troubleshooting
             </Link>
-            <Link className="text-link" href="/editorial-policy">
-              See how we evaluate products
+            <Link className="text-link" href="/about">
+              Why this approach
             </Link>
           </div>
         </div>
 
-        <aside className="answer-card" aria-label="The quick answer">
-          <p className="answer-label">The quick answer</p>
+        <aside className="answer-card" aria-label="The maintenance mindset">
+          <p className="answer-label">The maintenance mindset</p>
           <p className="answer-title">
-            The right product depends on the job, the space, and the tradeoffs you
-            will actually notice.
+            Start with the failure mode, not the shopping list.
           </p>
           <div className="answer-rule" />
           <p>
-            Start with fit and limitations. Features matter only when they solve
-            your specific problem.
+            A symptom can come from several systems. Narrow the cause first, then
+            replace only what the evidence points to.
           </p>
         </aside>
       </section>
 
       <div className="disclosure" role="note">
-        <strong>Affiliate disclosure:</strong> As an Amazon Associate, I earn from
-        qualifying purchases. Assessments are based on published product
-        information, not hands on testing unless a guide explicitly says otherwise.
+        <strong>Affiliate disclosure:</strong> Some buying guides contain Amazon
+        affiliate links. Troubleshooting guidance is not paid for, and a commission
+        does not decide whether repair or replacement is recommended.
       </div>
 
-      <section className="products-section" id="guides">
+      <section className="products-section" id="troubleshooting">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Current buying guides</p>
-            <h2>Focused products, very different jobs</h2>
+            <p className="eyebrow">Current troubleshooting</p>
+            <h2>Problems worth diagnosing before replacement.</h2>
           </div>
           <p>
-            Every guide includes a reason to consider the product, a reason to
-            pause, and the checks that determine whether it fits your situation.
+            The first cluster focuses on air movement, bathroom ventilation,
+            moisture, and comfort. The subjects connect technically and support a
+            deeper answer than isolated product recommendations.
           </p>
         </div>
 
-        <FeaturedProductGrid products={homepageProducts} />
+        <div className="product-grid">
+          {featuredResources.map((resource) => (
+            <article className={`product-card ${resource.accent}`} key={resource.slug}>
+              <div className="product-content">
+                <p className="product-category">{resource.eyebrow}</p>
+                <h3>{resource.title}</h3>
+                <p className="product-answer">{resource.dek}</p>
+                <div className="card-actions">
+                  <Link className="button button-primary" href={`/${resource.slug}`}>
+                    Open diagnostic guide
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="hero-actions">
+          <Link className="text-link" href="/troubleshooting">
+            See all troubleshooting guides
+          </Link>
+        </div>
       </section>
 
       <section className="standards" id="standards">
         <div>
           <p className="eyebrow">Our editorial standard</p>
-          <h2>Useful guidance begins with the limits.</h2>
+          <h2>Useful guidance begins with the diagnosis.</h2>
         </div>
         <div className="standards-grid">
           <article>
             <span>01</span>
-            <h3>Verify the claim</h3>
+            <h3>Confirm the symptom</h3>
             <p>
-              We trace important specifications to the manufacturer or current
-              product listing and avoid unsupported superlatives.
+              Describe what is actually happening before assigning a failed part or
+              a replacement product to it.
             </p>
           </article>
           <article>
             <span>02</span>
-            <h3>Name the tradeoff</h3>
+            <h3>Isolate the system</h3>
             <p>
-              Price, size, compatibility, upkeep, and real setup constraints belong
-              beside the benefits, not in the fine print.
+              Separate mechanical, electrical, airflow, moisture, installation,
+              and control problems when the same symptom could come from several
+              causes.
             </p>
           </article>
           <article>
             <span>03</span>
-            <h3>Separate evidence from judgment</h3>
+            <h3>Repair before replace</h3>
             <p>
-              Published facts are labeled and sourced. Our conclusions explain how
-              those facts may affect a buying decision.
+              Cleaning, adjustment, a serviceable component, or a corrected
+              installation belongs ahead of replacement when it solves the actual
+              problem safely.
             </p>
           </article>
           <article>
             <span>04</span>
-            <h3>Keep it current</h3>
+            <h3>Source the technical claim</h3>
             <p>
-              Availability and product details change. Every guide carries a
-              reviewed date and directs readers to confirm the current listing.
+              Government guidance, recognized industry organizations,
+              manufacturer documentation, and current specifications anchor the
+              facts. Our interpretation is labeled as judgment.
             </p>
           </article>
         </div>
       </section>
 
+      <section className="products-section" id="guides">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">When buying is the answer</p>
+            <h2>Product analysis connected to the problem.</h2>
+          </div>
+          <p>
+            The Dreame PM20 is the current product guide most closely connected to
+            this first topical cluster. Its published CADR can be checked against
+            room volume instead of relying only on a square-foot coverage headline.
+          </p>
+        </div>
+
+        <FeaturedProductGrid products={[pm20]} />
+
+        <div className="hero-actions">
+          <Link className="text-link" href="/guides">
+            See the complete buying guide archive
+          </Link>
+        </div>
+      </section>
+
       <section className="authority-strip" aria-label="How the site is built">
         <div>
-          <strong>{products.length}</strong>
-          <span>complete buyer guides</span>
+          <strong>{resources.length}</strong>
+          <span>focused troubleshooting resources</span>
         </div>
         <div>
-          <strong>2</strong>
-          <span>primary sources per guide</span>
+          <strong>1</strong>
+          <span>maintenance mindset across the site</span>
         </div>
         <div>
-          <strong>{REVIEWED_DATE.slice(0, 4)}</strong>
-          <span>current review cycle</span>
+          <strong>0</strong>
+          <span>invented hands on tests</span>
         </div>
       </section>
 
       <section className="newsletter">
         <div>
           <p className="eyebrow">The useful list</p>
-          <h2>Get new buying guides without the clutter.</h2>
+          <h2>Get practical fixes and buying guidance without the clutter.</h2>
         </div>
         <NewsletterForm source="homepage" />
       </section>

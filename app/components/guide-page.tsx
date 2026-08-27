@@ -18,6 +18,7 @@ export function GuidePage({ product }: { product: ProductGuide }) {
   const articleUrl = `${SITE_URL}/guides/${product.slug}`;
   const reviewedDate = product.reviewedDate ?? REVIEWED_DATE;
   const reviewedDateLabel = product.reviewedDateLabel ?? REVIEWED_DATE_LABEL;
+  const isPm20 = product.slug === "dreame-pm20";
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -284,9 +285,9 @@ export function GuidePage({ product }: { product: ProductGuide }) {
             </div>
             <div>
               <p>
-                Specifications were reviewed on {reviewedDateLabel}. We separate
-                manufacturer claims from our editorial judgment and do not present
-                this guide as hands on testing.
+                {isPm20
+                  ? `Specifications were reviewed on ${reviewedDateLabel}. The room-size calculations use the published CADR and independent EPA and AHAM sizing guidance. We separate manufacturer claims from our calculations and editorial judgment.`
+                  : `Specifications were reviewed on ${reviewedDateLabel}. We separate manufacturer claims from our editorial judgment and do not present this guide as hands on testing.`}
               </p>
               <ol>
                 <li>
@@ -298,6 +299,33 @@ export function GuidePage({ product }: { product: ProductGuide }) {
                     {product.manufacturerLabel}
                   </a>
                 </li>
+                {isPm20 ? (
+                  <>
+                    <li>
+                      <a
+                        href="https://www.epa.gov/indoor-air-quality-iaq/guide-air-cleaners-home"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        U.S. EPA guide to air cleaners in the home
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://ahamverifide.org/wp-content/uploads/2026/02/AHAM-White-Paper_Air-Cleaner-ACH_2025.pdf"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        AHAM air cleaner and air changes per hour white paper
+                      </a>
+                    </li>
+                    <li>
+                      <Link href="/air-purifier-cadr-room-size-guide">
+                        Trusted Home Essentials CADR and room size guide
+                      </Link>
+                    </li>
+                  </>
+                ) : null}
                 <li>
                   <a
                     href={product.amazonUrl}

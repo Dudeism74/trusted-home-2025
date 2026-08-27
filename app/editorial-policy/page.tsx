@@ -4,72 +4,86 @@ import { InfoPage } from "../components/info-page";
 export const metadata: Metadata = {
   title: "Editorial Policy",
   description:
-    "Read the Trusted Home Essentials sourcing, evaluation, correction, review, and affiliate independence standards.",
+    "Read the Trusted Home Essentials troubleshooting, sourcing, safety, testing, correction, and affiliate independence standards.",
   alternates: { canonical: "/editorial-policy" },
 };
 
 export default function EditorialPolicyPage() {
   return (
     <InfoPage
-      eyebrow="How recommendations are made"
+      eyebrow="How the guidance is built"
       title="Editorial policy"
-      intro="Our standard is simple: cite the fact, explain the judgment, name the limitation, and correct the record when it changes."
+      intro="Our standard is simple: diagnose before recommending, cite the fact, explain the judgment, name the limitation, and correct the record when it changes."
     >
       <section>
-        <h2>1. Scope comes before recommendation</h2>
+        <h2>1. Diagnose before recommending</h2>
         <p>
-          A product is evaluated for a defined job and audience. We do not call
-          something the best for everyone. Every guide names a likely best fit and
-          a reason a buyer may want to skip it.
+          A symptom is not automatically a failed part. Troubleshooting content
+          starts by separating plausible causes and identifying checks that can
+          narrow the problem. Replacement is presented as one possible outcome,
+          not the default answer.
         </p>
       </section>
       <section>
-        <h2>2. Primary sources anchor factual claims</h2>
+        <h2>2. Primary and authoritative sources anchor factual claims</h2>
         <p>
-          Key specifications are checked against the manufacturer, a current
-          authorized listing, a product manual, or another first party source.
-          Secondary sources may add context, but they do not replace the primary
-          record for basic product facts.
+          Technical guidance is checked against sources appropriate to the topic,
+          including government agencies, recognized industry organizations,
+          manufacturer documentation, product manuals, and current first party
+          specifications. Secondary sources may add context, but important factual
+          claims should be traceable to the strongest available source.
         </p>
       </section>
       <section>
-        <h2>3. Evidence and editorial judgment stay separate</h2>
+        <h2>3. Evidence and technical judgment stay separate</h2>
         <p>
-          A published dimension, runtime, or compatibility range is a sourced
-          fact. Whether that specification makes a product practical for a
-          particular buyer is editorial judgment. Guides make that distinction
-          clear.
+          A published airflow rate, compatibility range, safety instruction, or
+          maintenance interval is a sourced fact. Interpreting what that fact means
+          for a particular symptom or buying decision can require technical
+          judgment. The site makes that distinction clear rather than presenting an
+          inference as a measured result.
         </p>
       </section>
       <section>
-        <h2>4. Testing status is explicit</h2>
+        <h2>4. Safety defines the boundary of the guide</h2>
         <p>
-          We never imply hands on use when it did not happen. A specification based
-          assessment says so near the top of the guide and again in the method
-          section. If hands on testing is added later, the method, conditions, and
-          date will be documented.
+          General troubleshooting does not override manufacturer instructions,
+          applicable codes, lockout or isolation requirements, or the need for a
+          qualified professional. Electrical, fuel gas, refrigerant, structural,
+          water damage, and other safety critical work can require expertise beyond
+          a homeowner guide.
         </p>
       </section>
       <section>
-        <h2>5. Prices and availability are not frozen in time</h2>
+        <h2>5. Product testing status is explicit</h2>
         <p>
-          Retail price, seller, stock, and included variations can change quickly.
-          We direct readers to the current listing rather than presenting a stale
-          price as permanent. Product rich result markup is not used unless the
-          underlying offer information can be kept accurate.
+          We never imply hands on product use when it did not happen. A
+          specification based assessment says so near the top of the guide and
+          again in the method section. If hands on testing is added later, the
+          method, conditions, observations, and date will be documented.
         </p>
       </section>
       <section>
-        <h2>6. Affiliate relationships do not remove the tradeoffs</h2>
+        <h2>6. Marketing claims can be checked against the underlying metric</h2>
+        <p>
+          When a manufacturer publishes a coverage, capacity, runtime, or
+          performance headline, the site looks for the underlying specification and
+          the assumptions behind the claim. Where a useful independent calculation
+          can be made from published data, the method and assumptions are stated so
+          readers can reproduce it.
+        </p>
+      </section>
+      <section>
+        <h2>7. Affiliate relationships do not decide the diagnosis</h2>
         <p>
           Affiliate links help support the site, but a commission does not turn a
-          weak fit into a recommendation. Limitations, recurring costs, setup
-          constraints, and compatibility checks belong in the same guide as the
-          benefits.
+          repairable problem into a recommendation to buy something. Product
+          limitations, recurring costs, setup constraints, and compatibility checks
+          belong beside the benefits.
         </p>
       </section>
       <section>
-        <h2>7. Corrections are part of the product</h2>
+        <h2>8. Corrections are part of the product</h2>
         <p>
           Reader corrections are reviewed against the source record. Material
           factual corrections are made promptly and the reviewed date is updated.

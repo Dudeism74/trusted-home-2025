@@ -9,11 +9,12 @@ export function SiteFooter() {
           <span>Trusted Home Essentials</span>
         </Link>
         <p className="footer-summary">
-          Independent buying guidance based on published specifications, cited
-          sources, and clearly stated editorial judgment.
+          Practical home troubleshooting, maintenance reasoning, and buying
+          guidance built around diagnosing the problem before replacing equipment.
         </p>
       </div>
       <div className="footer-links" aria-label="Site information">
+        <Link href="/troubleshooting">Troubleshooting</Link>
         <Link href="/guides">Buying guides</Link>
         <Link href="/about">About</Link>
         <Link href="/editorial-policy">Editorial policy</Link>

@@ -8,9 +8,9 @@ export function SiteHeader() {
         <span>Trusted Home Essentials</span>
       </Link>
       <nav aria-label="Primary navigation">
-        <Link href="/guides">Guides</Link>
+        <Link href="/troubleshooting">Troubleshooting</Link>
+        <Link href="/guides">Buying guides</Link>
         <Link href="/about">About</Link>
-        <Link href="/editorial-policy">Editorial policy</Link>
       </nav>
     </header>
   );
