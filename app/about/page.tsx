@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { InfoPage } from "../components/info-page";
 
@@ -29,10 +30,23 @@ export default function AboutPage() {
       <section>
         <h2>What this site does</h2>
         <p>
-          Troubleshooting guides start with the failure mode and use current
-          technical guidance to narrow the likely causes. Product guides come
-          second. When buying is the right answer, important specifications are
-          traced to current primary sources and translated into practical fit,
+          The {" "}
+          <Link
+            href="/troubleshooting"
+            style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
+          >
+            troubleshooting library
+          </Link>{" "}
+          starts with the failure mode and uses current technical guidance to
+          narrow the likely causes. {" "}
+          <Link
+            href="/guides"
+            style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
+          >
+            Product buying guides
+          </Link>{" "}
+          come second. When buying is the right answer, important specifications
+          are traced to current primary sources and translated into practical fit,
           limitations, upkeep, and compatibility checks.
         </p>
       </section>
