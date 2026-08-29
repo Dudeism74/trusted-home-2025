@@ -27,8 +27,14 @@ declare global {
   }
 }
 
+const OVEN_IGNITER_PATH = "/whirlpool-oven-igniter-glows-but-wont-heat";
+
 function isAmazonUrl(url: URL) {
-  return url.hostname === "amazon.com" || url.hostname.endsWith(".amazon.com");
+  return (
+    url.hostname === "amzn.to" ||
+    url.hostname === "amazon.com" ||
+    url.hostname.endsWith(".amazon.com")
+  );
 }
 
 function getAsin(link: HTMLAnchorElement) {
@@ -61,10 +67,12 @@ export function OpenAIAdsTracking() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!pathname.startsWith("/guides/")) return;
+    const isProductContentPage =
+      pathname.startsWith("/guides/") || pathname === OVEN_IGNITER_PATH;
+    if (!isProductContentPage) return;
 
     const productLink = document.querySelector<HTMLAnchorElement>(
-      'a[data-amazon-asin][href*="amazon.com"]',
+      "a[data-amazon-asin]",
     );
     const content = productLink ? getContent(productLink) : undefined;
 
