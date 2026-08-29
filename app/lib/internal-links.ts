@@ -52,8 +52,17 @@ export const relatedResourceOverrides: Record<string, string[]> = {
     "fix-leaking-kitchen-faucet-guide",
     "toilet-keeps-running",
   ],
+  "whirlpool-oven-igniter-glows-but-wont-heat": [
+    "dryer-not-heating",
+    "dishwasher-not-draining",
+    "breaker-keeps-tripping",
+  ],
   "refrigerator-not-cooling": ["breaker-keeps-tripping"],
-  "dryer-not-heating": ["breaker-keeps-tripping", "washer-not-draining"],
+  "dryer-not-heating": [
+    "whirlpool-oven-igniter-glows-but-wont-heat",
+    "breaker-keeps-tripping",
+    "washer-not-draining",
+  ],
   "washer-not-draining": ["dryer-not-heating", "dishwasher-not-draining"],
   "dishwasher-not-draining": [
     "why-dishwasher-not-cleaning-properly",
@@ -108,6 +117,12 @@ export const contextualAnchorTerms: Record<string, string[]> = {
   "toilet-keeps-running": ["running toilet", "toilet"],
   "fix-leaking-kitchen-faucet-guide": ["leaking faucet", "kitchen faucet", "faucet"],
   "water-heater-not-providing-hot-water-solutions": ["water heater", "hot water"],
+  "whirlpool-oven-igniter-glows-but-wont-heat": [
+    "oven igniter",
+    "gas oven",
+    "oven not heating",
+    "bake burner",
+  ],
   "refrigerator-not-cooling": ["refrigerator", "fridge"],
   "dryer-not-heating": ["clothes dryer", "dryer"],
   "washer-not-draining": ["washing machine", "washer"],
