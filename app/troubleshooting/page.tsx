@@ -48,6 +48,7 @@ const resourceGroups = [
     description:
       "Separate power, airflow, water path, controls, and mechanical faults before condemning an appliance.",
     slugs: [
+      "whirlpool-oven-igniter-glows-but-wont-heat",
       "refrigerator-not-cooling",
       "dryer-not-heating",
       "washer-not-draining",
