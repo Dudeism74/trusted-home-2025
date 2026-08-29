@@ -36,9 +36,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${IMAGE_ROOT}/whirlpool-oven-blue-flame.webp`,
-        width: 510,
-        height: 680,
-        alt: "Whirlpool gas oven bake burner operating with an even blue flame after an igniter replacement",
+        width: 360,
+        height: 480,
+        alt: "Whirlpool oven bake burner operating with an even blue flame after the igniter repair",
       },
     ],
   },
@@ -89,12 +89,12 @@ const faq = [
   {
     question: "Can an oven igniter glow and still be bad?",
     answer:
-      "Yes. The original igniter in this Whirlpool range glowed orange but did not reliably cause the bake burner to light. After it was replaced, the existing gas valve opened promptly and the burner operated normally.",
+      "Yes. The original igniter in this Whirlpool range glowed orange but did not reliably cause the bake burner to light. After it was replaced, the existing safety valve opened promptly and the burner operated normally.",
   },
   {
     question: "Why did the stovetop work while the oven did not?",
     answer:
-      "The surface burners and bake burner use different ignition components. Working cooktop burners showed that gas was available to the range, but they did not prove that the oven igniter could operate the bake safety valve.",
+      "The surface burners and bake burner use different ignition components. Working cooktop burners showed that gas was available to the range, but they did not prove that the bake igniter could operate the oven safety valve.",
   },
   {
     question: "Does every W11590294 have the connector mismatch?",
@@ -125,7 +125,7 @@ export default function WhirlpoolOvenIgniterRepairPage() {
     description: ovenIgniterResource.metaDescription,
     image: [
       `${SITE_URL}${IMAGE_ROOT}/whirlpool-oven-blue-flame.webp`,
-      `${SITE_URL}${IMAGE_ROOT}/old-new-igniters.webp`,
+      `${SITE_URL}${IMAGE_ROOT}/connector-mismatch.webp`,
     ],
     datePublished: PUBLISHED_DATE,
     dateModified: PUBLISHED_DATE,
@@ -214,8 +214,8 @@ export default function WhirlpoolOvenIgniterRepairPage() {
               priority
               src="whirlpool-oven-blue-flame.webp"
               alt="Blue flame burning evenly along the Whirlpool oven bake burner after installing a new igniter"
-              width={510}
-              height={680}
+              width={360}
+              height={480}
               caption="The new igniter opened the existing safety valve promptly. The fully assembled oven then reached 350°F, held temperature, and cycled normally."
             />
           </header>
@@ -247,7 +247,7 @@ export default function WhirlpoolOvenIgniterRepairPage() {
               <ol>
                 <li><a href="#symptoms">Symptoms and diagnosis</a></li>
                 <li><a href="#part">Part and model number</a></li>
-                <li><a href="#safety">Safety and access</a></li>
+                <li><a href="#safety">Safety and removal</a></li>
                 <li><a href="#connector">Connector mismatch</a></li>
                 <li><a href="#install">Installation and routing</a></li>
                 <li><a href="#test">Final operating test</a></li>
@@ -279,22 +279,13 @@ export default function WhirlpoolOvenIgniterRepairPage() {
                   not glow at all. This one still glowed but could not start the burner
                   reliably.
                 </p>
-                <div className={styles.figureGrid}>
-                  <RepairFigure
-                    src="whirlpool-oven-stalled-155.webp"
-                    alt="Whirlpool gas range display stalled near 155 degrees during a 350 degree preheat"
-                    width={680}
-                    height={665}
-                    caption="The oven stopped climbing near 155°F even though Bake was set to 350°F."
-                  />
-                  <RepairFigure
-                    src="igniter-glowing-through-oven-floor.webp"
-                    alt="Orange oven igniter glow visible through slots in the Whirlpool oven floor"
-                    width={510}
-                    height={680}
-                    caption="The orange glow was real, but it did not prove that the igniter could start the burner."
-                  />
-                </div>
+                <RepairFigure
+                  src="igniter-glowing-through-oven-floor.webp"
+                  alt="Orange oven igniter glow visible through slots in the Whirlpool oven floor"
+                  width={360}
+                  height={480}
+                  caption="The orange glow was real, but it did not prove that the igniter could start the burner."
+                />
               </section>
 
               <section className={styles.section} id="part">
@@ -326,28 +317,19 @@ export default function WhirlpoolOvenIgniterRepairPage() {
                   </AffiliateButton>
                 </div>
 
-                <div className={styles.figureGrid}>
-                  <RepairFigure
-                    src="whirlpool-model-label-location.webp"
-                    alt="Whirlpool WFG505M0MS0 model and serial label on the left inside wall of the lower drawer opening"
-                    width={1200}
-                    height={535}
-                    caption={
-                      <>
-                        <strong>Where to find the label:</strong> Pull the lower drawer
-                        completely out and look on the left interior wall of the drawer
-                        opening. The serial number is blurred here for privacy.
-                      </>
-                    }
-                  />
-                  <RepairFigure
-                    src="oem-w11590294-box.webp"
-                    alt="Genuine Whirlpool factory-certified W11590294 oven igniter package"
-                    width={680}
-                    height={661}
-                    caption="The factory-certified package identified the new part as W11590294."
-                  />
-                </div>
+                <RepairFigure
+                  src="whirlpool-model-label-location.webp"
+                  alt="Whirlpool WFG505M0MS0 model and serial label found on the left inside wall of the lower drawer opening"
+                  width={520}
+                  height={156}
+                  caption={
+                    <>
+                      <strong>Where to find the label:</strong> Pull the lower drawer
+                      completely out and look on the left interior wall of the drawer
+                      opening. The serial number is blurred here for privacy.
+                    </>
+                  }
+                />
               </section>
 
               <section className={styles.section} id="safety">
@@ -368,18 +350,11 @@ export default function WhirlpoolOvenIgniterRepairPage() {
                   <strong>Service boundary</strong>
                   <p>
                     This records a repair completed on one range. Stop if the wiring,
-                    connector, burner, or gas arrangement differs from what is shown.
+                    connector, burner, or gas arrangement differs from what is described.
                   </p>
                 </div>
-                <RepairFigure
-                  src="gas-shutoff-closed.webp"
-                  alt="Red handle on the manual gas shutoff turned perpendicular to the vertical gas pipe"
-                  width={581}
-                  height={680}
-                  caption="On this installation, the red handle was perpendicular to the vertical pipe when closed. Valve designs can differ."
-                />
 
-                <h3>Remove the door, oven floor, and old igniter</h3>
+                <h3>Remove the door, oven floor, and original igniter</h3>
                 <p>
                   Removing the oven door made the burner easier to reach. After moving
                   both hinge locks to the removal position, I lifted the door out by its
@@ -392,13 +367,6 @@ export default function WhirlpoolOvenIgniterRepairPage() {
                   so I worked it gently back and forth rather than snapping it. The
                   burner tube and gas fittings stayed in place.
                 </p>
-                <RepairFigure
-                  src="bake-burner-exposed.webp"
-                  alt="Whirlpool oven with the door and floor removed, exposing the center bake burner and igniter"
-                  width={510}
-                  height={680}
-                  caption="With the floor removed, the bake burner and original igniter were accessible from the front."
-                />
               </section>
 
               <section className={styles.section} id="connector">
@@ -406,31 +374,22 @@ export default function WhirlpoolOvenIgniterRepairPage() {
                 <h2>The genuine replacement did not plug into the range harness</h2>
                 <p>
                   The original igniter leads passed through the rear oven wall to a
-                  white two-pin connector behind the lower galvanized cover. After the
-                  old igniter was unplugged, I compared both assemblies.
+                  white two-pin connector behind the lower galvanized cover. The new
+                  part&apos;s brackets, mounting holes, element position, and wire length
+                  matched closely. Its connector did not.
                 </p>
                 <p>
-                  The brackets, mounting holes, element position, and wire length
-                  matched closely. The connectors did not. The new OEM igniter and the
-                  range harness presented the same mating configuration, so they could
-                  not connect and should not be forced together.
+                  The new OEM igniter and the range harness presented the same mating
+                  configuration, so they could not connect and should not be forced
+                  together.
                 </p>
-                <div className={styles.figureGrid}>
-                  <RepairFigure
-                    src="old-new-igniters.webp"
-                    alt="Original darkened oven igniter beside the new Whirlpool W11590294 igniter"
-                    width={510}
-                    height={680}
-                    caption="The mechanical assemblies matched closely, but the electrical connectors did not."
-                  />
-                  <RepairFigure
-                    src="connector-mismatch.webp"
-                    alt="Close-up of two incompatible two-pin oven igniter connector housings"
-                    width={680}
-                    height={630}
-                    caption="The replacement connector and range-side connector were the same mating gender."
-                  />
-                </div>
+                <RepairFigure
+                  src="connector-mismatch.webp"
+                  alt="Close-up of two incompatible two-pin oven igniter connector housings"
+                  width={680}
+                  height={630}
+                  caption="The replacement connector and range-side connector were the same mating gender."
+                />
 
                 <h3>Retaining the original plug</h3>
                 <p>
@@ -464,13 +423,6 @@ export default function WhirlpoolOvenIgniterRepairPage() {
                     qualified technician when a factory plug-and-play repair is required.
                   </p>
                 </div>
-                <RepairFigure
-                  src="ceramic-wire-nut-splices.webp"
-                  alt="Two completed oven igniter wire splices enclosed in ceramic wire connectors"
-                  width={629}
-                  height={680}
-                  caption="Each conductor passed an individual tug test, and no bare copper remained visible beneath the ceramic connectors."
-                />
               </section>
 
               <section className={styles.section} id="install">
@@ -483,51 +435,35 @@ export default function WhirlpoolOvenIgniterRepairPage() {
                   plug behind the oven wall.
                 </p>
                 <p>
-                  The wires were given gentle bends and enough slack to avoid tension.
-                  The splices were kept away from sharp sheet-metal edges and gas
-                  components, and the rear cover was checked to make sure it could not
-                  pinch them.
+                  Each conductor passed an individual tug test, no bare copper remained
+                  visible, and the wires were given gentle bends and enough slack to
+                  avoid tension. The splices were kept away from sharp sheet-metal edges
+                  and gas components, and the rear cover was checked to make sure it
+                  could not pinch them.
                 </p>
                 <p>
                   The new igniter was mounted in the original position with the two
                   factory screws, tightened only enough to secure the bracket. Its
-                  high-temperature leads remained clear of the burner tube.
+                  high-temperature leads remained clear of the burner tube, and the rear
+                  protective cover was reinstalled before power was restored.
                 </p>
-                <div className={styles.figureGrid}>
-                  <RepairFigure
-                    src="rear-splice-routing.webp"
-                    alt="Ceramic oven igniter splices routed in the protected rear compartment of the range"
-                    width={510}
-                    height={680}
-                    caption="Both ceramic splices remained behind the oven wall, with the original plug reconnected to the range harness."
-                  />
-                  <RepairFigure
-                    src="new-igniter-mounted.webp"
-                    alt="New Whirlpool W11590294 igniter mounted beside the bake burner"
-                    width={510}
-                    height={680}
-                    caption="The replacement igniter was secured in the same position and orientation as the original."
-                  />
-                </div>
               </section>
 
               <section className={styles.section} id="test">
                 <p className={styles.eyebrow}>Final verification</p>
                 <h2>Every post-repair test passed</h2>
                 <p>
-                  The rear protective cover was installed before power or gas was
-                  restored. With hands and face clear of the oven, I reopened the manual
-                  gas valve, plugged in the range, selected Bake, and set it to 350°F.
+                  With hands and face clear of the oven, I reopened the manual gas
+                  valve, plugged in the range, selected Bake, and set it to 350°F. The
+                  new igniter became bright, the existing safety valve opened, and the
+                  burner lit promptly with an even blue flame.
                 </p>
                 <p>
-                  The new igniter became bright, the existing safety valve opened, and
-                  the burner lit promptly with an even blue flame. After the visible
-                  test, the range was cooled, unplugged again, and fully reassembled.
-                </p>
-                <p>
-                  The final assembled test also passed. The oven reached 350°F normally,
-                  maintained the set temperature, cycled the burner off, and relit it
-                  correctly. The range has continued working well.
+                  After the visible test, the range was cooled, unplugged again, and
+                  fully reassembled. The final assembled test also passed. The oven
+                  reached 350°F normally, maintained the set temperature, cycled the
+                  burner off, and relit it correctly. The range has continued working
+                  well.
                 </p>
                 <div className={styles.resultGrid}>
                   <div><span>Ignition</span><p>The bake burner lit promptly instead of stalling near 155°F.</p></div>
@@ -555,10 +491,10 @@ export default function WhirlpoolOvenIgniterRepairPage() {
                 </div>
                 <div>
                   <p>
-                    The failure pattern, connector mismatch, installation photographs,
-                    and completed operating tests are original observations from this
-                    WFG505M0MS0 repair. Manufacturer and OEM-parts sources were used to
-                    confirm the range family and replacement-part relationship.
+                    The failure pattern, connector mismatch, installation observations,
+                    and completed operating tests are original to this WFG505M0MS0
+                    repair. Manufacturer and OEM-parts sources were used to confirm the
+                    range family and replacement-part relationship.
                   </p>
                   <ol>
                     {ovenIgniterResource.sources.map((source) => (
