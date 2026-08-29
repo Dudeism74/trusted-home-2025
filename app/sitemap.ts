@@ -3,6 +3,9 @@ import { products, REVIEWED_DATE, SITE_URL } from "./lib/products";
 import { allResources } from "./lib/all-resources";
 import { RESOURCE_REVIEWED_DATE } from "./lib/resources";
 
+const OVEN_IGNITER_SLUG = "whirlpool-oven-igniter-glows-but-wont-heat";
+const OVEN_IGNITER_PUBLISHED_DATE = new Date("2026-08-29T12:00:00Z");
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const productLastModified = new Date(`${REVIEWED_DATE}T12:00:00Z`);
   const resourceLastModified = new Date(`${RESOURCE_REVIEWED_DATE}T12:00:00Z`);
@@ -11,13 +14,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       path: "",
       priority: 1,
       changeFrequency: "weekly" as const,
-      lastModified: resourceLastModified,
+      lastModified: OVEN_IGNITER_PUBLISHED_DATE,
     },
     {
       path: "/troubleshooting",
       priority: 0.95,
       changeFrequency: "weekly" as const,
-      lastModified: resourceLastModified,
+      lastModified: OVEN_IGNITER_PUBLISHED_DATE,
     },
     {
       path: "/guides",
@@ -60,9 +63,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...allResources.map((resource) => ({
       url: `${SITE_URL}/${resource.slug}`,
-      lastModified: resourceLastModified,
+      lastModified:
+        resource.slug === OVEN_IGNITER_SLUG
+          ? OVEN_IGNITER_PUBLISHED_DATE
+          : resourceLastModified,
       changeFrequency: "monthly" as const,
-      priority: 0.9,
+      priority: resource.slug === OVEN_IGNITER_SLUG ? 0.95 : 0.9,
     })),
     ...products.map((product) => ({
       url: `${SITE_URL}/guides/${product.slug}`,
