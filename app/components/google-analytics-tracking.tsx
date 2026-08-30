@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 declare global {
@@ -22,16 +21,6 @@ function currentPagePath(pathname: string) {
 }
 
 export function GoogleAnalyticsTracking() {
-  const pathname = usePathname();
-
-  useEffect(() => {
-    window.gtag?.("event", "page_view", {
-      page_title: document.title,
-      page_location: window.location.href,
-      page_path: currentPagePath(pathname),
-    });
-  }, [pathname]);
-
   useEffect(() => {
     function measureAmazonAffiliateClick(event: MouseEvent) {
       if (!(event.target instanceof Element)) return;
