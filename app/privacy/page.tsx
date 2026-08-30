@@ -49,6 +49,14 @@ export default function PrivacyPage() {
           personal information.
         </p>
         <p>
+          Google Analytics 4 is used to measure page views, referral sources,
+          device and browser categories, approximate geography, and selected site
+          events. We also record an <strong>amazon_affiliate_click</strong> event
+          when a visitor follows an Amazon link so we can understand which pages
+          lead readers to product listings. Google Analytics is configured without
+          Google Signals or ad personalization signals on this site.
+        </p>
+        <p>
           The OpenAI Ads measurement pixel records visits that follow a ChatGPT ad
           and clicks from our guides to Amazon. It may use a first party attribution
           cookie and receives the page and event details needed to connect those

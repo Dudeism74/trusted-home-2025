@@ -1,9 +1,24 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
+import { GoogleAnalyticsTracking } from "./components/google-analytics-tracking";
 import { OpenAIAdsTracking } from "./components/openai-ads-tracking";
 import "./globals.css";
 
+const GA4_MEASUREMENT_ID = "G-C48XPCKD7E";
 const OPENAI_ADS_PIXEL_ID = "CJt53jFYSRyQWMHHfozm12";
+
+const ga4Setup = `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.gtag = gtag;
+gtag("js", new Date());
+gtag("config", "${GA4_MEASUREMENT_ID}", {
+  send_page_view: false,
+  allow_google_signals: false,
+  allow_ad_personalization_signals: false
+});
+`;
 
 const openAIAdsPixelSetup = `
 (function (w, d, s, u) {
@@ -78,6 +93,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <Script
+          id="ga4-bootstrap"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: ga4Setup }}
+        />
         <script
           data-openai-ads-pixel={OPENAI_ADS_PIXEL_ID}
           dangerouslySetInnerHTML={{ __html: openAIAdsPixelSetup }}
@@ -86,7 +106,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
         {children}
+        <GoogleAnalyticsTracking />
         <OpenAIAdsTracking />
       </body>
     </html>
