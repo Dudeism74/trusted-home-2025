@@ -5,7 +5,24 @@ import { JsonLd } from "../components/json-ld";
 import { NewsletterForm } from "../components/newsletter-form";
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
+import {
+  CORDLESS_TOOLS_SLUG,
+  cordlessToolsGuide,
+} from "../lib/cordless-tools-guide";
 import { products, SITE_NAME, SITE_URL } from "../lib/products";
+
+const categoryGuide = {
+  name: cordlessToolsGuide.title,
+  url: "/" + CORDLESS_TOOLS_SLUG,
+  image: cordlessToolsGuide.image,
+  alt: cordlessToolsGuide.imageAlt,
+  category: "Home tool systems",
+  quickAnswer: cordlessToolsGuide.quickAnswer,
+  bestFor:
+    "Homeowners choosing a first cordless platform or deciding which tool a real project justifies next.",
+  skipIf:
+    "You need a hands-on review of one exact model rather than a source-backed category and buying-order guide.",
+};
 
 export const metadata: Metadata = {
   title: "Home Product Buying Guides",
@@ -36,11 +53,17 @@ export default function GuidesIndex() {
     },
     mainEntity: {
       "@type": "ItemList",
-      itemListElement: products.map((product, index) => ({
+      itemListElement: [
+        { name: categoryGuide.name, url: SITE_URL + categoryGuide.url },
+        ...products.map((product) => ({
+          name: product.name,
+          url: SITE_URL + "/guides/" + product.slug,
+        })),
+      ].map((item, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        name: product.name,
-        url: `${SITE_URL}/guides/${product.slug}`,
+        name: item.name,
+        url: item.url,
       })),
     },
   };
@@ -102,6 +125,44 @@ export default function GuidesIndex() {
         </header>
 
         <div className="guide-directory-list">
+          <article className="guide-directory-card coral category-guide-card">
+            <Link
+              className="guide-directory-image"
+              href={categoryGuide.url}
+              aria-label={"Read " + categoryGuide.name}
+            >
+              <span aria-hidden="true">01</span>
+              <Image
+                src={categoryGuide.image}
+                alt={categoryGuide.alt}
+                width={1536}
+                height={1024}
+                sizes="(max-width: 760px) 92vw, 38vw"
+                unoptimized
+              />
+            </Link>
+            <div className="guide-directory-content">
+              <p className="product-category">{categoryGuide.category}</p>
+              <h2>
+                <Link href={categoryGuide.url}>{categoryGuide.name}</Link>
+              </h2>
+              <p className="product-answer">{categoryGuide.quickAnswer}</p>
+              <dl>
+                <div>
+                  <dt>Best fit</dt>
+                  <dd>{categoryGuide.bestFor}</dd>
+                </div>
+                <div>
+                  <dt>Skip if</dt>
+                  <dd>{categoryGuide.skipIf}</dd>
+                </div>
+              </dl>
+              <Link className="button button-primary" href={categoryGuide.url}>
+                Choose the first five tools
+              </Link>
+            </div>
+          </article>
+
           {products.map((product, index) => (
             <article
               className={`guide-directory-card ${product.accent}`}
@@ -113,7 +174,7 @@ export default function GuidesIndex() {
                 aria-label={`Read the ${product.name} buying guide`}
               >
                 <span aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
+                  {String(index + 2).padStart(2, "0")}
                 </span>
                 <Image
                   src={product.image}

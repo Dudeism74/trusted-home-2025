@@ -28,6 +28,7 @@ declare global {
 }
 
 const OVEN_IGNITER_PATH = "/whirlpool-oven-igniter-glows-but-wont-heat";
+const CORDLESS_TOOLS_PATH = "/essential-cordless-power-tools-diyers";
 
 function isAmazonUrl(url: URL) {
   return (
@@ -68,7 +69,9 @@ export function OpenAIAdsTracking() {
 
   useEffect(() => {
     const isProductContentPage =
-      pathname.startsWith("/guides/") || pathname === OVEN_IGNITER_PATH;
+      pathname.startsWith("/guides/") ||
+      pathname === OVEN_IGNITER_PATH ||
+      pathname === CORDLESS_TOOLS_PATH;
     if (!isProductContentPage) return;
 
     const productLink = document.querySelector<HTMLAnchorElement>(

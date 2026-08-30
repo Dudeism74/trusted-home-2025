@@ -41,10 +41,9 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
   ];
 
   const linkedContextTargets = new Set<string>();
-  let internalLinkSequence = 0;
 
   const linkContextually = (text: string): ReactNode => {
-    let nodes: ReactNode[] = [text];
+    const nodes: ReactNode[] = [text];
 
     for (const target of contextualTargets) {
       if (linkedContextTargets.has(target.key) || target.terms.length === 0) {
@@ -67,14 +66,13 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
           const before = node.slice(0, matchIndex);
           const matchedText = node.slice(matchIndex, matchIndex + term.length);
           const after = node.slice(matchIndex + term.length);
-          internalLinkSequence += 1;
           nodes.splice(
             index,
             1,
             before,
             <Link
               href={target.href}
-              key={`contextual-${internalLinkSequence}`}
+              key={`contextual-${target.key}`}
               style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
             >
               {matchedText}

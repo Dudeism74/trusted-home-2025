@@ -1,10 +1,17 @@
 import type { MetadataRoute } from "next";
 import { products, REVIEWED_DATE, SITE_URL } from "./lib/products";
 import { allResources } from "./lib/all-resources";
+import {
+  CORDLESS_TOOLS_PUBLISHED_DATE,
+  CORDLESS_TOOLS_SLUG,
+} from "./lib/cordless-tools-guide";
 import { RESOURCE_REVIEWED_DATE } from "./lib/resources";
 
 const OVEN_IGNITER_SLUG = "whirlpool-oven-igniter-glows-but-wont-heat";
 const OVEN_IGNITER_PUBLISHED_DATE = new Date("2026-08-29T12:00:00Z");
+const CORDLESS_TOOLS_PUBLISHED_AT = new Date(
+  CORDLESS_TOOLS_PUBLISHED_DATE + "T12:00:00Z",
+);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const productLastModified = new Date(`${REVIEWED_DATE}T12:00:00Z`);
@@ -27,6 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.75,
       changeFrequency: "weekly" as const,
       lastModified: productLastModified,
+    },
+    {
+      path: "/" + CORDLESS_TOOLS_SLUG,
+      priority: 0.95,
+      changeFrequency: "monthly" as const,
+      lastModified: CORDLESS_TOOLS_PUBLISHED_AT,
     },
     {
       path: "/about",

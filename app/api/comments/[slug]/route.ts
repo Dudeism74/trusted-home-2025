@@ -1,6 +1,7 @@
 import { and, asc, count, eq, gte, sql } from "drizzle-orm";
 import { getDb } from "../../../../db";
 import { comments } from "../../../../db/schema";
+import { CORDLESS_TOOLS_SLUG } from "../../../lib/cordless-tools-guide";
 import { getProduct } from "../../../lib/products";
 
 export const dynamic = "force-dynamic";
@@ -9,6 +10,10 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function normalizeText(value: string) {
   return value.replace(/\s+/g, " ").trim();
+}
+
+function isCommentableGuide(slug: string) {
+  return Boolean(getProduct(slug)) || slug === CORDLESS_TOOLS_SLUG;
 }
 
 async function fingerprint(request: Request) {
@@ -29,7 +34,7 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
-    if (!getProduct(slug)) {
+    if (!isCommentableGuide(slug)) {
       return Response.json({ error: "Guide not found." }, { status: 404 });
     }
 
@@ -58,7 +63,7 @@ export async function POST(
 ) {
   try {
     const { slug } = await params;
-    if (!getProduct(slug)) {
+    if (!isCommentableGuide(slug)) {
       return Response.json({ error: "Guide not found." }, { status: 404 });
     }
 

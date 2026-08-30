@@ -46,7 +46,7 @@ test("renders the homepage without obsolete keyword metadata", async () => {
   assert.match(html, developmentPreviewMeta);
   assert.doesNotMatch(html, /<meta[^>]+\bname=["']keywords["'][^>]*>/i);
   assert.match(html, /href=["']\/guides["']/i);
-  assert.match(html, /LABIGO Portable Carpet Cleaner/i);
+  assert.match(html, /Dreame PM20/i);
   assert.doesNotMatch(html, /Shark WANDVAC WV201/i);
   assert.match(html, /CJt53jFYSRyQWMHHfozm12/i);
   assert.match(html, /https:\/\/bzrcdn\.openai\.com\/sdk\/oaiq\.min\.js/i);
@@ -82,6 +82,7 @@ test("renders a dedicated buying guide directory", async () => {
   assert.match(html, /LABIGO Portable Carpet Cleaner/i);
   assert.match(html, /Shark WANDVAC WV201/i);
   assert.match(html, /Cosori TWINFRY 9 Qt/i);
+  assert.match(html, /The First 5 Cordless Power Tools for Home DIY/i);
   assert.match(
     html,
     /<link[^>]+\brel=["']canonical["'][^>]+\bhref=["']https:\/\/www\.trustedhomeessentials\.com\/guides["']/i,
@@ -158,7 +159,7 @@ test("Cosori guide keeps the accepted campaign attribution and editorial disclos
 
 test("legacy equivalents use permanent redirects", async () => {
   const redirects = new Map([
-    ["/articles", "/guides"],
+    ["/articles", "/troubleshooting"],
     ["/our-blog", "/guides"],
     ["/privacy-policy", "/privacy"],
     ["/contact", "/about"],
@@ -178,19 +179,19 @@ test("legacy equivalents use permanent redirects", async () => {
 });
 
 test("unrelated retired root articles return Gone instead of soft redirecting", async () => {
-  const response = await render("/fix-leaking-kitchen-faucet-guide");
+  const response = await render("/retired-example-article");
   assert.equal(response.status, 410);
   assert.equal(response.headers.get("location"), null);
   assert.equal(response.headers.get("x-robots-tag"), "noindex");
 });
 
-test("sitemap includes the guide directory and seven current guides", async () => {
+test("sitemap includes every current resource and buying guide", async () => {
   const response = await render("/sitemap.xml");
   const xml = await response.text();
   const urls = xml.match(/<url>/g) ?? [];
 
   assert.equal(response.status, 200);
-  assert.equal(urls.length, 13);
+  assert.equal(urls.length, 32);
   assert.match(
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides<\/loc>/i,
@@ -211,4 +212,74 @@ test("sitemap includes the guide directory and seven current guides", async () =
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides\/cosori-twinfry-9qt<\/loc>/i,
   );
+  assert.match(
+    xml,
+    /<loc>https:\/\/www\.trustedhomeessentials\.com\/essential-cordless-power-tools-diyers<\/loc>/i,
+  );
+});
+
+test("renders the restored cordless power tool guide with visible evidence limits", async () => {
+  const response = await render("/essential-cordless-power-tools-diyers");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /The First 5 Cordless Power Tools for Home DIY/i);
+  assert.match(html, /No cordless tool lasts forever/i);
+  assert.match(html, /Cordless drill\/driver/i);
+  assert.match(html, /Cordless impact driver/i);
+  assert.match(html, /Cordless circular saw/i);
+  assert.match(html, /Cordless jigsaw/i);
+  assert.match(html, /Cordless oscillating multi-tool/i);
+  assert.match(html, /Affiliate disclosure/i);
+  assert.match(html, /B00IJ0ALYS/i);
+  assert.match(html, /pinterest1-2025-20/i);
+  assert.match(html, /a1412bcb6c417073a66110ccc7adddde/i);
+  assert.match(
+    html,
+    /<a(?=[^>]*\bdata-amazon-asin=["']B00IJ0ALYS["'])(?=[^>]*\brel=["'][^"']*sponsored[^"']*nofollow[^"']*["'])[^>]*>/i,
+  );
+  assert.match(html, /has not completed hands-on testing of this kit/i);
+  assert.match(html, /not evidence of hands-on testing of a particular model/i);
+  assert.match(html, /may limit runtime in higher-demand saw use/i);
+  assert.match(html, /powertoolinstitute\.com/i);
+  assert.match(html, /cpsc\.gov\/Recalls/i);
+  assert.match(
+    html,
+    /<meta[^>]+\bproperty=["']og:image["'][^>]+home-diy-cordless-power-tools\.webp/i,
+  );
+  assert.match(
+    html,
+    /<meta[^>]+\bname=["']twitter:card["'][^>]+\bcontent=["']summary_large_image["']/i,
+  );
+  assert.match(html, /"@type":"Article"/i);
+  assert.match(html, /"@type":"BreadcrumbList"/i);
+  assert.match(html, /"@type":"FAQPage"/i);
+  assert.doesNotMatch(html, /"@type":"Product"/i);
+  assert.doesNotMatch(html, /"@type":"Review"/i);
+  assert.match(
+    html,
+    /<link[^>]+\brel=["']canonical["'][^>]+\bhref=["']https:\/\/www\.trustedhomeessentials\.com\/essential-cordless-power-tools-diyers["']/i,
+  );
+});
+
+test("llms text exposes the restored cordless power tool guide", async () => {
+  const response = await render("/llms.txt");
+  const body = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(
+    body,
+    /https:\/\/www\.trustedhomeessentials\.com\/essential-cordless-power-tools-diyers/i,
+  );
+  assert.match(body, /Cordless power tool guide reviewed: August 30, 2026/i);
+});
+
+test("comments API accepts the restored cordless power tool guide slug", async () => {
+  const response = await render(
+    "/api/comments/essential-cordless-power-tools-diyers",
+  );
+  const body = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(body, { comments: [] });
 });

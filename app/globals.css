@@ -803,6 +803,14 @@ dd {
   background: #edf7b4;
 }
 
+.category-guide-card .guide-directory-image {
+  padding: 0;
+}
+
+.category-guide-card .guide-directory-image img {
+  object-fit: cover;
+}
+
 .guide-directory-content {
   align-self: center;
   padding: clamp(30px, 5vw, 72px);

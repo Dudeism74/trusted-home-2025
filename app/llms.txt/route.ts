@@ -1,5 +1,10 @@
 import { products, REVIEWED_DATE_LABEL, SITE_URL } from "../lib/products";
 import { allResources } from "../lib/all-resources";
+import {
+  CORDLESS_TOOLS_PUBLISHED_DATE_LABEL,
+  CORDLESS_TOOLS_SLUG,
+  cordlessToolsGuide,
+} from "../lib/cordless-tools-guide";
 import { RESOURCE_REVIEWED_DATE_LABEL } from "../lib/resources";
 
 export function GET() {
@@ -16,6 +21,16 @@ export function GET() {
         `### ${product.name}\n${SITE_URL}/guides/${product.slug}\n${product.metaDescription}`,
     )
     .join("\n\n");
+
+  const cordlessToolsLine =
+    "### " +
+    cordlessToolsGuide.title +
+    "\n" +
+    SITE_URL +
+    "/" +
+    CORDLESS_TOOLS_SLUG +
+    "\n" +
+    cordlessToolsGuide.metaDescription;
 
   const body = `# Trusted Home Essentials
 
@@ -44,10 +59,13 @@ ${resourceLines}
 
 ## Product buying guides
 
+${cordlessToolsLine}
+
 ${guideLines}
 
 Troubleshooting resources last reviewed: ${RESOURCE_REVIEWED_DATE_LABEL}
 Product guide review cycle: ${REVIEWED_DATE_LABEL}
+Cordless power tool guide reviewed: ${CORDLESS_TOOLS_PUBLISHED_DATE_LABEL}
 `;
 
   return new Response(body, {
