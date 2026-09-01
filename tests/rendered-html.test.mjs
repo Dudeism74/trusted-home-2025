@@ -191,7 +191,7 @@ test("sitemap includes every current resource and buying guide", async () => {
   const urls = xml.match(/<url>/g) ?? [];
 
   assert.equal(response.status, 200);
-  assert.equal(urls.length, 32);
+  assert.equal(urls.length, 33);
   assert.match(
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides<\/loc>/i,
@@ -215,6 +215,45 @@ test("sitemap includes every current resource and buying guide", async () => {
   assert.match(
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/essential-cordless-power-tools-diyers<\/loc>/i,
+  );
+  assert.match(
+    xml,
+    /<loc>https:\/\/www\.trustedhomeessentials\.com\/home-maintenance-checklist<\/loc>/i,
+  );
+});
+
+test("renders the printable monthly home maintenance checklist", async () => {
+  const response = await render("/home-maintenance-checklist");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /Home maintenance checklist by month/i);
+  assert.match(html, /Print or save as PDF/i);
+  assert.match(html, /What maintenance should you do every month\?/i);
+  assert.match(html, /January: Heating, vents, and cold-weather leaks/i);
+  assert.match(html, /December: Annual records and deferred repairs/i);
+  assert.match(html, /Source-backed and ungated/i);
+  assert.match(html, /Optional maintenance kit/i);
+  assert.match(html, /As an Amazon Associate I earn from qualifying purchases/i);
+  assert.match(html, /indoor\+digital\+hygrometer&amp;tag=pinterest1-2025-20/i);
+  assert.match(
+    html,
+    /<a(?=[^>]*\bdata-affiliate-tag=["']pinterest1-2025-20["'])(?=[^>]*\brel=["'][^"']*sponsored[^"']*nofollow[^"']*["'])[^>]*>/i,
+  );
+  assert.match(html, /usfa\.fema\.gov\/prevention\/home-fires/i);
+  assert.match(html, /energystar\.gov\/saveathome\/heating-cooling/i);
+  assert.match(html, /epa\.gov\/radon/i);
+  assert.match(
+    html,
+    /<meta[^>]+\bproperty=["']og:image["'][^>]+home-maintenance-checklist-social-2026\.webp/i,
+  );
+  assert.match(html, /"@type":"Article"/i);
+  assert.match(html, /"@type":"BreadcrumbList"/i);
+  assert.match(html, /"@type":"ItemList"/i);
+  assert.match(html, /"@type":"FAQPage"/i);
+  assert.match(
+    html,
+    /<link[^>]+\brel=["']canonical["'][^>]+\bhref=["']https:\/\/www\.trustedhomeessentials\.com\/home-maintenance-checklist["']/i,
   );
 });
 
@@ -272,6 +311,11 @@ test("llms text exposes the restored cordless power tool guide", async () => {
     /https:\/\/www\.trustedhomeessentials\.com\/essential-cordless-power-tools-diyers/i,
   );
   assert.match(body, /Cordless power tool guide reviewed: August 30, 2026/i);
+  assert.match(
+    body,
+    /https:\/\/www\.trustedhomeessentials\.com\/home-maintenance-checklist/i,
+  );
+  assert.match(body, /Home maintenance checklist published: September 1, 2026/i);
 });
 
 test("comments API accepts the restored cordless power tool guide slug", async () => {

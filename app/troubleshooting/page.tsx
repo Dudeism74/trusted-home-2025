@@ -108,6 +108,38 @@ export default function TroubleshootingPage() {
         </aside>
       </section>
 
+      <section className="products-section" aria-labelledby="maintenance-planner-title">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Plan before the problem</p>
+            <h2 id="maintenance-planner-title">Spread preventive work across the year.</h2>
+          </div>
+          <p>
+            The free printable checklist organizes safety, HVAC, moisture,
+            appliance, plumbing, drainage, and seasonal tasks into twelve
+            manageable checkpoints.
+          </p>
+        </div>
+        <div className="product-grid">
+          <article className="product-card lime">
+            <span className="product-number">12</span>
+            <div className="product-content" style={{ paddingTop: "58px" }}>
+              <p className="product-category">Monthly maintenance planner</p>
+              <h3>Home Maintenance Checklist by Month</h3>
+              <p className="product-answer">
+                Keep only the tasks that match your home, equipment, and climate.
+                Print it or save it as a PDF without an email gate.
+              </p>
+              <div className="card-actions">
+                <Link className="button button-primary" href="/home-maintenance-checklist">
+                  Open the free checklist
+                </Link>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       {resourceGroups.map((group) => {
         const groupResources = group.slugs
           .map((slug) => getAnyResource(slug))

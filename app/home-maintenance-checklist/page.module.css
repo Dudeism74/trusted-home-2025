@@ -1,0 +1,764 @@
+.page {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.shell {
+  margin: 0 auto;
+  max-width: 1600px;
+  padding-inline: clamp(20px, 5vw, 84px);
+}
+
+.breadcrumbs {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  gap: 10px;
+  padding-top: 30px;
+}
+
+.breadcrumbs a,
+.jumpLink,
+.recurringCard a,
+.monthCard a,
+.sources a {
+  border-bottom: 1px solid currentColor;
+}
+
+.hero {
+  align-items: center;
+  display: grid;
+  gap: clamp(40px, 7vw, 96px);
+  grid-template-columns: minmax(0, 0.88fr) minmax(420px, 1.12fr);
+  padding-block: clamp(52px, 8vw, 112px);
+}
+
+.heroCopy,
+.heroFigure,
+.sectionHeading > *,
+.boundaries > *,
+.sources > * {
+  min-width: 0;
+}
+
+.hero h1 {
+  font-size: clamp(2.8rem, 6vw, 6.5rem);
+  max-width: 850px;
+}
+
+.eyebrow,
+.quickLabel {
+  color: var(--coral);
+  font-size: 0.73rem;
+  font-weight: 820;
+  letter-spacing: 0.16em;
+  margin: 0 0 18px;
+  text-transform: uppercase;
+}
+
+.dek {
+  color: var(--muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.12rem, 1.7vw, 1.44rem);
+  line-height: 1.62;
+  margin: 28px 0 0;
+  max-width: 760px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 28px;
+}
+
+.meta span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.meta a {
+  border-bottom: 1px solid currentColor;
+}
+
+.heroActions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+  margin-top: 34px;
+}
+
+.printButton {
+  background: var(--cobalt);
+  border: 1px solid var(--ink);
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 820;
+  letter-spacing: 0.08em;
+  padding: 15px 20px;
+  text-transform: uppercase;
+}
+
+.printButton:hover,
+.printButton:focus-visible {
+  background: var(--ink);
+}
+
+.jumpLink {
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.heroFigure {
+  margin: 0;
+}
+
+.heroFigure img {
+  background: #d7cfbd;
+  border: 1px solid var(--ink);
+  box-shadow: 16px 16px 0 #b6ca59;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+
+.heroFigure figcaption {
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  margin-top: 16px;
+}
+
+.quickAnswer {
+  background: var(--ink);
+  color: white;
+  display: grid;
+  gap: 34px;
+  grid-template-columns: minmax(170px, 0.28fr) minmax(0, 1fr);
+  margin-bottom: clamp(70px, 9vw, 120px);
+  padding: clamp(30px, 5vw, 68px);
+}
+
+.quickLabel {
+  color: var(--lime);
+}
+
+.quickAnswer h2 {
+  font-size: clamp(2rem, 3.8vw, 4.3rem);
+}
+
+.quickAnswer p:last-child {
+  color: #d5d8dc;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.05rem, 1.55vw, 1.28rem);
+  line-height: 1.72;
+  margin: 22px 0 0;
+  max-width: 980px;
+}
+
+.recurring,
+.affiliateKit,
+.calendar,
+.faq,
+.sources {
+  border-top: 1px solid var(--ink);
+  padding-block: clamp(64px, 9vw, 118px);
+}
+
+.sectionHeading {
+  align-items: end;
+  display: grid;
+  gap: 34px;
+  grid-template-columns: minmax(0, 1.22fr) minmax(280px, 0.78fr);
+  margin-bottom: 42px;
+}
+
+.sectionHeading h2,
+.boundaries h2,
+.sources h2 {
+  font-size: clamp(2.2rem, 4.4vw, 4.8rem);
+  max-width: 1050px;
+}
+
+.sectionHeading > p,
+.sources > div > p {
+  color: var(--muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.06rem;
+  line-height: 1.68;
+  margin: 0;
+}
+
+.recurringGrid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.recurringCard {
+  background: white;
+  border: 1px solid var(--ink);
+  padding: 24px;
+}
+
+.checkRow {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.checkRow input,
+.monthCard li > input {
+  accent-color: var(--cobalt);
+  height: 20px;
+  margin: 0;
+  width: 20px;
+}
+
+.checkRow span,
+.scope {
+  color: var(--cobalt);
+  font-size: 0.66rem;
+  font-weight: 820;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.recurringCard h3 {
+  font-size: 1.3rem;
+  line-height: 1.16;
+  margin: 36px 0 14px;
+}
+
+.recurringCard p,
+.monthSummary,
+.monthCard li p,
+.faqList p,
+.boundaries p {
+  color: var(--muted);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.68;
+}
+
+.recurringCard p {
+  font-size: 0.94rem;
+  margin: 0;
+}
+
+.recurringCard a,
+.monthCard a {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 750;
+  margin-top: 18px;
+}
+
+.affiliateKit {
+  background: #fff5ec;
+  border: 1px solid var(--ink);
+  margin-bottom: clamp(64px, 9vw, 118px);
+  padding: clamp(30px, 5vw, 62px);
+}
+
+.affiliateKit .sectionHeading {
+  margin-bottom: 30px;
+}
+
+.affiliateKit .sectionHeading > p {
+  color: var(--ink);
+}
+
+.affiliateGrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.affiliateGrid article {
+  background: white;
+  border: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+}
+
+.affiliateGrid h3 {
+  font-size: 1.14rem;
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+
+.affiliateGrid p {
+  color: var(--muted);
+  flex: 1;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.91rem;
+  line-height: 1.62;
+  margin: 0;
+}
+
+.affiliateGrid a {
+  align-self: flex-start;
+  border-bottom: 1px solid currentColor;
+  font-size: 0.76rem;
+  font-weight: 780;
+  margin-top: 20px;
+}
+
+.monthNav {
+  align-items: center;
+  background: #edf7b4;
+  border: 1px solid var(--ink);
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  margin: 0 0 clamp(64px, 9vw, 118px);
+  padding: 20px 24px;
+  position: sticky;
+  top: 74px;
+  z-index: 2;
+}
+
+.monthNav p {
+  font-size: 0.73rem;
+  font-weight: 820;
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.monthNav > div {
+  display: grid;
+  flex: 1;
+  gap: 6px;
+  grid-template-columns: repeat(12, minmax(38px, 1fr));
+}
+
+.monthNav a {
+  border: 1px solid transparent;
+  font-size: 0.71rem;
+  font-weight: 780;
+  padding: 8px 4px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.monthNav a:hover,
+.monthNav a:focus-visible {
+  background: white;
+  border-color: var(--ink);
+}
+
+.calendar {
+  padding-top: 0;
+}
+
+.monthGrid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.monthCard {
+  background: white;
+  border: 1px solid var(--ink);
+  scroll-margin-top: 160px;
+}
+
+.monthCard > header {
+  align-items: stretch;
+  background: var(--cobalt);
+  color: white;
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+}
+
+.monthCard > header > span {
+  align-items: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.48);
+  display: flex;
+  font-size: 2.1rem;
+  font-weight: 850;
+  justify-content: center;
+}
+
+.monthCard > header > div {
+  padding: 22px 24px;
+}
+
+.monthCard > header p {
+  color: var(--lime);
+  font-size: 0.68rem;
+  font-weight: 820;
+  letter-spacing: 0.14em;
+  margin: 0 0 7px;
+  text-transform: uppercase;
+}
+
+.monthCard > header h3 {
+  font-size: clamp(1.32rem, 2vw, 1.85rem);
+  line-height: 1.12;
+}
+
+.monthSummary {
+  border-bottom: 1px solid var(--line);
+  font-size: 0.94rem;
+  margin: 0;
+  padding: 22px 24px;
+}
+
+.monthCard ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.monthCard li {
+  align-items: start;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 20px minmax(0, 1fr);
+  padding: 24px;
+}
+
+.monthCard li + li {
+  border-top: 1px solid var(--line);
+}
+
+.monthCard h4 {
+  font-size: 1.05rem;
+  line-height: 1.25;
+  margin: 8px 0 10px;
+}
+
+.monthCard li p {
+  font-size: 0.91rem;
+  margin: 0;
+}
+
+.boundaries {
+  background: #e8f1ff;
+  border: 1px solid var(--ink);
+  display: grid;
+  gap: clamp(34px, 6vw, 80px);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  margin-bottom: clamp(70px, 10vw, 130px);
+  padding: clamp(30px, 5vw, 68px);
+}
+
+.boundaries .eyebrow {
+  color: var(--cobalt);
+}
+
+.boundaries p {
+  font-size: 1.04rem;
+  margin: 0;
+}
+
+.boundaries p + p {
+  margin-top: 22px;
+}
+
+.faqList {
+  border: 1px solid var(--ink);
+}
+
+.faqList details + details {
+  border-top: 1px solid var(--ink);
+}
+
+.faqList summary {
+  cursor: pointer;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 780;
+  padding: 24px;
+}
+
+.faqList p {
+  margin: 0;
+  max-width: 980px;
+  padding: 0 24px 26px;
+}
+
+.sources {
+  display: grid;
+  gap: clamp(34px, 6vw, 80px);
+  grid-template-columns: minmax(230px, 0.42fr) minmax(0, 1fr);
+}
+
+.sources ol {
+  list-style-position: outside;
+  margin: 34px 0 0;
+  padding-left: 22px;
+}
+
+.sources li {
+  line-height: 1.55;
+  padding-left: 8px;
+}
+
+.sources li + li {
+  margin-top: 18px;
+}
+
+.sources li a {
+  font-weight: 750;
+}
+
+.sources li span {
+  color: var(--muted);
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.88rem;
+  margin-top: 5px;
+}
+
+.newsletter {
+  margin-top: 0;
+}
+
+@media (max-width: 1120px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .heroFigure {
+    max-width: 980px;
+  }
+
+  .recurringGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .affiliateGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .monthNav {
+    align-items: start;
+    flex-direction: column;
+    position: static;
+  }
+
+  .monthNav > div {
+    grid-template-columns: repeat(6, minmax(48px, 1fr));
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .quickAnswer,
+  .sectionHeading,
+  .boundaries,
+  .sources {
+    grid-template-columns: 1fr;
+  }
+
+  .recurringGrid,
+  .affiliateGrid,
+  .monthGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroFigure img {
+    box-shadow: 8px 8px 0 #b6ca59;
+  }
+
+  .monthNav > div {
+    grid-template-columns: repeat(4, minmax(48px, 1fr));
+  }
+
+  .monthCard > header {
+    grid-template-columns: 68px minmax(0, 1fr);
+  }
+
+  .monthCard > header > span {
+    font-size: 1.6rem;
+  }
+}
+
+@media print {
+  @page {
+    margin: 0.45in;
+    size: auto;
+  }
+
+  :global(.site-header),
+  :global(.site-footer),
+  :global(.newsletter),
+  .breadcrumbs,
+  .heroFigure,
+  .heroActions,
+  .quickAnswer,
+  .affiliateKit,
+  .monthNav,
+  .boundaries,
+  .faq,
+  .sources,
+  .recurring header,
+  .calendar > header {
+    display: none !important;
+  }
+
+  .page {
+    background: white;
+    color: black;
+  }
+
+  .shell {
+    max-width: none;
+    padding: 0;
+  }
+
+  .hero {
+    display: block;
+    padding: 0 0 16px;
+  }
+
+  .hero h1 {
+    font-size: 24pt;
+    margin: 0;
+  }
+
+  .eyebrow {
+    color: black;
+    font-size: 8pt;
+    margin-bottom: 8px;
+  }
+
+  .dek {
+    color: black;
+    font-size: 10pt;
+    line-height: 1.35;
+    margin-top: 10px;
+  }
+
+  .meta {
+    margin-top: 8px;
+  }
+
+  .meta span {
+    color: black;
+    font-size: 7.5pt;
+  }
+
+  .recurring,
+  .calendar {
+    border-top: 1px solid black;
+    padding: 12px 0;
+  }
+
+  .recurring::before,
+  .calendar::before {
+    display: block;
+    font-size: 14pt;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .recurring::before {
+    content: "Every month";
+  }
+
+  .calendar::before {
+    content: "Month-by-month checklist";
+  }
+
+  .recurringGrid {
+    gap: 6px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .recurringCard {
+    border: 1px solid #444;
+    break-inside: avoid;
+    padding: 8px;
+  }
+
+  .recurringCard h3 {
+    font-size: 9pt;
+    margin: 8px 0 4px;
+  }
+
+  .recurringCard p,
+  .recurringCard a {
+    display: none;
+  }
+
+  .checkRow span,
+  .scope {
+    color: black;
+    font-size: 6.5pt;
+  }
+
+  .checkRow input,
+  .monthCard li > input {
+    accent-color: black;
+    height: 13px;
+    width: 13px;
+  }
+
+  .monthGrid {
+    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .monthCard {
+    border: 1px solid #444;
+    break-inside: avoid;
+  }
+
+  .monthCard > header {
+    background: white;
+    color: black;
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .monthCard > header > span {
+    border-right-color: #444;
+    font-size: 11pt;
+  }
+
+  .monthCard > header > div {
+    padding: 7px 8px;
+  }
+
+  .monthCard > header p {
+    color: black;
+    font-size: 6.5pt;
+    margin-bottom: 2px;
+  }
+
+  .monthCard > header h3 {
+    font-size: 10pt;
+  }
+
+  .monthSummary {
+    display: none;
+  }
+
+  .monthCard li {
+    gap: 7px;
+    grid-template-columns: 13px minmax(0, 1fr);
+    padding: 7px 8px;
+  }
+
+  .monthCard h4 {
+    font-size: 8pt;
+    margin: 2px 0;
+  }
+
+  .monthCard li p,
+  .monthCard a {
+    display: none;
+  }
+}

@@ -5,12 +5,19 @@ import {
   CORDLESS_TOOLS_PUBLISHED_DATE,
   CORDLESS_TOOLS_SLUG,
 } from "./lib/cordless-tools-guide";
+import {
+  HOME_MAINTENANCE_PUBLISHED_DATE,
+  HOME_MAINTENANCE_SLUG,
+} from "./lib/home-maintenance-checklist";
 import { RESOURCE_REVIEWED_DATE } from "./lib/resources";
 
 const OVEN_IGNITER_SLUG = "whirlpool-oven-igniter-glows-but-wont-heat";
 const OVEN_IGNITER_PUBLISHED_DATE = new Date("2026-08-29T12:00:00Z");
 const CORDLESS_TOOLS_PUBLISHED_AT = new Date(
   CORDLESS_TOOLS_PUBLISHED_DATE + "T12:00:00Z",
+);
+const HOME_MAINTENANCE_PUBLISHED_AT = new Date(
+  HOME_MAINTENANCE_PUBLISHED_DATE + "T12:00:00Z",
 );
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -40,6 +47,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
       changeFrequency: "monthly" as const,
       lastModified: CORDLESS_TOOLS_PUBLISHED_AT,
+    },
+    {
+      path: "/" + HOME_MAINTENANCE_SLUG,
+      priority: 0.95,
+      changeFrequency: "monthly" as const,
+      lastModified: HOME_MAINTENANCE_PUBLISHED_AT,
     },
     {
       path: "/about",

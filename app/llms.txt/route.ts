@@ -5,6 +5,10 @@ import {
   CORDLESS_TOOLS_SLUG,
   cordlessToolsGuide,
 } from "../lib/cordless-tools-guide";
+import {
+  HOME_MAINTENANCE_PUBLISHED_DATE_LABEL,
+  HOME_MAINTENANCE_SLUG,
+} from "../lib/home-maintenance-checklist";
 import { RESOURCE_REVIEWED_DATE_LABEL } from "../lib/resources";
 
 export function GET() {
@@ -32,6 +36,13 @@ export function GET() {
     "\n" +
     cordlessToolsGuide.metaDescription;
 
+  const homeMaintenanceLine =
+    "### Home Maintenance Checklist by Month\n" +
+    SITE_URL +
+    "/" +
+    HOME_MAINTENANCE_SLUG +
+    "\nA free, printable month-by-month checklist for home safety, HVAC, moisture, plumbing, appliances, drainage, and seasonal preparation.";
+
   const body = `# Trusted Home Essentials
 
 Trusted Home Essentials publishes practical home troubleshooting, maintenance guidance, and source-backed product analysis. The editorial approach is to diagnose the problem before recommending replacement.
@@ -55,6 +66,8 @@ Affiliate disclosure: ${SITE_URL}/affiliate-disclosure
 
 ## Troubleshooting and maintenance resources
 
+${homeMaintenanceLine}
+
 ${resourceLines}
 
 ## Product buying guides
@@ -66,6 +79,7 @@ ${guideLines}
 Troubleshooting resources last reviewed: ${RESOURCE_REVIEWED_DATE_LABEL}
 Product guide review cycle: ${REVIEWED_DATE_LABEL}
 Cordless power tool guide reviewed: ${CORDLESS_TOOLS_PUBLISHED_DATE_LABEL}
+Home maintenance checklist published: ${HOME_MAINTENANCE_PUBLISHED_DATE_LABEL}
 `;
 
   return new Response(body, {

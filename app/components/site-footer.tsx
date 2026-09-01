@@ -15,6 +15,7 @@ export function SiteFooter() {
       </div>
       <div className="footer-links" aria-label="Site information">
         <Link href="/troubleshooting">Troubleshooting</Link>
+        <Link href="/home-maintenance-checklist">Home maintenance checklist</Link>
         <Link href="/guides">Buying guides</Link>
         <Link href="/about">About</Link>
         <Link href="/editorial-policy">Editorial policy</Link>

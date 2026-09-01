@@ -126,6 +126,9 @@ export default function Home() {
         </div>
 
         <div className="hero-actions">
+          <Link className="text-link" href="/home-maintenance-checklist">
+            Open the monthly maintenance checklist
+          </Link>
           <Link className="text-link" href="/troubleshooting">
             See all troubleshooting guides
           </Link>
