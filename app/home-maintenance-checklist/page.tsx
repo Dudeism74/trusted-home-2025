@@ -9,8 +9,6 @@ import {
   HOME_MAINTENANCE_PUBLISHED_DATE,
   HOME_MAINTENANCE_PUBLISHED_DATE_LABEL,
   HOME_MAINTENANCE_SLUG,
-  HOME_MAINTENANCE_AFFILIATE_TAG,
-  homeMaintenanceAffiliateKit,
   homeMaintenanceFaq,
   homeMaintenanceSources,
   monthlyMaintenancePlans,
@@ -225,37 +223,6 @@ export default function HomeMaintenanceChecklistPage() {
                   <h3>{task.title}</h3>
                   <p>{task.detail}</p>
                   {task.href ? <Link href={task.href}>Open the related guide</Link> : null}
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className={styles.affiliateKit} aria-labelledby="affiliate-kit-title">
-            <header className={styles.sectionHeading}>
-              <div>
-                <p className={styles.eyebrow}>Optional maintenance kit</p>
-                <h2 id="affiliate-kit-title">Useful tools when the task calls for them</h2>
-              </div>
-              <p>
-                <strong>Affiliate disclosure:</strong> As an Amazon Associate I earn
-                from qualifying purchases. These links are optional starting points,
-                not claims that one product fits every home.
-              </p>
-            </header>
-            <div className={styles.affiliateGrid}>
-              {homeMaintenanceAffiliateKit.map((item) => (
-                <article key={item.name}>
-                  <h3>{item.name}</h3>
-                  <p>{item.reason}</p>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="sponsored nofollow noopener"
-                    data-product-name={item.name}
-                    data-affiliate-tag={HOME_MAINTENANCE_AFFILIATE_TAG}
-                  >
-                    Browse options on Amazon
-                  </a>
                 </article>
               ))}
             </div>

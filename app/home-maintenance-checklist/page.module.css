@@ -164,7 +164,6 @@
 }
 
 .recurring,
-.affiliateKit,
 .calendar,
 .faq,
 .sources {
@@ -259,58 +258,6 @@
   font-size: 0.76rem;
   font-weight: 750;
   margin-top: 18px;
-}
-
-.affiliateKit {
-  background: #fff5ec;
-  border: 1px solid var(--ink);
-  margin-bottom: clamp(64px, 9vw, 118px);
-  padding: clamp(30px, 5vw, 62px);
-}
-
-.affiliateKit .sectionHeading {
-  margin-bottom: 30px;
-}
-
-.affiliateKit .sectionHeading > p {
-  color: var(--ink);
-}
-
-.affiliateGrid {
-  display: grid;
-  gap: 14px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.affiliateGrid article {
-  background: white;
-  border: 1px solid var(--ink);
-  display: flex;
-  flex-direction: column;
-  padding: 22px;
-}
-
-.affiliateGrid h3 {
-  font-size: 1.14rem;
-  line-height: 1.2;
-  margin: 0 0 12px;
-}
-
-.affiliateGrid p {
-  color: var(--muted);
-  flex: 1;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 0.91rem;
-  line-height: 1.62;
-  margin: 0;
-}
-
-.affiliateGrid a {
-  align-self: flex-start;
-  border-bottom: 1px solid currentColor;
-  font-size: 0.76rem;
-  font-weight: 780;
-  margin-top: 20px;
 }
 
 .monthNav {
@@ -539,10 +486,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .affiliateGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .monthNav {
     align-items: start;
     flex-direction: column;
@@ -564,7 +507,6 @@
   }
 
   .recurringGrid,
-  .affiliateGrid,
   .monthGrid {
     grid-template-columns: 1fr;
   }
@@ -599,7 +541,6 @@
   .heroFigure,
   .heroActions,
   .quickAnswer,
-  .affiliateKit,
   .monthNav,
   .boundaries,
   .faq,

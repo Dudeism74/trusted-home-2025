@@ -1,7 +1,6 @@
 export const HOME_MAINTENANCE_SLUG = "home-maintenance-checklist";
 export const HOME_MAINTENANCE_PUBLISHED_DATE = "2026-09-01";
 export const HOME_MAINTENANCE_PUBLISHED_DATE_LABEL = "September 1, 2026";
-export const HOME_MAINTENANCE_AFFILIATE_TAG = "pinterest1-2025-20";
 
 export type MaintenanceTask = {
   title: string;
@@ -55,45 +54,6 @@ export const recurringMaintenanceTasks: MaintenanceTask[] = [
     detail:
       "Use the opener manufacturer's monthly reversal test. Adjust it exactly as instructed or call qualified service if the door does not reverse correctly.",
     scope: "If equipped",
-  },
-];
-
-export const homeMaintenanceAffiliateKit = [
-  {
-    name: "HVAC replacement filters",
-    reason:
-      "Match the exact length, width, depth, and filter type specified for your equipment. A higher rating is not automatically compatible with every system.",
-    href: `https://www.amazon.com/s?k=home+HVAC+replacement+air+filter&tag=${HOME_MAINTENANCE_AFFILIATE_TAG}`,
-  },
-  {
-    name: "Indoor digital hygrometers",
-    reason:
-      "Use measured humidity to investigate condensation and moisture instead of judging the room by feel alone.",
-    href: `https://www.amazon.com/s?k=indoor+digital+hygrometer&tag=${HOME_MAINTENANCE_AFFILIATE_TAG}`,
-  },
-  {
-    name: "Refrigerator and freezer thermometers",
-    reason:
-      "An appliance thermometer verifies whether the refrigerator is at 40°F or below and the freezer is at 0°F or below.",
-    href: `https://www.amazon.com/s?k=refrigerator+freezer+appliance+thermometer&tag=${HOME_MAINTENANCE_AFFILIATE_TAG}`,
-  },
-  {
-    name: "Water-leak detector alarms",
-    reason:
-      "Place suitable alarms near higher-risk plumbing and appliances, following their instructions and without obstructing service access.",
-    href: `https://www.amazon.com/s?k=water+leak+detector+alarm&tag=${HOME_MAINTENANCE_AFFILIATE_TAG}`,
-  },
-  {
-    name: "Dryer-vent cleaning kits",
-    reason:
-      "Choose a kit that fits the accessible duct path. Stop if the duct is crushed, disconnected, damaged, or unsafe to reach.",
-    href: `https://www.amazon.com/s?k=dryer+vent+cleaning+kit&tag=${HOME_MAINTENANCE_AFFILIATE_TAG}`,
-  },
-  {
-    name: "Door and window weatherstripping",
-    reason:
-      "Match the product to the operable joint and required clearance. Do not seal intentional drainage or ventilation openings.",
-    href: `https://www.amazon.com/s?k=door+window+weatherstripping&tag=${HOME_MAINTENANCE_AFFILIATE_TAG}`,
   },
 ];
 

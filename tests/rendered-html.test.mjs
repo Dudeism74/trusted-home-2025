@@ -233,13 +233,8 @@ test("renders the printable monthly home maintenance checklist", async () => {
   assert.match(html, /January: Heating, vents, and cold-weather leaks/i);
   assert.match(html, /December: Annual records and deferred repairs/i);
   assert.match(html, /Source-backed and ungated/i);
-  assert.match(html, /Optional maintenance kit/i);
-  assert.match(html, /As an Amazon Associate I earn from qualifying purchases/i);
-  assert.match(html, /indoor\+digital\+hygrometer&amp;tag=pinterest1-2025-20/i);
-  assert.match(
-    html,
-    /<a(?=[^>]*\bdata-affiliate-tag=["']pinterest1-2025-20["'])(?=[^>]*\brel=["'][^"']*sponsored[^"']*nofollow[^"']*["'])[^>]*>/i,
-  );
+  assert.doesNotMatch(html, /pinterest1-2025-20/i);
+  assert.doesNotMatch(html, /Browse options on Amazon/i);
   assert.match(html, /usfa\.fema\.gov\/prevention\/home-fires/i);
   assert.match(html, /energystar\.gov\/saveathome\/heating-cooling/i);
   assert.match(html, /epa\.gov\/radon/i);
