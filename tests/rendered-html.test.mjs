@@ -235,6 +235,24 @@ test("renders the printable monthly home maintenance checklist", async () => {
   assert.match(html, /Source-backed and ungated/i);
   assert.doesNotMatch(html, /pinterest1-2025-20/i);
   assert.doesNotMatch(html, /Browse options on Amazon/i);
+  assert.match(html, /As an Amazon Associate I earn from qualifying purchases/i);
+  assert.match(html, /Jim has not completed hands-on testing of these exact models/i);
+  assert.match(html, /View exact product on Amazon \(paid link\)/i);
+  assert.match(html, /https:\/\/amzn\.to\/4ycHS9F/i);
+  assert.match(html, /https:\/\/amzn\.to\/4qRt4e8/i);
+  assert.match(html, /https:\/\/amzn\.to\/4iH4hHB/i);
+  assert.match(html, /https:\/\/amzn\.to\/4de6qa2/i);
+  for (const asin of ["B01H1R0K68", "B000095RC8", "B000JOK11K", "B06XTP3XD2"]) {
+    assert.match(
+      html,
+      new RegExp(
+        `<a(?=[^>]*\\bdata-amazon-asin=["']${asin}["'])(?=[^>]*\\bdata-affiliate-tag=["']checklist02c-20["'])(?=[^>]*\\brel=["'][^"']*sponsored[^"']*nofollow[^"']*["'])[^>]*>`,
+        "i",
+      ),
+    );
+  }
+  assert.doesNotMatch(html, /https:\/\/www\.amazon\.com\/(?:s|dp)\//i);
+  assert.match(html, /Those checklist tasks intentionally have no shopping link/i);
   assert.match(html, /usfa\.fema\.gov\/prevention\/home-fires/i);
   assert.match(html, /energystar\.gov\/saveathome\/heating-cooling/i);
   assert.match(html, /epa\.gov\/radon/i);

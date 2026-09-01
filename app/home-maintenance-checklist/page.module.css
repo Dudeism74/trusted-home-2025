@@ -164,6 +164,7 @@
 }
 
 .recurring,
+.affiliateKit,
 .calendar,
 .faq,
 .sources {
@@ -258,6 +259,121 @@
   font-size: 0.76rem;
   font-weight: 750;
   margin-top: 18px;
+}
+
+.affiliateKit {
+  background: #fff5ec;
+  border: 1px solid var(--ink);
+  margin-bottom: clamp(64px, 9vw, 118px);
+  padding: clamp(30px, 5vw, 62px);
+}
+
+.affiliateKit .sectionHeading {
+  margin-bottom: 30px;
+}
+
+.affiliateIntro {
+  color: var(--muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.affiliateIntro p {
+  margin: 0;
+}
+
+.affiliateIntro p + p {
+  margin-top: 16px;
+}
+
+.affiliateIntro a,
+.specLink {
+  border-bottom: 1px solid currentColor;
+}
+
+.affiliateGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.affiliateCard {
+  background: white;
+  border: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 3vw, 30px);
+}
+
+.productTask {
+  color: var(--cobalt);
+  font-size: 0.68rem;
+  font-weight: 820;
+  letter-spacing: 0.1em;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+}
+
+.affiliateCard h3 {
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+
+.productReason,
+.fitWarning,
+.fitFirst p {
+  color: var(--muted);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.62;
+}
+
+.productReason {
+  margin: 0;
+}
+
+.fitWarning {
+  border-top: 1px solid var(--line);
+  margin: 20px 0 0;
+  padding-top: 18px;
+}
+
+.productActions {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.productLink {
+  font-size: 0.73rem;
+  line-height: 1.35;
+  padding: 13px 15px;
+}
+
+.specLink {
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.fitFirst {
+  background: #edf7b4;
+  border: 1px solid var(--ink);
+  margin-top: 16px;
+  padding: 22px;
+}
+
+.fitFirst > strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.fitFirst p {
+  margin: 0;
 }
 
 .monthNav {
@@ -507,6 +623,7 @@
   }
 
   .recurringGrid,
+  .affiliateGrid,
   .monthGrid {
     grid-template-columns: 1fr;
   }
@@ -541,6 +658,7 @@
   .heroFigure,
   .heroActions,
   .quickAnswer,
+  .affiliateKit,
   .monthNav,
   .boundaries,
   .faq,

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { AffiliateButton } from "../components/affiliate-button";
 import { JsonLd } from "../components/json-ld";
 import { NewsletterForm } from "../components/newsletter-form";
 import { SiteFooter } from "../components/site-footer";
@@ -8,8 +9,10 @@ import { SiteHeader } from "../components/site-header";
 import {
   HOME_MAINTENANCE_PUBLISHED_DATE,
   HOME_MAINTENANCE_PUBLISHED_DATE_LABEL,
+  HOME_MAINTENANCE_AFFILIATE_TAG,
   HOME_MAINTENANCE_SLUG,
   homeMaintenanceFaq,
+  homeMaintenanceProductRecommendations,
   homeMaintenanceSources,
   monthlyMaintenancePlans,
   recurringMaintenanceTasks,
@@ -226,6 +229,69 @@ export default function HomeMaintenanceChecklistPage() {
                 </article>
               ))}
             </div>
+          </section>
+
+          <section className={styles.affiliateKit} aria-labelledby="affiliate-kit-title">
+            <header className={styles.sectionHeading}>
+              <div>
+                <p className={styles.eyebrow}>Optional maintenance kit</p>
+                <h2 id="affiliate-kit-title">Four exact products for four defined jobs</h2>
+              </div>
+              <div className={styles.affiliateIntro}>
+                <p>
+                  These are researched starting points selected from published
+                  manufacturer specifications. Jim has not completed hands-on
+                  testing of these exact models, so verify fit before ordering.
+                </p>
+                <p>
+                  <strong>Affiliate disclosure:</strong> As an Amazon Associate I
+                  earn from qualifying purchases. Each Amazon button is a paid
+                  link. Read the full <Link href="/affiliate-disclosure">affiliate disclosure</Link>.
+                </p>
+              </div>
+            </header>
+
+            <div className={styles.affiliateGrid}>
+              {homeMaintenanceProductRecommendations.map((item) => (
+                <article className={styles.affiliateCard} key={item.amazonAsin}>
+                  <p className={styles.productTask}>{item.task}</p>
+                  <h3>{item.productName}</h3>
+                  <p className={styles.productReason}>{item.reason}</p>
+                  <p className={styles.fitWarning}>
+                    <strong>Check before buying:</strong> {item.fitWarning}
+                  </p>
+                  <div className={styles.productActions}>
+                    <AffiliateButton
+                      href={item.amazonUrl}
+                      productName={item.productName}
+                      amazonAsin={item.amazonAsin}
+                      affiliateTag={HOME_MAINTENANCE_AFFILIATE_TAG}
+                      className={styles.productLink}
+                    >
+                      View exact product on Amazon (paid link)
+                    </AffiliateButton>
+                    <a
+                      href={item.manufacturerSource.url}
+                      target="_blank"
+                      rel="noopener"
+                      className={styles.specLink}
+                    >
+                      {item.manufacturerSource.label}
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <aside className={styles.fitFirst} aria-label="Products that require a fit check">
+              <strong>Why no universal HVAC filter or weatherstrip pick?</strong>
+              <p>
+                Filter dimensions, filter type, and equipment airflow requirements
+                must match the HVAC system. Weatherstrip profile and compression
+                must match the moving joint. Those checklist tasks intentionally
+                have no shopping link until the exact fit is known.
+              </p>
+            </aside>
           </section>
 
           <nav className={styles.monthNav} aria-label="Jump to a month">

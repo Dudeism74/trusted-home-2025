@@ -1,6 +1,7 @@
 export const HOME_MAINTENANCE_SLUG = "home-maintenance-checklist";
 export const HOME_MAINTENANCE_PUBLISHED_DATE = "2026-09-01";
 export const HOME_MAINTENANCE_PUBLISHED_DATE_LABEL = "September 1, 2026";
+export const HOME_MAINTENANCE_AFFILIATE_TAG = "checklist02c-20";
 
 export type MaintenanceTask = {
   title: string;
@@ -15,6 +16,79 @@ export type MonthlyMaintenancePlan = {
   summary: string;
   tasks: MaintenanceTask[];
 };
+
+export type MaintenanceProductRecommendation = {
+  task: string;
+  productName: string;
+  amazonAsin: string;
+  amazonUrl: string;
+  reason: string;
+  fitWarning: string;
+  manufacturerSource: {
+    label: string;
+    url: string;
+  };
+};
+
+export const homeMaintenanceProductRecommendations: MaintenanceProductRecommendation[] = [
+  {
+    task: "Measure indoor humidity",
+    productName:
+      "ThermoPro TP50 indoor hygrometer (now TempPro TempAir CORE TP50)",
+    amazonAsin: "B01H1R0K68",
+    amazonUrl: "https://amzn.to/4ycHS9F",
+    reason:
+      "Its local display updates every 10 seconds, retains maximum and minimum readings until reset, and has stated accuracy of ±1°F and ±2–3% relative humidity.",
+    fitWarning:
+      "The manufacturer documents a local 10–99% relative-humidity measurement range with no wireless connection. Use it as a spot and trend aid, not remote monitoring or a whole-home diagnosis.",
+    manufacturerSource: {
+      label: "TempPro TP50 specifications (formerly ThermoPro)",
+      url: "https://temppro.com/products/tp50-digital-indoor-hygrometer-thermometer",
+    },
+  },
+  {
+    task: "Verify refrigerator or freezer temperature",
+    productName: "CDN FG80 refrigerator/freezer thermometer",
+    amazonAsin: "B000095RC8",
+    amazonUrl: "https://amzn.to/4qRt4e8",
+    reason:
+      "The non-mercuric thermometer has a shatterproof case, stand-or-hang mounting, a -40°F to 80°F range, and stated accuracy of ±2°F.",
+    fitWarning:
+      "Use a separate thermometer in each compartment being monitored. This is a passive appliance-air thermometer, not a food probe, alarm, or data logger.",
+    manufacturerSource: {
+      label: "CDN FG80 specifications",
+      url: "https://cdnmeasurement.com/products/fg80",
+    },
+  },
+  {
+    task: "Add an early warning near leak risks",
+    productName: "Basement Watchdog BWD-HWA water alarm",
+    amazonAsin: "B000JOK11K",
+    amazonUrl: "https://amzn.to/4iH4hHB",
+    reason:
+      "The local alarm has a stated 110 dB output, detects as little as 1/32 inch of water, and has a remote sensor panel on an attached 6-foot wire.",
+    fitWarning:
+      "The manufacturer documents only a local audible alarm, not a shutoff or phone alert. Install and test the required 9V battery, position the sensor as directed, and keep the alarm body dry.",
+    manufacturerSource: {
+      label: "Basement Watchdog BWD-HWA specifications",
+      url: "https://basementwatchdog.com/product/watchdog-water-alarm/",
+    },
+  },
+  {
+    task: "Clean an accessible dryer-vent route",
+    productName: "Gardus LintEater Pro RLE208 dryer-vent cleaning kit",
+    amazonAsin: "B06XTP3XD2",
+    amazonUrl: "https://amzn.to/4de6qa2",
+    reason:
+      "The drill-powered kit includes four 3-foot button-link rods for 12 feet of reach, a self-feeding auger brush, a 2.5-inch lint-trap brush, a blockage tool, and a vacuum adapter.",
+    fitWarning:
+      "Verify the duct material, diameter, route length, bends, and access before use. Stop if the duct is crushed, disconnected, damaged, inaccessible, or still blocked after safe cleaning.",
+    manufacturerSource: {
+      label: "Gardus LintEater Pro RLE208 specifications",
+      url: "https://www.hy-c.com/gardus-product/linteater-pro-dryer-vent-cleaning-kit",
+    },
+  },
+];
 
 export const recurringMaintenanceTasks: MaintenanceTask[] = [
   {
@@ -257,7 +331,7 @@ export const monthlyMaintenancePlans: MonthlyMaintenancePlan[] = [
       {
         title: "Verify refrigerator and freezer temperatures",
         detail:
-          "Use an appliance thermometer. Keep the refrigerator at 40°F or below and the freezer at 0°F or below.",
+          "Use appliance thermometers and check them at least weekly. Keep the refrigerator at 40°F or below and the freezer at 0°F or below.",
         scope: "Every home",
         href: "/refrigerator-not-cooling",
       },
@@ -532,6 +606,11 @@ export const homeMaintenanceSources = [
     label: "CDC: Preventing food poisoning",
     url: "https://www.cdc.gov/food-safety/prevention/index.html",
     supports: "Refrigerator and freezer temperature targets.",
+  },
+  {
+    label: "U.S. Food and Drug Administration: Safe food storage",
+    url: "https://www.fda.gov/consumers/consumer-updates/are-you-storing-food-safely",
+    supports: "Using appliance thermometers and checking refrigerator and freezer temperatures at least weekly.",
   },
   {
     label: "U.S. Consumer Product Safety Commission: Fuel-container safety",
