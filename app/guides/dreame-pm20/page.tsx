@@ -8,8 +8,6 @@ const product = {
   ...baseProduct,
   manufacturerUrl: "https://www.dreametech.com/products/pm20-air-purifier",
   manufacturerLabel: "Dreame AirPursue PM20 specifications",
-  reviewedDate: "2026-08-27",
-  reviewedDateLabel: "August 27, 2026",
   metaTitle: "Dreame AirPursue PM20: CADR, Room Size, and Tradeoffs",
   metaDescription:
     "A CADR-based Dreame AirPursue PM20 analysis with room-size math, equivalent air changes per hour, EPA sizing context, noise, filtration limits, and buying tradeoffs.",

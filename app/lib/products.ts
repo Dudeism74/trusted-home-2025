@@ -241,6 +241,8 @@ export const products: ProductGuide[] = [
   },
   {
     slug: "dreame-pm20",
+    reviewedDate: "2026-08-27",
+    reviewedDateLabel: "August 27, 2026",
     name: "Dreame AirPursue PM20",
     shortName: "AirPursue PM20",
     category: "Indoor air",
