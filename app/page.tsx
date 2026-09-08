@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { FeaturedProductGrid } from "./components/featured-product-grid";
@@ -8,6 +9,14 @@ import { SiteHeader } from "./components/site-header";
 import { allResources } from "./lib/all-resources";
 import { products, SITE_NAME, SITE_URL } from "./lib/products";
 import { featuredResources } from "./lib/resources";
+import { ovenIgniterResource } from "./lib/oven-igniter-resource";
+
+const homepageFeaturedResources = [
+  ovenIgniterResource,
+  ...featuredResources.filter(
+    (resource) => resource.slug !== "prevent-bathroom-mold-growth-steps",
+  ),
+];
 
 export const metadata: Metadata = {
   description:
@@ -41,7 +50,7 @@ export default function Home() {
       {
         "@type": "ItemList",
         name: "Featured Trusted Home Essentials troubleshooting resources",
-        itemListElement: featuredResources.map((resource, index) => ({
+        itemListElement: homepageFeaturedResources.map((resource, index) => ({
           "@type": "ListItem",
           position: index + 1,
           url: `${SITE_URL}/${resource.slug}`,
@@ -102,15 +111,33 @@ export default function Home() {
             <h2>Problems worth diagnosing before replacement.</h2>
           </div>
           <p>
-            The featured cluster focuses on air movement, bathroom ventilation,
-            moisture, and comfort. The full troubleshooting library now also covers
-            appliance, plumbing, hot-water, and electrical problems.
+            Start with our photographed Whirlpool oven repair, including the
+            connector mismatch and successful operating test. Then explore
+            source-backed checks for ventilation, moisture, appliances, and more.
           </p>
         </div>
 
         <div className="product-grid">
-          {featuredResources.map((resource) => (
+          {homepageFeaturedResources.map((resource) => (
             <article className={`product-card ${resource.accent}`} key={resource.slug}>
+              {resource.slug === ovenIgniterResource.slug ? (
+                <Link
+                  href={`/${resource.slug}`}
+                  className="product-image"
+                  style={{ minHeight: 280, padding: 24 }}
+                  aria-label="Read the photographed Whirlpool oven igniter repair"
+                >
+                  <Image
+                    src="/repair/whirlpool-oven-igniter/whirlpool-oven-blue-flame.webp"
+                    alt="Whirlpool oven bake burner with an even blue flame after the igniter replacement"
+                    width={360}
+                    height={480}
+                    sizes="180px"
+                    style={{ height: 240, width: "auto", maxWidth: "100%" }}
+                    unoptimized
+                  />
+                </Link>
+              ) : null}
               <div className="product-content">
                 <p className="product-category">{resource.eyebrow}</p>
                 <h3>{resource.title}</h3>
@@ -186,10 +213,9 @@ export default function Home() {
             <h2>Product analysis connected to the problem.</h2>
           </div>
           <p>
-            The Dreame PM20 is the current product guide most closely connected to
-            the original air and comfort cluster. Its published CADR can be checked
-            against room volume instead of relying only on a square-foot coverage
-            headline.
+            Compare the Dreame PM20's published clean-air delivery rate with your
+            room volume. The guide works through the sizing math and explains the
+            tradeoffs of combining a purifier, fan, and supplemental heater.
           </p>
         </div>
 
@@ -219,8 +245,8 @@ export default function Home() {
 
       <section className="newsletter">
         <div>
-          <p className="eyebrow">The useful list</p>
-          <h2>Get practical fixes and buying guidance without the clutter.</h2>
+          <p className="eyebrow">Stay in touch</p>
+          <h2>Questions, corrections, and future guides.</h2>
         </div>
         <NewsletterForm source="homepage" />
       </section>

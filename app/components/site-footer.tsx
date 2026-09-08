@@ -18,6 +18,7 @@ export function SiteFooter() {
         <Link href="/home-maintenance-checklist">Home maintenance checklist</Link>
         <Link href="/guides">Buying guides</Link>
         <Link href="/about">About</Link>
+        <Link href="/contact">Contact</Link>
         <Link href="/editorial-policy">Editorial policy</Link>
         <Link href="/affiliate-disclosure">Affiliate disclosure</Link>
         <Link href="/privacy">Privacy</Link>

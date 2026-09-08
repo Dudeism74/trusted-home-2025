@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { supportsSitesServices } from "./lib/server-capabilities";
 
 export type ChatGPTUser = {
   displayName: string;
@@ -17,6 +18,7 @@ const SIGN_OUT_PATH = "/signout-with-chatgpt";
 const CALLBACK_PATH = "/callback";
 
 export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
+  if (!supportsSitesServices()) return null;
   const requestHeaders = await headers();
   const email = requestHeaders.get(USER_EMAIL_HEADER);
   if (!email) return null;
@@ -38,6 +40,7 @@ export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
 export async function requireChatGPTUser(
   returnTo: string,
 ): Promise<ChatGPTUser> {
+  if (!supportsSitesServices()) notFound();
   const user = await getChatGPTUser();
   if (user) return user;
 
