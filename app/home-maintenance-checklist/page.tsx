@@ -421,8 +421,8 @@ export default function HomeMaintenanceChecklistPage() {
 
       <section className={`newsletter ${styles.newsletter}`}>
         <div>
-          <p className="eyebrow">The useful list</p>
-          <h2>Get the next practical home guide without the clutter.</h2>
+          <p className="eyebrow">Stay in touch</p>
+          <h2>Questions, corrections, and future guides.</h2>
         </div>
         <NewsletterForm source="home-maintenance-checklist" />
       </section>

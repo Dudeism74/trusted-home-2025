@@ -1,5 +1,7 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { InfoPage } from "../components/info-page";
+import { supportsSitesServices } from "../lib/server-capabilities";
 
 export const metadata: Metadata = {
   title: "Privacy",
@@ -18,10 +20,14 @@ export default function PrivacyPage() {
       <section>
         <h2>Information you provide</h2>
         <p>
-          Newsletter signup stores the email address you submit and the page source
-          of the signup. Comment submission stores the display name, comment text,
-          optional email address, moderation status, and submission time. Comment
-          email addresses are kept private.
+          {supportsSitesServices()
+            ? "Newsletter signup and on-site comments collect the information you choose to submit."
+            : "Newsletter signup and on-site comments are currently paused on this site."}{" "}
+          Existing newsletter records can include an email address and signup
+          source. Existing comment records can include a display name, comment
+          text, optional email address, moderation status, and submission time.
+          Comment email addresses are kept private. If you email Jim, your email
+          address and message are used to respond to your request.
         </p>
       </section>
       <section>
@@ -74,10 +80,9 @@ export default function PrivacyPage() {
       <section>
         <h2>Your choices</h2>
         <p>
-          Every newsletter message will include an unsubscribe option. A reader
-          may also request removal of a submitted comment or private email by
-          replying through the contact method included in the newsletter or site
-          correspondence.
+          Request removal of a submitted comment or newsletter email address through
+          the <Link href="/contact">contact page</Link>. Sending a question by
+          email does not subscribe you to a newsletter.
         </p>
       </section>
     </InfoPage>

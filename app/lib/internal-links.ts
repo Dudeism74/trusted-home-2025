@@ -124,7 +124,13 @@ export const contextualAnchorTerms: Record<string, string[]> = {
     "bake burner",
   ],
   "refrigerator-not-cooling": ["refrigerator", "fridge"],
-  "dryer-not-heating": ["clothes dryer", "dryer"],
+  "dryer-not-heating": [
+    "clothes dryer",
+    "electric dryer",
+    "dryer not heating",
+    "dryer vent",
+    "dryer exhaust",
+  ],
   "washer-not-draining": ["washing machine", "washer"],
   "dishwasher-not-draining": ["dishwasher drain", "dishwasher not draining"],
   "why-dishwasher-not-cleaning-properly": [
@@ -148,4 +154,14 @@ export const supplementalContextualLinks: Record<
 
 export function getRelatedResourceSlugs(slug: string, fallback: string[]) {
   return relatedResourceOverrides[slug] ?? fallback;
+}
+
+export function findContextualTermIndex(text: string, term: string) {
+  const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = new RegExp(
+    `(^|[^\\p{L}\\p{N}_])(${escapedTerm})(?=$|[^\\p{L}\\p{N}_])`,
+    "iu",
+  ).exec(text);
+
+  return match ? match.index + match[1].length : -1;
 }

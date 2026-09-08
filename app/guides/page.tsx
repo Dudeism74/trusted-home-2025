@@ -215,8 +215,8 @@ export default function GuidesIndex() {
 
       <section className="newsletter">
         <div>
-          <p className="eyebrow">The useful list</p>
-          <h2>Get new buying guides without the clutter.</h2>
+          <p className="eyebrow">Stay in touch</p>
+          <h2>Questions, corrections, and future guides.</h2>
         </div>
         <NewsletterForm source="guides-index" />
       </section>

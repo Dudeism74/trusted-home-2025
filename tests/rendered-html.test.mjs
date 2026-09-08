@@ -162,7 +162,6 @@ test("legacy equivalents use permanent redirects", async () => {
     ["/articles", "/troubleshooting"],
     ["/our-blog", "/guides"],
     ["/privacy-policy", "/privacy"],
-    ["/contact", "/about"],
     ["/home", "/"],
     ["/guides/dreame-z1-pro", "/guides/dreame-a3-awd-pro"],
   ]);
@@ -191,7 +190,7 @@ test("sitemap includes every current resource and buying guide", async () => {
   const urls = xml.match(/<url>/g) ?? [];
 
   assert.equal(response.status, 200);
-  assert.equal(urls.length, 33);
+  assert.equal(urls.length, 34);
   assert.match(
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides<\/loc>/i,
@@ -331,12 +330,20 @@ test("llms text exposes the restored cordless power tool guide", async () => {
   assert.match(body, /Home maintenance checklist published: September 1, 2026/i);
 });
 
-test("comments API accepts the restored cordless power tool guide slug", async () => {
+test("comments API reports unavailable storage honestly", async () => {
   const response = await render(
     "/api/comments/essential-cordless-power-tools-diyers",
   );
   const body = await response.json();
 
+  assert.equal(response.status, 503);
+  assert.deepEqual(body, { error: "Comments are temporarily unavailable." });
+});
+
+test("contact page exposes a direct editorial and privacy contact", async () => {
+  const response = await render("/contact");
+  const html = await response.text();
   assert.equal(response.status, 200);
-  assert.deepEqual(body, { comments: [] });
+  assert.match(html, /mailto:trustedessentialsgpt@gmail\.com/);
+  assert.match(html, /Privacy requests/);
 });

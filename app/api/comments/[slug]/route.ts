@@ -1,3 +1,4 @@
+import { supportsSitesServices } from "../../../lib/server-capabilities";
 import { and, asc, count, eq, gte, sql } from "drizzle-orm";
 import { getDb } from "../../../../db";
 import { comments } from "../../../../db/schema";
@@ -32,6 +33,12 @@ export async function GET(
   _request: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
+  if (!supportsSitesServices()) {
+    return Response.json(
+      { error: "On-site comments are paused. Contact Jim through the contact page." },
+      { status: 503, headers: { "Cache-Control": "no-store" } },
+    );
+  }
   try {
     const { slug } = await params;
     if (!isCommentableGuide(slug)) {
@@ -53,7 +60,10 @@ export async function GET(
 
     return Response.json({ comments: rows });
   } catch {
-    return Response.json({ comments: [] });
+    return Response.json(
+      { error: "Comments are temporarily unavailable." },
+      { status: 503, headers: { "Cache-Control": "no-store" } },
+    );
   }
 }
 
@@ -61,6 +71,12 @@ export async function POST(
   request: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
+  if (!supportsSitesServices()) {
+    return Response.json(
+      { error: "On-site comments are paused. Contact Jim through the contact page." },
+      { status: 503, headers: { "Cache-Control": "no-store" } },
+    );
+  }
   try {
     const { slug } = await params;
     if (!isCommentableGuide(slug)) {

@@ -91,8 +91,8 @@ export function GuidePage({ product }: { product: ProductGuide }) {
         qualifying purchases.
         {product.campaignId ? (
           <>
-            {" "}This guide supports an Amazon Creator Connections campaign, so
-            qualifying purchases may earn an enhanced commission.
+            {" "}This guide includes Amazon Creator Connections links. An additional
+            commission may apply only while a corresponding campaign is active.
           </>
         ) : null}
       </div>
@@ -354,8 +354,8 @@ export function GuidePage({ product }: { product: ProductGuide }) {
 
         <section className="newsletter guide-newsletter">
           <div>
-            <p className="eyebrow">The useful list</p>
-            <h2>Get the next guide when it is worth reading.</h2>
+            <p className="eyebrow">Stay in touch</p>
+            <h2>Questions, corrections, and future guides.</h2>
           </div>
           <NewsletterForm source={`guide-${product.slug}`} />
         </section>

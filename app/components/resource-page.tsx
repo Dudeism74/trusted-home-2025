@@ -7,6 +7,7 @@ import { SiteHeader } from "./site-header";
 import { getAnyResource } from "../lib/all-resources";
 import {
   contextualAnchorTerms,
+  findContextualTermIndex,
   getRelatedResourceSlugs,
   supplementalContextualLinks,
 } from "../lib/internal-links";
@@ -58,7 +59,7 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
             continue;
           }
 
-          const matchIndex = node.toLowerCase().indexOf(term.toLowerCase());
+          const matchIndex = findContextualTermIndex(node, term);
           if (matchIndex < 0) {
             continue;
           }
@@ -283,8 +284,8 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
 
         <section className="newsletter guide-newsletter">
           <div>
-            <p className="eyebrow">The useful list</p>
-            <h2>Get practical fixes and buying guidance.</h2>
+            <p className="eyebrow">Stay in touch</p>
+            <h2>Questions, corrections, and future guides.</h2>
           </div>
           <NewsletterForm source={`resource-${resource.slug}`} />
         </section>

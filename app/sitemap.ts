@@ -61,6 +61,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: resourceLastModified,
     },
     {
+      path: "/contact",
+      priority: 0.4,
+      changeFrequency: "monthly" as const,
+      lastModified: new Date("2026-09-08T12:00:00Z"),
+    },
+    {
       path: "/editorial-policy",
       priority: 0.7,
       changeFrequency: "monthly" as const,

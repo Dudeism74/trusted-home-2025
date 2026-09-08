@@ -28,6 +28,10 @@ export default function AboutPage() {
         </p>
       </section>
       <section>
+        <h2>Questions and corrections</h2>
+        <p>Have a question about a guide or a detail that needs correcting? <Link href="/contact">Contact Jim</Link>.</p>
+      </section>
+      <section>
         <h2>What this site does</h2>
         <p>
           The {" "}

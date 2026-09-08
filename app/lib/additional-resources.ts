@@ -438,14 +438,6 @@ export const additionalResources: TroubleshootingResource[] = [
         ],
       },
       {
-        kicker: "Seasonal demand is predictable",
-        title: "Cooling-failure searches surge when the weather puts every system under load",
-        paragraphs: [
-          "Google Trends-derived 2026 datasets show AC repair interest climbing sharply through spring and peaking in summer. That seasonality matches the physical load on residential cooling equipment: the first long heat waves expose weak airflow, dirty coils, electrical starting problems, and refrigeration faults that were less obvious in mild weather.",
-          "For troubleshooting, the seasonal pattern does not change the diagnostic order. It makes early filter and coil maintenance more valuable because service availability is usually worst when cooling demand is highest.",
-        ],
-      },
-      {
         kicker: "Refrigerant is not a consumable setting",
         title: "Low charge means the system needs a reason, not just refrigerant",
         paragraphs: [
