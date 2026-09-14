@@ -98,7 +98,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified:
         resource.slug === OVEN_IGNITER_SLUG
           ? OVEN_IGNITER_PUBLISHED_DATE
-          : resourceLastModified,
+          : new Date(
+              `${resource.reviewedDate ?? RESOURCE_REVIEWED_DATE}T12:00:00Z`,
+            ),
       changeFrequency: "monthly" as const,
       priority: resource.slug === OVEN_IGNITER_SLUG ? 0.95 : 0.9,
     })),
