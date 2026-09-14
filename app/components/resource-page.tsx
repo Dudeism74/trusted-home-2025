@@ -20,6 +20,9 @@ import { SITE_NAME, SITE_URL } from "../lib/products";
 
 export function ResourcePage({ resource }: { resource: TroubleshootingResource }) {
   const articleUrl = `${SITE_URL}/${resource.slug}`;
+  const reviewedDate = resource.reviewedDate ?? RESOURCE_REVIEWED_DATE;
+  const reviewedDateLabel =
+    resource.reviewedDateLabel ?? RESOURCE_REVIEWED_DATE_LABEL;
   const relatedSlugs = getRelatedResourceSlugs(
     resource.slug,
     resource.relatedSlugs,
@@ -101,7 +104,7 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
     description: resource.metaDescription,
     articleSection: resource.eyebrow,
     datePublished: RESOURCE_REVIEWED_DATE,
-    dateModified: RESOURCE_REVIEWED_DATE,
+    dateModified: reviewedDate,
     mainEntityOfPage: articleUrl,
     isAccessibleForFree: true,
     author: {
@@ -163,7 +166,7 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
               <p className="guide-dek">{resource.dek}</p>
               <div className="review-meta">
                 <span>By Jim</span>
-                <span>Reviewed {RESOURCE_REVIEWED_DATE_LABEL}</span>
+                <span>Reviewed {reviewedDateLabel}</span>
                 <span>Maintenance led troubleshooting</span>
               </div>
             </div>

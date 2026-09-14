@@ -213,7 +213,7 @@ export default function Home() {
             <h2>Product analysis connected to the problem.</h2>
           </div>
           <p>
-            Compare the Dreame PM20's published clean-air delivery rate with your
+            Compare the Dreame PM20&apos;s published clean-air delivery rate with your
             room volume. The guide works through the sizing math and explains the
             tradeoffs of combining a purifier, fan, and supplemental heater.
           </p>
