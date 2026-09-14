@@ -19,6 +19,8 @@ export type ResourceSection = {
 
 export type TroubleshootingResource = {
   slug: string;
+  reviewedDate?: string;
+  reviewedDateLabel?: string;
   title: string;
   metaTitle: string;
   metaDescription: string;
@@ -37,6 +39,8 @@ export type TroubleshootingResource = {
 export const resources: TroubleshootingResource[] = [
   {
     slug: "stop-drafts-from-windows-without-replacement",
+    reviewedDate: "2026-09-14",
+    reviewedDateLabel: "September 14, 2026",
     title: "How to Stop Drafts From Windows Without Replacing Them",
     metaTitle: "Stop Drafts From Windows Without Replacement",
     metaDescription:
@@ -92,6 +96,14 @@ export const resources: TroubleshootingResource[] = [
         title: "Local sealing is not the same as whole house air sealing",
         paragraphs: [
           "Sealing an obvious window gap is a targeted repair. A major whole house air sealing project can change how the building exchanges air and how fuel burning equipment receives combustion air. If you are tightening an older home extensively, especially one with atmospherically vented combustion appliances, include ventilation and combustion safety in the plan.",
+        ],
+      },
+      {
+        kicker: "Match the finding to the repair",
+        title: "Use the joint that moves as the dividing line",
+        paragraphs: [
+          "If the tissue or smoke test moves at the operable sash, check the latch, alignment, and weatherstripping because that joint must keep moving. If air enters at a stationary trim or frame seam, caulk may fit the repair. If the leak remains behind removable trim, the rough opening may need backer rod, caulk, or low expansion window and door foam instead.",
+          "When the same test finds no moving air, do not keep adding sealant. Cold glass can create a downward current on the room side. In that case, an insulating shade, storm panel, or seasonal film can address comfort without covering drainage paths or sealing a joint that must operate.",
         ],
       },
     ],
@@ -312,6 +324,8 @@ export const resources: TroubleshootingResource[] = [
   },
   {
     slug: "bathroom-exhaust-fan-cfm-sizing",
+    reviewedDate: "2026-09-14",
+    reviewedDateLabel: "September 14, 2026",
     title: "Bathroom Exhaust Fan CFM Sizing Without Guesswork",
     metaTitle: "Bathroom Exhaust Fan CFM Sizing Guide",
     metaDescription:
@@ -363,6 +377,14 @@ export const resources: TroubleshootingResource[] = [
         title: "Fixture count can matter more than floor area",
         paragraphs: [
           "For a bathroom over 100 square feet with a shower, standard bathtub, and toilet, the HVI fixture method totals 150 CFM. An enclosed toilet room may need its own exhaust or operable window depending on the design and applicable requirements.",
+        ],
+      },
+      {
+        kicker: "Before you choose a model",
+        title: "Compare certified airflow at realistic resistance",
+        paragraphs: [
+          "HVI-certified ratings give buyers a consistent third-party-tested starting point, but the fan still has to move air through the installed duct. When a manufacturer supplies a performance table, compare airflow at the duct size and static pressure that resemble the actual route rather than assuming the free-air or headline CFM will reach the room.",
+          "A shorter, straighter, correctly sized duct usually preserves more of the rated airflow than a long route with tight elbows or crushed flex duct. If the existing route cannot be corrected, buying a larger box rating alone may add noise without delivering the intended ventilation.",
         ],
       },
     ],
