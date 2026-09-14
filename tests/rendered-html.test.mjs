@@ -104,7 +104,11 @@ test("LABIGO guide preserves Creator Connections attribution and evidence limits
   assert.match(html, /labigoweb-20/i);
   assert.match(html, /specification based assessment/i);
   assert.match(html, /not a hands on cleaning test/i);
-  assert.match(html, /Amazon Creator Connections campaign/i);
+  assert.match(html, /includes Amazon Creator Connections links/i);
+  assert.match(
+    html,
+    /commission may apply only while a corresponding campaign is active/i,
+  );
   assert.match(
     html,
     /<link[^>]+\brel=["']canonical["'][^>]+\bhref=["']https:\/\/www\.trustedhomeessentials\.com\/guides\/labigo-portable-carpet-cleaner["']/i,
@@ -219,6 +223,32 @@ test("sitemap includes every current resource and buying guide", async () => {
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/home-maintenance-checklist<\/loc>/i,
   );
+  assert.match(
+    xml,
+    /<loc>https:\/\/www\.trustedhomeessentials\.com\/stop-drafts-from-windows-without-replacement<\/loc>\s*<lastmod>2026-09-14T12:00:00\.000Z<\/lastmod>/i,
+  );
+  assert.match(
+    xml,
+    /<loc>https:\/\/www\.trustedhomeessentials\.com\/bathroom-exhaust-fan-cfm-sizing<\/loc>\s*<lastmod>2026-09-14T12:00:00\.000Z<\/lastmod>/i,
+  );
+});
+
+test("seasonal window and bathroom fan guides show the reviewed decision guidance", async () => {
+  const windowResponse = await render(
+    "/stop-drafts-from-windows-without-replacement",
+  );
+  const windowHtml = await windowResponse.text();
+  assert.equal(windowResponse.status, 200);
+  assert.match(windowHtml, /Reviewed[\s\S]{0,40}September 14, 2026/i);
+  assert.match(windowHtml, /Use the joint that moves as the dividing line/i);
+  assert.match(windowHtml, /"dateModified":"2026-09-14"/i);
+
+  const fanResponse = await render("/bathroom-exhaust-fan-cfm-sizing");
+  const fanHtml = await fanResponse.text();
+  assert.equal(fanResponse.status, 200);
+  assert.match(fanHtml, /Reviewed[\s\S]{0,40}September 14, 2026/i);
+  assert.match(fanHtml, /Compare certified airflow at realistic resistance/i);
+  assert.match(fanHtml, /"dateModified":"2026-09-14"/i);
 });
 
 test("renders the printable monthly home maintenance checklist", async () => {
