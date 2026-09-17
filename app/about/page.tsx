@@ -28,8 +28,17 @@ export default function AboutPage() {
         </p>
         <p>
           I also publish{" "}
-          <a href="https://www.trustedtravelessentials.com/">
-            Trusted Travel Essentials
+          <a
+            href="https://www.trustedtravelessentials.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              textDecoration: "underline",
+              textUnderlineOffset: "3px",
+              fontWeight: 700,
+            }}
+          >
+            Trusted Travel Essentials <span aria-hidden="true">↗</span>
           </a>
           , a separate site where Anne and I share firsthand travel stories,
           original photographs, and practical trip-planning perspective.
