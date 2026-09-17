@@ -26,6 +26,14 @@ export default function AboutPage() {
           decide what actually needs service. Trusted Home Essentials applies that
           same troubleshooting mindset to ordinary homeowner problems.
         </p>
+        <p>
+          I also publish{" "}
+          <a href="https://www.trustedtravelessentials.com/">
+            Trusted Travel Essentials
+          </a>
+          , a separate site where Anne and I share firsthand travel stories,
+          original photographs, and practical trip-planning perspective.
+        </p>
       </section>
       <section>
         <h2>Questions and corrections</h2>
