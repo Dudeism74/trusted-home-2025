@@ -6,7 +6,7 @@ import { supportsSitesServices } from "../lib/server-capabilities";
 export const metadata: Metadata = {
   title: "Privacy",
   description:
-    "Learn what information Trusted Home Essentials collects through newsletter and comment forms and how it is used.",
+    "Learn what information Trusted Home Essentials collects, how analytics and advertising technologies are used, and what choices visitors have.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -15,7 +15,7 @@ export default function PrivacyPage() {
     <InfoPage
       eyebrow="Plain language data policy"
       title="Privacy"
-      intro="Trusted Home Essentials collects only the information needed to run the newsletter, moderate comments, secure forms, and understand site performance."
+      intro="Trusted Home Essentials collects only the information needed to operate the site, respond to readers, measure performance, and support advertising and affiliate relationships."
     >
       <section>
         <h2>Information you provide</h2>
@@ -75,6 +75,33 @@ export default function PrivacyPage() {
           and hash it in the browser before including it with conversion events. Raw
           contact information is not sent to OpenAI through automatic advanced
           matching.
+        </p>
+      </section>
+      <section>
+        <h2>Google advertising</h2>
+        <p>
+          Trusted Home Essentials is connected to Google AdSense for site review
+          and may use Google advertising after approval. Third party vendors,
+          including Google, may use cookies to serve ads based on a visitor&apos;s
+          prior visits to this site or other websites. Google&apos;s use of
+          advertising cookies enables Google and its partners to serve ads based on
+          those visits.
+        </p>
+        <p>
+          Visitors can manage or opt out of personalized Google advertising through{" "}
+          <a href="https://adssettings.google.com/" rel="noopener noreferrer">
+            Google Ads Settings
+          </a>
+          . Visitors can also learn about opting out of some third party vendors&apos;
+          use of cookies for personalized advertising at{" "}
+          <a href="https://www.aboutads.info/" rel="noopener noreferrer">
+            AboutAds.info
+          </a>
+          .
+        </p>
+        <p>
+          If additional advertising vendors or networks are enabled, this policy
+          will be updated to identify them and explain the available privacy choices.
         </p>
       </section>
       <section>
