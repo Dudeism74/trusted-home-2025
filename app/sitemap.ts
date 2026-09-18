@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { products, REVIEWED_DATE, SITE_URL } from "./lib/products";
-import { allResources } from "./lib/all-resources";
+import { resources } from "./lib/resources";
+import { ovenIgniterResource } from "./lib/oven-igniter-resource";
 import {
   CORDLESS_TOOLS_PUBLISHED_DATE,
   CORDLESS_TOOLS_SLUG,
@@ -19,6 +20,9 @@ const CORDLESS_TOOLS_PUBLISHED_AT = new Date(
 const HOME_MAINTENANCE_PUBLISHED_AT = new Date(
   HOME_MAINTENANCE_PUBLISHED_DATE + "T12:00:00Z",
 );
+const DIAGNOSTIC_METHOD_PUBLISHED_AT = new Date("2026-09-18T12:00:00Z");
+const curatedResources = [...resources, ovenIgniterResource];
+const indexableProducts = products.filter((product) => product.slug === "dreame-pm20");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const productLastModified = new Date(`${REVIEWED_DATE}T12:00:00Z`);
@@ -53,6 +57,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
       changeFrequency: "monthly" as const,
       lastModified: HOME_MAINTENANCE_PUBLISHED_AT,
+    },
+    {
+      path: "/diagnostic-method",
+      priority: 0.95,
+      changeFrequency: "monthly" as const,
+      lastModified: DIAGNOSTIC_METHOD_PUBLISHED_AT,
     },
     {
       path: "/about",
@@ -93,7 +103,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: page.changeFrequency,
       priority: page.priority,
     })),
-    ...allResources.map((resource) => ({
+    ...curatedResources.map((resource) => ({
       url: `${SITE_URL}/${resource.slug}`,
       lastModified:
         resource.slug === OVEN_IGNITER_SLUG
@@ -104,7 +114,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: resource.slug === OVEN_IGNITER_SLUG ? 0.95 : 0.9,
     })),
-    ...products.map((product) => ({
+    ...indexableProducts.map((product) => ({
       url: `${SITE_URL}/guides/${product.slug}`,
       lastModified: new Date(
         `${product.reviewedDate ?? REVIEWED_DATE}T12:00:00Z`,
