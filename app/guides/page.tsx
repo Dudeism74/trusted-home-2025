@@ -11,6 +11,8 @@ import {
 } from "../lib/cordless-tools-guide";
 import { products, SITE_NAME, SITE_URL } from "../lib/products";
 
+const publicProducts = products.filter((product) => product.slug === "dreame-pm20");
+
 const categoryGuide = {
   name: cordlessToolsGuide.title,
   url: "/" + CORDLESS_TOOLS_SLUG,
@@ -27,7 +29,7 @@ const categoryGuide = {
 export const metadata: Metadata = {
   title: "Home Product Buying Guides",
   description:
-    "Browse practical home product buying guides organized around fit, sourced specifications, tradeoffs, and checks to make before ordering.",
+    "Browse the current Trusted Home Essentials buying guides that add original decision frameworks, calculations, and practical fit checks to sourced product information.",
   alternates: { canonical: "/guides" },
   openGraph: {
     type: "website",
@@ -55,7 +57,7 @@ export default function GuidesIndex() {
       "@type": "ItemList",
       itemListElement: [
         { name: categoryGuide.name, url: SITE_URL + categoryGuide.url },
-        ...products.map((product) => ({
+        ...publicProducts.map((product) => ({
           name: product.name,
           url: SITE_URL + "/guides/" + product.slug,
         })),
@@ -78,9 +80,9 @@ export default function GuidesIndex() {
           <p className="eyebrow">Buying guide library</p>
           <h1>Start with fit. Then compare the features.</h1>
           <p className="guide-index-lede">
-            These guides turn published specifications into practical decisions.
-            Each one explains who a product may suit, where it can fall short, and
-            what to confirm before ordering. If you are here because something in
+            This library is intentionally selective. A guide stays public when it
+            adds a useful decision framework, original calculation, or other analysis
+            beyond repeating a product listing. If you are here because something in
             the house stopped working, start with the{" "}
             <Link
               href="/troubleshooting"
@@ -118,9 +120,9 @@ export default function GuidesIndex() {
             <h2 id="all-guides">Find the product that matches the job.</h2>
           </div>
           <p>
-            The library grows only when there is enough reliable information to
-            explain a real use case, meaningful limitations, and the checks that
-            affect fit.
+            Current pages either solve a category decision or add analysis that can
+            be reproduced from the cited specifications. Specification-only drafts
+            are held back until they clear that quality bar.
           </p>
         </header>
 
@@ -163,7 +165,7 @@ export default function GuidesIndex() {
             </div>
           </article>
 
-          {products.map((product, index) => (
+          {publicProducts.map((product, index) => (
             <article
               className={`guide-directory-card ${product.accent}`}
               key={product.slug}
