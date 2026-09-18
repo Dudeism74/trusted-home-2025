@@ -1,6 +1,6 @@
 # Trusted Home Essentials project status
 
-Updated September 14, 2026. Read this handoff before making changes.
+Updated September 18, 2026. Read this handoff before making changes.
 
 ## Canonical property
 
@@ -12,7 +12,7 @@ The repository retains the Sites/Vinext build path and Cloudflare D1 schema. Ver
 
 The verified production baseline is commit `27f662876bd34634e8ef48a5e4ebe522f55502a5`, merged through PR 12 and deployed READY as `dpl_45GcugVrzFNn5RBNBaaW5yaGKarj`. Public readback on September 14 returned that exact commit from `/api/version`. The sitemap contains 34 current URLs. Both the apex domain and the `www` hostname are attached to the production deployment, with the apex redirecting to `www`. Analytics remains configured with the existing public measurement ID `G-C48XPCKD7E`. Source presence is not proof of event receipt, indexing, traffic, or conversion.
 
-`/ads.txt` publicly returns the verified Google publisher record for `pub-2173466789348999`. The site does not currently load display-ad code or ad units. Treat the public authorization file and an AdSense account's site-approval state as separate checks.
+`/ads.txt` publicly returns the verified Google publisher record for `pub-2173466789348999`. The root layout also carries the AdSense account meta tag and AdSense bootstrap script for `ca-pub-2173466789348999` so Google can verify the site through more than one supported method. No manual display-ad units are intentionally placed. Treat site verification, AdSense approval, and later ad placement as separate checks.
 
 Private dashboard evidence, approvals, social drafts, operating schedules, and the full audit are maintained in the owner's September 8 property audit, rather than this public repository.
 
@@ -23,6 +23,14 @@ The September 8 repair gives Vercel readers a direct business contact at `truste
 ## September 14 release
 
 PR 12 strengthened two existing seasonal guides instead of adding generic pages. The window-draft guide now maps operable-sash, stationary-seam, and rough-opening findings to the appropriate repair. The bathroom-fan sizing guide now explains certified airflow and realistic duct resistance. Both pages show September 14 review metadata and matching sitemap `lastmod` dates. The release did not create or remove URLs, change affiliate tracking, or add display ads.
+
+## September 18 AdSense review repair
+
+The September 9 AdSense notice said the site had been deactivated because ownership could not be verified within seven days. After the public `ads.txt` record and Search Console ownership were restored, Google completed a new review and sent a September 18 notice that the site still needed attention. The email itself did not identify a page-level policy violation.
+
+This repair adds the AdSense account meta tag and Google AdSense bootstrap script to the site-wide head, keeps the verified `ads.txt` record, and explicitly permits `Mediapartners-Google` and `Google-Display-Ads-Bot` in `robots.txt`. The privacy page now discloses Google advertising cookies, personalized-ad choices, and opt-out links before ad serving is enabled. This repair does not add manual ad units or change the light-advertising plan.
+
+After deployment, verify the production HTML contains the AdSense account meta tag and publisher-specific script, confirm `/ads.txt` still returns the publisher record, confirm `/robots.txt` exposes the AdSense crawler rules, and recheck the AdSense Sites page before requesting another review. If AdSense shows a specific content or policy reason in the account, treat that account detail as controlling over generic approval guidance.
 
 ## Remaining work
 

@@ -6,6 +6,7 @@ const googleVerificationToken =
   "FlYTM9Sap79Z8WW7NmGJ1S3UTSU3h8Z-Km5IcBDWcGw";
 const googleVerificationFile =
   "google-site-verification: google7d9b156696884744.html";
+const adsensePublisherId = "ca-pub-2173466789348999";
 
 const developmentPreviewMeta =
   /<meta(?=[^>]*\bname=["']codex-preview["'])(?=[^>]*\bcontent=["']development["'])[^>]*>/i;
@@ -54,6 +55,20 @@ test("renders the homepage without obsolete keyword metadata", async () => {
     html,
     new RegExp(
       `<meta(?=[^>]*\\bname=["']google-site-verification["'])(?=[^>]*\\bcontent=["']${googleVerificationToken}["'])[^>]*>`,
+      "i",
+    ),
+  );
+  assert.match(
+    html,
+    new RegExp(
+      `<meta(?=[^>]*\\bname=["']google-adsense-account["'])(?=[^>]*\\bcontent=["']${adsensePublisherId}["'])[^>]*>`,
+      "i",
+    ),
+  );
+  assert.match(
+    html,
+    new RegExp(
+      `https://pagead2\\.googlesyndication\\.com/pagead/js/adsbygoogle\\.js\\?client=${adsensePublisherId}`,
       "i",
     ),
   );
@@ -133,7 +148,7 @@ test("guide HTML has a useful comment fallback before JavaScript loads", async (
   assert.match(html, /data-amazon-asin=["']B0FNPPGKHW["']/i);
 });
 
-test("privacy page discloses OpenAI Ads conversion measurement", async () => {
+test("privacy page discloses advertising and conversion measurement", async () => {
   const response = await render("/privacy");
   const html = await response.text();
 
@@ -143,6 +158,10 @@ test("privacy page discloses OpenAI Ads conversion measurement", async () => {
   assert.match(html, /Automatic advanced matching is enabled/i);
   assert.match(html, /Raw contact information is not sent to OpenAI/i);
   assert.match(html, /does not tell Trusted Home Essentials.*purchases on Amazon/is);
+  assert.match(html, /connected to Google AdSense for site review/i);
+  assert.match(html, /Third party vendors, including Google, may use cookies/i);
+  assert.match(html, /Google Ads Settings/i);
+  assert.match(html, /AboutAds\.info/i);
 });
 
 test("Cosori guide keeps the accepted campaign attribution and editorial disclosure", async () => {
@@ -186,6 +205,16 @@ test("unrelated retired root articles return Gone instead of soft redirecting", 
   assert.equal(response.status, 410);
   assert.equal(response.headers.get("location"), null);
   assert.equal(response.headers.get("x-robots-tag"), "noindex");
+});
+
+test("robots file explicitly permits AdSense crawlers", async () => {
+  const response = await render("/robots.txt");
+  const body = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(body, /User-Agent: Mediapartners-Google/i);
+  assert.match(body, /User-Agent: Google-Display-Ads-Bot/i);
+  assert.match(body, /Allow: \/$/m);
 });
 
 test("sitemap includes every current resource and buying guide", async () => {
