@@ -7,6 +7,7 @@ import "./globals.css";
 
 const GA4_MEASUREMENT_ID = "G-C48XPCKD7E";
 const OPENAI_ADS_PIXEL_ID = "CJt53jFYSRyQWMHHfozm12";
+const ADSENSE_PUBLISHER_ID = "ca-pub-2173466789348999";
 
 const ga4Setup = `
 window.dataLayer = window.dataLayer || [];
@@ -75,6 +76,7 @@ export const metadata: Metadata = {
   other: {
     "codex-preview": "development",
     "msvalidate.01": "7F8CFB4C5FAE0A178EB5924E3B871CF3",
+    "google-adsense-account": ADSENSE_PUBLISHER_ID,
   },
   verification: {
     google: "FlYTM9Sap79Z8WW7NmGJ1S3UTSU3h8Z-Km5IcBDWcGw",
@@ -93,6 +95,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <Script
+          id="adsense-bootstrap"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUBLISHER_ID}`}
+          strategy="beforeInteractive"
+          crossOrigin="anonymous"
+        />
         <Script
           id="ga4-bootstrap"
           strategy="beforeInteractive"
