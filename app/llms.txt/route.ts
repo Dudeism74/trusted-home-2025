@@ -1,5 +1,6 @@
 import { products, REVIEWED_DATE_LABEL, SITE_URL } from "../lib/products";
-import { allResources } from "../lib/all-resources";
+import { resources, RESOURCE_REVIEWED_DATE_LABEL } from "../lib/resources";
+import { ovenIgniterResource } from "../lib/oven-igniter-resource";
 import {
   CORDLESS_TOOLS_PUBLISHED_DATE_LABEL,
   CORDLESS_TOOLS_SLUG,
@@ -9,17 +10,18 @@ import {
   HOME_MAINTENANCE_PUBLISHED_DATE_LABEL,
   HOME_MAINTENANCE_SLUG,
 } from "../lib/home-maintenance-checklist";
-import { RESOURCE_REVIEWED_DATE_LABEL } from "../lib/resources";
 
 export function GET() {
-  const resourceLines = allResources
+  const curatedResources = [...resources, ovenIgniterResource];
+  const indexableProducts = products.filter((product) => product.slug === "dreame-pm20");
+  const resourceLines = curatedResources
     .map(
       (resource) =>
         `### ${resource.title}\n${SITE_URL}/${resource.slug}\n${resource.metaDescription}`,
     )
     .join("\n\n");
 
-  const guideLines = products
+  const guideLines = indexableProducts
     .map(
       (product) =>
         `### ${product.name}\n${SITE_URL}/guides/${product.slug}\n${product.metaDescription}`,
@@ -59,6 +61,7 @@ Safety instructions, manufacturer guidance, and applicable codes take priority o
 
 Affiliate disclosure: As an Amazon Associate, I earn from qualifying purchases. Affiliate relationships do not decide whether repair or replacement is recommended.
 
+Troubleshooting method: ${SITE_URL}/diagnostic-method
 Troubleshooting hub: ${SITE_URL}/troubleshooting
 Editorial policy: ${SITE_URL}/editorial-policy
 About the editor: ${SITE_URL}/about
