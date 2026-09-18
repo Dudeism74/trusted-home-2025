@@ -7,6 +7,7 @@ const product = getProduct("shark-wandvac-wv201")!;
 export const metadata: Metadata = {
   title: product.metaTitle,
   description: product.metaDescription,
+  robots: { index: false, follow: true },
   alternates: { canonical: `/guides/${product.slug}` },
   openGraph: {
     type: "article",
