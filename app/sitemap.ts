@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { products, REVIEWED_DATE, SITE_URL } from "./lib/products";
-import { resources } from "./lib/resources";
+import { RESOURCE_REVIEWED_DATE, resources } from "./lib/resources";
 import { ovenIgniterResource } from "./lib/oven-igniter-resource";
 import {
   CORDLESS_TOOLS_PUBLISHED_DATE,
@@ -10,7 +10,6 @@ import {
   HOME_MAINTENANCE_PUBLISHED_DATE,
   HOME_MAINTENANCE_SLUG,
 } from "./lib/home-maintenance-checklist";
-import { RESOURCE_REVIEWED_DATE } from "./lib/resources";
 
 const OVEN_IGNITER_SLUG = "whirlpool-oven-igniter-glows-but-wont-heat";
 const OVEN_IGNITER_PUBLISHED_DATE = new Date("2026-08-29T12:00:00Z");
