@@ -6,7 +6,7 @@ import { JsonLd } from "./components/json-ld";
 import { NewsletterForm } from "./components/newsletter-form";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
-import { allResources } from "./lib/all-resources";
+import { resources } from "./lib/resources";
 import { products, SITE_NAME, SITE_URL } from "./lib/products";
 import { featuredResources } from "./lib/resources";
 import { ovenIgniterResource } from "./lib/oven-igniter-resource";
@@ -78,6 +78,9 @@ export default function Home() {
           <div className="hero-actions">
             <Link className="button button-primary" href="/troubleshooting">
               Start troubleshooting
+            </Link>
+            <Link className="text-link" href="/diagnostic-method">
+              Use my diagnostic method
             </Link>
             <Link className="text-link" href="/about">
               Why this approach
@@ -162,6 +165,30 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="standards" id="method">
+        <div>
+          <p className="eyebrow">The method behind the guides</p>
+          <h2>A maintenance troubleshooting process you can reuse.</h2>
+        </div>
+        <div>
+          <p className="hero-lede" style={{ marginTop: 0 }}>
+            My electromechanical and industrial maintenance work taught me to preserve
+            the evidence, separate a system into functions, and choose tests that rule
+            causes in or out before replacing parts. I wrote that process down for
+            homeowners, including a printable worksheet and a worked example from my
+            Whirlpool oven repair.
+          </p>
+          <div className="hero-actions">
+            <Link className="button button-primary" href="/diagnostic-method">
+              Open the diagnostic method
+            </Link>
+            <Link className="text-link" href="/whirlpool-oven-igniter-glows-but-wont-heat">
+              See the photographed repair
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="standards" id="standards">
         <div>
           <p className="eyebrow">Our editorial standard</p>
@@ -230,12 +257,12 @@ export default function Home() {
 
       <section className="authority-strip" aria-label="How the site is built">
         <div>
-          <strong>{allResources.length}</strong>
-          <span>focused troubleshooting resources</span>
+          <strong>1</strong>
+          <span>original diagnostic method</span>
         </div>
         <div>
-          <strong>1</strong>
-          <span>maintenance mindset across the site</span>
+          <strong>{resources.length + 1}</strong>
+          <span>curated troubleshooting resources</span>
         </div>
         <div>
           <strong>0</strong>

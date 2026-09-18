@@ -5,7 +5,7 @@ export type SupplementalContextualLink = {
 
 export const relatedResourceOverrides: Record<string, string[]> = {
   "stop-drafts-from-windows-without-replacement": [
-    "central-air-conditioner-not-cooling-troubleshooting-guide",
+    "air-purifier-cadr-room-size-guide",
     "prevent-bathroom-mold-growth-steps",
   ],
   "fix-noisy-bathroom-exhaust-fan": [
@@ -29,9 +29,9 @@ export const relatedResourceOverrides: Record<string, string[]> = {
     "prevent-bathroom-mold-growth-steps",
   ],
   "air-purifier-cadr-room-size-guide": [
-    "central-air-conditioner-not-cooling-troubleshooting-guide",
     "stop-drafts-from-windows-without-replacement",
     "prevent-bathroom-mold-growth-steps",
+    "bathroom-exhaust-fan-cfm-sizing",
   ],
   "central-air-conditioner-not-cooling-troubleshooting-guide": [
     "stop-drafts-from-windows-without-replacement",
@@ -52,11 +52,7 @@ export const relatedResourceOverrides: Record<string, string[]> = {
     "fix-leaking-kitchen-faucet-guide",
     "toilet-keeps-running",
   ],
-  "whirlpool-oven-igniter-glows-but-wont-heat": [
-    "dryer-not-heating",
-    "dishwasher-not-draining",
-    "breaker-keeps-tripping",
-  ],
+  "whirlpool-oven-igniter-glows-but-wont-heat": [],
   "refrigerator-not-cooling": ["breaker-keeps-tripping"],
   "dryer-not-heating": [
     "whirlpool-oven-igniter-glows-but-wont-heat",

@@ -1766,3 +1766,63 @@ dd {
     transition: none !important;
   }
 }
+
+
+/* Original diagnostic worksheet */
+.diagnostic-worksheet {
+  display: grid;
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.diagnostic-worksheet label {
+  display: grid;
+  font-size: 0.78rem;
+  font-weight: 800;
+  gap: 8px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.diagnostic-worksheet input,
+.diagnostic-worksheet textarea {
+  background: #fff;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 450;
+  letter-spacing: 0;
+  line-height: 1.5;
+  padding: 13px 14px;
+  text-transform: none;
+  width: 100%;
+}
+
+.diagnostic-worksheet textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.diagnostic-worksheet input:focus,
+.diagnostic-worksheet textarea:focus {
+  outline: 3px solid var(--lime);
+  outline-offset: 2px;
+}
+
+@media print {
+  .diagnostic-worksheet {
+    gap: 12px;
+  }
+
+  .diagnostic-worksheet input,
+  .diagnostic-worksheet textarea {
+    min-height: 0;
+    padding: 8px;
+  }
+
+  .diagnostic-worksheet textarea {
+    height: 0.8in;
+  }
+}

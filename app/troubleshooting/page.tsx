@@ -4,8 +4,9 @@ import { JsonLd } from "../components/json-ld";
 import { NewsletterForm } from "../components/newsletter-form";
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
-import { allResources, getAnyResource } from "../lib/all-resources";
-import type { TroubleshootingResource } from "../lib/resources";
+import { getAnyResource } from "../lib/all-resources";
+import { resources, type TroubleshootingResource } from "../lib/resources";
+import { ovenIgniterResource } from "../lib/oven-igniter-resource";
 import { SITE_NAME, SITE_URL } from "../lib/products";
 
 export const metadata: Metadata = {
@@ -15,12 +16,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/troubleshooting" },
 };
 
+const curatedResources = [...resources, ovenIgniterResource];
+
 const resourceGroups = [
   {
     eyebrow: "Air, ventilation, and comfort",
     title: "Airflow and moisture problems",
     description:
-      "Diagnose drafts, bathroom ventilation, mold conditions, purifier sizing, and central cooling problems as connected airflow systems.",
+      "Diagnose drafts, bathroom ventilation, mold conditions, and purifier sizing as connected airflow systems.",
     slugs: [
       "stop-drafts-from-windows-without-replacement",
       "fix-noisy-bathroom-exhaust-fan",
@@ -28,40 +31,14 @@ const resourceGroups = [
       "bathroom-exhaust-fan-cfm-sizing",
       "bathroom-exhaust-fan-repair-or-replace",
       "air-purifier-cadr-room-size-guide",
-      "central-air-conditioner-not-cooling-troubleshooting-guide",
     ],
   },
   {
-    eyebrow: "Plumbing and hot water",
-    title: "Leaks, running water, and no hot water",
+    eyebrow: "Documented repair",
+    title: "A real repair with the evidence left in",
     description:
-      "Trace where water is moving, leaking, or failing to heat before replacing a fixture or major appliance.",
-    slugs: [
-      "toilet-keeps-running",
-      "fix-leaking-kitchen-faucet-guide",
-      "water-heater-not-providing-hot-water-solutions",
-    ],
-  },
-  {
-    eyebrow: "Appliances",
-    title: "Cooling, heating, washing, and draining failures",
-    description:
-      "Separate power, airflow, water path, controls, and mechanical faults before condemning an appliance.",
-    slugs: [
-      "whirlpool-oven-igniter-glows-but-wont-heat",
-      "refrigerator-not-cooling",
-      "dryer-not-heating",
-      "washer-not-draining",
-      "dishwasher-not-draining",
-      "why-dishwasher-not-cleaning-properly",
-    ],
-  },
-  {
-    eyebrow: "Electrical safety",
-    title: "Protective devices and circuit faults",
-    description:
-      "Treat a protective trip as evidence and isolate loads safely without bypassing the device designed to protect the circuit.",
-    slugs: ["breaker-keeps-tripping"],
+      "The Whirlpool oven guide records the actual symptom, replacement decision, connector mismatch, original photographs, and successful final operating test.",
+    slugs: ["whirlpool-oven-igniter-glows-but-wont-heat"],
   },
 ];
 
@@ -70,7 +47,7 @@ export default function TroubleshootingPage() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: `${SITE_NAME} troubleshooting guides`,
-    itemListElement: allResources.map((resource, index) => ({
+    itemListElement: curatedResources.map((resource, index) => ({
       "@type": "ListItem",
       position: index + 1,
       url: `${SITE_URL}/${resource.slug}`,
@@ -106,6 +83,38 @@ export default function TroubleshootingPage() {
             homeowner work.
           </p>
         </aside>
+      </section>
+
+      <section className="products-section" aria-labelledby="diagnostic-method-title">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Start with the process</p>
+            <h2 id="diagnostic-method-title">Use the same diagnostic sequence before choosing a repair.</h2>
+          </div>
+          <p>
+            My maintenance method starts by writing the exact symptom, setting the
+            safety boundary, dividing the system into functions, and choosing the
+            next test because its result will eliminate possible causes.
+          </p>
+        </div>
+        <div className="product-grid">
+          <article className="product-card cobalt">
+            <span className="product-number">01</span>
+            <div className="product-content" style={{ paddingTop: "58px" }}>
+              <p className="product-category">Original troubleshooting method</p>
+              <h3>The Maintenance Troubleshooting Method I Use at Home</h3>
+              <p className="product-answer">
+                A reusable failure-mode-first process adapted from electromechanical
+                and industrial maintenance, with a printable diagnostic worksheet.
+              </p>
+              <div className="card-actions">
+                <Link className="button button-primary" href="/diagnostic-method">
+                  Open the diagnostic method
+                </Link>
+              </div>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section className="products-section" aria-labelledby="maintenance-planner-title">

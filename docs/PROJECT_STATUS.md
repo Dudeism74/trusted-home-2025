@@ -32,6 +32,18 @@ This repair adds the AdSense account meta tag and Google AdSense bootstrap scrip
 
 After deployment, verify the production HTML contains the AdSense account meta tag and publisher-specific script, confirm `/ads.txt` still returns the publisher record, confirm `/robots.txt` exposes the AdSense crawler rules, and recheck the AdSense Sites page before requesting another review. If AdSense shows a specific content or policy reason in the account, treat that account detail as controlling over generic approval guidance.
 
+## September 18 AdSense low-value-content remediation
+
+After site ownership verification turned green, the AdSense Sites dashboard identified the controlling approval blocker as `Low value content`. The dashboard says the site needs substantial unique value, ongoing curation and maintenance, and genuine user interest. This is now treated as a content-quality and audience-evidence problem rather than a verification problem.
+
+The public quality surface was reduced instead of adding more generic articles. Ten synthesized troubleshooting pages built primarily from manufacturer or government guidance remain reachable for continuity but are marked `noindex,follow`, removed from the troubleshooting directory, and removed from the sitemap. Six specification-only affiliate product pages are also marked `noindex,follow`, removed from the buying-guide directory, and removed from the sitemap. The stronger PM20 analysis remains public because it adds reproducible CADR, CFM, room-volume, and equivalent-air-change calculations beyond the source listing. The photographed Whirlpool oven repair, the core diagnostic resources, the cordless-tool decision guide, and the monthly maintenance checklist remain in the indexed public set.
+
+A new original page, `/diagnostic-method`, documents Jim's failure-mode-first troubleshooting process adapted from electromechanical and industrial maintenance. It includes a worked example from the photographed Whirlpool oven repair and a printable diagnostic worksheet. The homepage, About page, editorial policy, and troubleshooting index now point readers to that method.
+
+Search Console data is an important constraint on resubmission timing. For the canonical `https://www.trustedhomeessentials.com/` property, the settled June 1 through September 15, 2026 page report showed impressions across 38 landing-page rows but zero organic clicks. The last-28-settled-days report through September 15 likewise showed zero clicks. Google does not publish a numeric organic-traffic threshold for AdSense approval, so do not invent one. The practical gate is to let the smaller, stronger site earn real search and direct-use signals before requesting another AdSense review.
+
+The curated sitemap target is 19 URLs: 11 static/current utility pages, seven curated troubleshooting resources including the photographed oven repair, and one indexable product analysis (PM20). Specification-only and generic synthesized pages are intentionally excluded until they gain original evidence or a stronger decision tool.
+
 ## Remaining work
 
 Restore newsletter/comments only after choosing and validating a supported production database, secure authentication, moderation, delivery and unsubscribe flows. Do not enable the old header-trusting admin handlers merely because a database is connected. Preserve existing records; this repair does not delete or migrate data.

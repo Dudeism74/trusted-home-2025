@@ -92,12 +92,13 @@ test("renders a dedicated buying guide directory", async () => {
 
   assert.equal(response.status, 200);
   assert.match(html, /Buying guide library/i);
-  assert.match(html, /Solo Stove Pi Prime/i);
-  assert.match(html, /Dreame A3 AWD Pro 3500/i);
-  assert.match(html, /LABIGO Portable Carpet Cleaner/i);
-  assert.match(html, /Shark WANDVAC WV201/i);
-  assert.match(html, /Cosori TWINFRY 9 Qt/i);
+  assert.match(html, /Dreame AirPursue PM20/i);
   assert.match(html, /The First 5 Cordless Power Tools for Home DIY/i);
+  assert.doesNotMatch(html, /Solo Stove Pi Prime/i);
+  assert.doesNotMatch(html, /Dreame A3 AWD Pro 3500/i);
+  assert.doesNotMatch(html, /LABIGO Portable Carpet Cleaner/i);
+  assert.doesNotMatch(html, /Shark WANDVAC WV201/i);
+  assert.doesNotMatch(html, /Cosori TWINFRY 9 Qt/i);
   assert.match(
     html,
     /<link[^>]+\brel=["']canonical["'][^>]+\bhref=["']https:\/\/www\.trustedhomeessentials\.com\/guides["']/i,
@@ -217,32 +218,24 @@ test("robots file explicitly permits AdSense crawlers", async () => {
   assert.match(body, /Allow: \/$/m);
 });
 
-test("sitemap includes every current resource and buying guide", async () => {
+test("sitemap exposes the curated high-value public set", async () => {
   const response = await render("/sitemap.xml");
   const xml = await response.text();
   const urls = xml.match(/<url>/g) ?? [];
 
   assert.equal(response.status, 200);
-  assert.equal(urls.length, 34);
+  assert.equal(urls.length, 19);
   assert.match(
     xml,
-    /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides<\/loc>/i,
+    /<loc>https:\/\/www\.trustedhomeessentials\.com\/diagnostic-method<\/loc>/i,
   );
   assert.match(
     xml,
-    /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides\/dreame-a3-awd-pro<\/loc>/i,
+    /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides\/dreame-pm20<\/loc>/i,
   );
   assert.match(
     xml,
-    /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides\/shark-wandvac-wv201<\/loc>/i,
-  );
-  assert.match(
-    xml,
-    /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides\/labigo-portable-carpet-cleaner<\/loc>/i,
-  );
-  assert.match(
-    xml,
-    /<loc>https:\/\/www\.trustedhomeessentials\.com\/guides\/cosori-twinfry-9qt<\/loc>/i,
+    /<loc>https:\/\/www\.trustedhomeessentials\.com\/whirlpool-oven-igniter-glows-but-wont-heat<\/loc>/i,
   );
   assert.match(
     xml,
@@ -260,8 +253,10 @@ test("sitemap includes every current resource and buying guide", async () => {
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/bathroom-exhaust-fan-cfm-sizing<\/loc>\s*<lastmod>2026-09-14T12:00:00\.000Z<\/lastmod>/i,
   );
+  assert.doesNotMatch(xml, /refrigerator-not-cooling/i);
+  assert.doesNotMatch(xml, /guides\/cosori-twinfry-9qt/i);
+  assert.doesNotMatch(xml, /guides\/solo-stove-pi-prime/i);
 });
-
 test("seasonal window and bathroom fan guides show the reviewed decision guidance", async () => {
   const windowResponse = await render(
     "/stop-drafts-from-windows-without-replacement",
@@ -279,6 +274,36 @@ test("seasonal window and bathroom fan guides show the reviewed decision guidanc
   assert.match(fanHtml, /Compare certified airflow at realistic resistance/i);
   assert.match(fanHtml, /"dateModified":"2026-09-14"/i);
 });
+
+test("renders the original diagnostic method and printable worksheet", async () => {
+  const response = await render("/diagnostic-method");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /The Maintenance Troubleshooting Method I Use at Home/i);
+  assert.match(html, /Printable diagnostic worksheet/i);
+  assert.match(html, /failure-mode-first/i);
+  assert.match(html, /whirlpool-oven-igniter-glows-but-wont-heat/i);
+  assert.match(html, /name=["']symptom["']/i);
+  assert.match(html, /name=["']verification["']/i);
+  assert.match(html, /\"@type\":\"Article\"/i);
+  assert.doesNotMatch(
+    html,
+    /<meta(?=[^>]*\\bname=["']robots["'])(?=[^>]*\\bcontent=["'][^"']*noindex[^"']*["'])[^>]*>/i,
+  );
+});
+
+test("generic synthesized troubleshooting pages are held from search indexing", async () => {
+  const response = await render("/refrigerator-not-cooling");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(
+    html,
+    /<meta(?=[^>]*\\bname=["']robots["'])(?=[^>]*\\bcontent=["'][^"']*noindex[^"']*["'])[^>]*>/i,
+  );
+});
+
 
 test("renders the printable monthly home maintenance checklist", async () => {
   const response = await render("/home-maintenance-checklist");

@@ -21,6 +21,13 @@ export default function EditorialPolicyPage() {
         <p>
           A symptom is not automatically a failed part. The{" "}
           <Link
+            href="/diagnostic-method"
+            style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
+          >
+            maintenance troubleshooting method
+          </Link>{" "}
+          explains the reusable diagnostic sequence behind the site. The{" "}
+          <Link
             href="/troubleshooting"
             style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
           >

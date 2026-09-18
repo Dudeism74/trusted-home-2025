@@ -7,6 +7,7 @@ const resource = getAdditionalResource("refrigerator-not-cooling")!;
 export const metadata: Metadata = {
   title: resource.metaTitle,
   description: resource.metaDescription,
+  robots: { index: false, follow: true },
   alternates: { canonical: `/${resource.slug}` },
 };
 

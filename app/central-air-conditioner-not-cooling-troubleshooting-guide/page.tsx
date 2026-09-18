@@ -9,6 +9,7 @@ const resource = getAdditionalResource(
 export const metadata: Metadata = {
   title: resource.metaTitle,
   description: resource.metaDescription,
+  robots: { index: false, follow: true },
   alternates: { canonical: `/${resource.slug}` },
 };
 
