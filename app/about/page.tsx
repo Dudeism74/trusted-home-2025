@@ -45,6 +45,16 @@ export default function AboutPage() {
         </p>
       </section>
       <section>
+        <h2>The troubleshooting method</h2>
+        <p>
+          I wrote out the failure-mode-first process I use to keep a diagnosis from
+          turning into parts swapping. It covers symptom definition, safety
+          boundaries, functional blocks, discriminating tests, one-change-at-a-time
+          repairs, and final verification. <Link href="/diagnostic-method">Use the
+          maintenance troubleshooting method and printable worksheet</Link>.
+        </p>
+      </section>
+      <section>
         <h2>Questions and corrections</h2>
         <p>Have a question about a guide or a detail that needs correcting? <Link href="/contact">Contact Jim</Link>.</p>
       </section>
