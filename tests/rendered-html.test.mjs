@@ -437,6 +437,14 @@ test("llms text exposes the restored cordless power tool guide", async () => {
     /https:\/\/www\.trustedhomeessentials\.com\/home-maintenance-checklist/i,
   );
   assert.match(body, /Home maintenance checklist published: September 1, 2026/i);
+  assert.match(
+    body,
+    /https:\/\/www\.trustedhomeessentials\.com\/pre-service-home-hvac-water-heater-inspection/i,
+  );
+  assert.match(
+    body,
+    /Original home systems field inspection published: September 19, 2026/i,
+  );
 });
 
 test("comments API reports unavailable storage honestly", async () => {
