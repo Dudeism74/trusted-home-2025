@@ -80,15 +80,18 @@
 
 .figure {
   margin: 34px 0 42px;
+  max-width: 420px;
 }
 
 .figure img {
   background: #e9e5dc;
   border: 1px solid var(--ink);
+  display: block;
   height: auto;
   max-height: 690px;
+  max-width: 100%;
   object-fit: cover;
-  width: 100%;
+  width: auto;
 }
 
 .figure figcaption {
@@ -99,7 +102,9 @@
 }
 
 .hero .figure {
+  justify-self: end;
   margin: 0;
+  max-width: 315px;
 }
 
 .scope {
@@ -210,12 +215,19 @@
 .figureGrid {
   display: grid;
   gap: 28px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 360px));
+  justify-content: start;
   margin: 32px 0 12px;
 }
 
 .figureGrid .figure {
   margin: 0;
+  max-width: 360px;
+}
+
+.section > .figure {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .questionGrid {
@@ -317,7 +329,8 @@
   }
 
   .hero .figure {
-    max-width: 620px;
+    justify-self: start;
+    max-width: 315px;
   }
 
   .toc {
