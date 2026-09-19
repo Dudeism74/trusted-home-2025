@@ -88,6 +88,7 @@ Troubleshooting resources last reviewed: ${RESOURCE_REVIEWED_DATE_LABEL}
 Product guide review cycle: ${REVIEWED_DATE_LABEL}
 Cordless power tool guide reviewed: ${CORDLESS_TOOLS_PUBLISHED_DATE_LABEL}
 Home maintenance checklist published: ${HOME_MAINTENANCE_PUBLISHED_DATE_LABEL}
+Original home systems field inspection published: September 19, 2026
 `;
 
   return new Response(body, {
