@@ -234,6 +234,8 @@ export default function PreServiceHomeSystemsInspectionPage() {
                   src="ac-insulation-gap.webp"
                   alt="Localized gap in black refrigerant suction-line insulation near the Bryant condenser"
                   caption="The localized opening in the suction-line insulation was the clearest maintenance finding from the AC inspection. It is being handed off at the scheduled service visit."
+                  width={420}
+                  height={560}
                 />
 
                 <p>
