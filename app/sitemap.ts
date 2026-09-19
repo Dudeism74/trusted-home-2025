@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { products, REVIEWED_DATE, SITE_URL } from "./lib/products";
 import { RESOURCE_REVIEWED_DATE, resources } from "./lib/resources";
+import { homeSystemsInspectionResource } from "./lib/home-systems-inspection-resource";
 import { ovenIgniterResource } from "./lib/oven-igniter-resource";
 import {
   CORDLESS_TOOLS_PUBLISHED_DATE,
@@ -20,7 +21,11 @@ const HOME_MAINTENANCE_PUBLISHED_AT = new Date(
   HOME_MAINTENANCE_PUBLISHED_DATE + "T12:00:00Z",
 );
 const DIAGNOSTIC_METHOD_PUBLISHED_AT = new Date("2026-09-18T12:00:00Z");
-const curatedResources = [...resources, ovenIgniterResource];
+const curatedResources = [
+  ...resources,
+  homeSystemsInspectionResource,
+  ovenIgniterResource,
+];
 const indexableProducts = products.filter((product) => product.slug === "dreame-pm20");
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -37,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       path: "/troubleshooting",
       priority: 0.95,
       changeFrequency: "weekly" as const,
-      lastModified: OVEN_IGNITER_PUBLISHED_DATE,
+      lastModified: new Date("2026-09-19T12:00:00Z"),
     },
     {
       path: "/guides",
