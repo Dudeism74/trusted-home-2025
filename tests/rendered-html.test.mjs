@@ -224,7 +224,7 @@ test("sitemap exposes the curated high-value public set", async () => {
   const urls = xml.match(/<url>/g) ?? [];
 
   assert.equal(response.status, 200);
-  assert.equal(urls.length, 19);
+  assert.equal(urls.length, 20);
   assert.match(
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/diagnostic-method<\/loc>/i,
@@ -236,6 +236,10 @@ test("sitemap exposes the curated high-value public set", async () => {
   assert.match(
     xml,
     /<loc>https:\/\/www\.trustedhomeessentials\.com\/whirlpool-oven-igniter-glows-but-wont-heat<\/loc>/i,
+  );
+  assert.match(
+    xml,
+    /<loc>https:\/\/www\.trustedhomeessentials\.com\/pre-service-home-hvac-water-heater-inspection<\/loc>\s*<lastmod>2026-09-19T12:00:00\.000Z<\/lastmod>/i,
   );
   assert.match(
     xml,
@@ -257,6 +261,27 @@ test("sitemap exposes the curated high-value public set", async () => {
   assert.doesNotMatch(xml, /guides\/cosori-twinfry-9qt/i);
   assert.doesNotMatch(xml, /guides\/solo-stove-pi-prime/i);
 });
+test("renders the photographed pre-service home systems inspection", async () => {
+  const response = await render("/pre-service-home-hvac-water-heater-inspection");
+  const html = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.match(html, /What I Found Inspecting My AC, Boiler, and Water Heater Before Annual Service/i);
+  assert.match(html, /Bryant 126BNA024-A/i);
+  assert.match(html, /Crown AWR070BNT3SU1/i);
+  assert.match(html, /Bradford White RG240S6N/i);
+  assert.match(html, /no obvious fresh water/i);
+  assert.match(html, /ac-insulation-gap\.webp/i);
+  assert.match(html, /boiler-overview\.webp/i);
+  assert.match(html, /water-heater-paper-towel-check\.webp/i);
+  assert.match(html, /\"@type\":\"Article\"/i);
+  assert.match(html, /\"@type\":\"FAQPage\"/i);
+  assert.doesNotMatch(
+    html,
+    /<meta(?=[^>]*\\bname=["']robots["'])(?=[^>]*\\bcontent=["'][^"']*noindex[^"']*["'])[^>]*>/i,
+  );
+});
+
 test("seasonal window and bathroom fan guides show the reviewed decision guidance", async () => {
   const windowResponse = await render(
     "/stop-drafts-from-windows-without-replacement",
@@ -412,6 +437,14 @@ test("llms text exposes the restored cordless power tool guide", async () => {
     /https:\/\/www\.trustedhomeessentials\.com\/home-maintenance-checklist/i,
   );
   assert.match(body, /Home maintenance checklist published: September 1, 2026/i);
+  assert.match(
+    body,
+    /https:\/\/www\.trustedhomeessentials\.com\/pre-service-home-hvac-water-heater-inspection/i,
+  );
+  assert.match(
+    body,
+    /Original home systems field inspection published: September 19, 2026/i,
+  );
 });
 
 test("comments API reports unavailable storage honestly", async () => {

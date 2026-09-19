@@ -1,5 +1,6 @@
 import { products, REVIEWED_DATE_LABEL, SITE_URL } from "../lib/products";
 import { resources, RESOURCE_REVIEWED_DATE_LABEL } from "../lib/resources";
+import { homeSystemsInspectionResource } from "../lib/home-systems-inspection-resource";
 import { ovenIgniterResource } from "../lib/oven-igniter-resource";
 import {
   CORDLESS_TOOLS_PUBLISHED_DATE_LABEL,
@@ -12,7 +13,11 @@ import {
 } from "../lib/home-maintenance-checklist";
 
 export function GET() {
-  const curatedResources = [...resources, ovenIgniterResource];
+  const curatedResources = [
+    ...resources,
+    homeSystemsInspectionResource,
+    ovenIgniterResource,
+  ];
   const indexableProducts = products.filter((product) => product.slug === "dreame-pm20");
   const resourceLines = curatedResources
     .map(

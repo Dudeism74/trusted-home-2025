@@ -9,9 +9,11 @@ import { SiteHeader } from "./components/site-header";
 import { resources } from "./lib/resources";
 import { products, SITE_NAME, SITE_URL } from "./lib/products";
 import { featuredResources } from "./lib/resources";
+import { homeSystemsInspectionResource } from "./lib/home-systems-inspection-resource";
 import { ovenIgniterResource } from "./lib/oven-igniter-resource";
 
 const homepageFeaturedResources = [
+  homeSystemsInspectionResource,
   ovenIgniterResource,
   ...featuredResources.filter(
     (resource) => resource.slug !== "prevent-bathroom-mold-growth-steps",
@@ -114,16 +116,33 @@ export default function Home() {
             <h2>Problems worth diagnosing before replacement.</h2>
           </div>
           <p>
-            Start with our photographed Whirlpool oven repair, including the
-            connector mismatch and successful operating test. Then explore
-            source-backed checks for ventilation, moisture, appliances, and more.
+            Start with original field work from this house: a pre-service inspection
+            of the AC, hydronic boiler, and gas water heater, plus the photographed
+            Whirlpool oven repair. Then explore source-backed troubleshooting guides.
           </p>
         </div>
 
         <div className="product-grid">
           {homepageFeaturedResources.map((resource) => (
             <article className={`product-card ${resource.accent}`} key={resource.slug}>
-              {resource.slug === ovenIgniterResource.slug ? (
+              {resource.slug === homeSystemsInspectionResource.slug ? (
+                <Link
+                  href={`/${resource.slug}`}
+                  className="product-image"
+                  style={{ minHeight: 280, padding: 24 }}
+                  aria-label="Read the photographed home systems pre-service inspection"
+                >
+                  <Image
+                    src="/field/home-systems-pre-service/boiler-overview.webp"
+                    alt="Crown hydronic boiler photographed during a homeowner pre-service inspection"
+                    width={315}
+                    height={420}
+                    sizes="180px"
+                    style={{ height: 240, width: "auto", maxWidth: "100%" }}
+                    unoptimized
+                  />
+                </Link>
+              ) : resource.slug === ovenIgniterResource.slug ? (
                 <Link
                   href={`/${resource.slug}`}
                   className="product-image"
@@ -261,7 +280,7 @@ export default function Home() {
           <span>original diagnostic method</span>
         </div>
         <div>
-          <strong>{resources.length + 1}</strong>
+          <strong>{resources.length + 2}</strong>
           <span>curated troubleshooting resources</span>
         </div>
         <div>

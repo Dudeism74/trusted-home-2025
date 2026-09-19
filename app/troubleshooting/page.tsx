@@ -5,6 +5,7 @@ import { NewsletterForm } from "../components/newsletter-form";
 import { SiteFooter } from "../components/site-footer";
 import { SiteHeader } from "../components/site-header";
 import { getAnyResource } from "../lib/all-resources";
+import { homeSystemsInspectionResource } from "../lib/home-systems-inspection-resource";
 import { resources, type TroubleshootingResource } from "../lib/resources";
 import { ovenIgniterResource } from "../lib/oven-igniter-resource";
 import { SITE_NAME, SITE_URL } from "../lib/products";
@@ -16,7 +17,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/troubleshooting" },
 };
 
-const curatedResources = [...resources, ovenIgniterResource];
+const curatedResources = [
+  ...resources,
+  homeSystemsInspectionResource,
+  ovenIgniterResource,
+];
 
 const resourceGroups = [
   {
@@ -34,11 +39,14 @@ const resourceGroups = [
     ],
   },
   {
-    eyebrow: "Documented repair",
-    title: "A real repair with the evidence left in",
+    eyebrow: "Original field work",
+    title: "Real equipment with the evidence left in",
     description:
-      "The Whirlpool oven guide records the actual symptom, replacement decision, connector mismatch, original photographs, and successful final operating test.",
-    slugs: ["whirlpool-oven-igniter-glows-but-wont-heat"],
+      "Photographed work from this house, including a successful oven repair and a pre-service inspection of the AC, hydronic boiler, and gas water heater.",
+    slugs: [
+      "pre-service-home-hvac-water-heater-inspection",
+      "whirlpool-oven-igniter-glows-but-wont-heat",
+    ],
   },
 ];
 
