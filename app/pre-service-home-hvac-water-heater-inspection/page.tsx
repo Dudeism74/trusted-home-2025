@@ -68,7 +68,7 @@ function FieldFigure({
         alt={alt}
         width={width}
         height={height}
-        sizes="(max-width: 900px) 92vw, 32vw"
+        sizes={`(max-width: 680px) 92vw, ${width}px`}
         priority={priority}
         unoptimized
       />
