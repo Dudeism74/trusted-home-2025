@@ -10,15 +10,37 @@ const OPENAI_ADS_PIXEL_ID = "CJt53jFYSRyQWMHHfozm12";
 const ADSENSE_PUBLISHER_ID = "ca-pub-2173466789348999";
 
 const ga4Setup = `
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-window.gtag = gtag;
-gtag("js", new Date());
-gtag("config", "${GA4_MEASUREMENT_ID}", {
-  send_page_view: true,
-  allow_google_signals: false,
-  allow_ad_personalization_signals: false
-});
+(function () {
+  var qaKey = "the-qa-session-v1";
+  var qaSession = false;
+
+  try {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get("qa") === "1") {
+      window.sessionStorage.setItem(qaKey, "1");
+    }
+    qaSession = window.sessionStorage.getItem(qaKey) === "1";
+  } catch (_) {}
+
+  window.__trustedEssentialsQa = qaSession;
+  if (qaSession) return;
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  window.gtag = gtag;
+  gtag("js", new Date());
+  gtag("config", "${GA4_MEASUREMENT_ID}", {
+    send_page_view: true,
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false
+  });
+
+  var script = document.createElement("script");
+  script.async = true;
+  script.src = "https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}";
+  script.dataset.theAnalytics = "google-analytics";
+  document.head.appendChild(script);
+})();
 `;
 
 const openAIAdsPixelSetup = `
@@ -114,10 +136,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
-        />
         {children}
         <GoogleAnalyticsTracking />
         <OpenAIAdsTracking />
