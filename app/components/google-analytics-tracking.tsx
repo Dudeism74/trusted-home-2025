@@ -5,6 +5,7 @@ import { useEffect } from "react";
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
+    __trustedEssentialsQa?: boolean;
   }
 }
 
@@ -22,6 +23,8 @@ function currentPagePath(pathname: string) {
 
 export function GoogleAnalyticsTracking() {
   useEffect(() => {
+    if (window.__trustedEssentialsQa) return;
+
     function measureAmazonAffiliateClick(event: MouseEvent) {
       if (!(event.target instanceof Element)) return;
 
