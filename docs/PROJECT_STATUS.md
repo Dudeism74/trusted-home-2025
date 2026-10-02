@@ -1,5 +1,15 @@
 # Trusted Home Essentials project status
 
+## October 2, 2026 approved affiliate placements
+
+Jim explicitly approved adding and publishing the supplied Rubbermaid, TempPro TP50 Classic, and Gardus RLE202 links after the assistant identified these placements. Content commit `3fe264d87a489becdc01f2eb10278d492602b6ff` was pushed without force to `main` and verified remotely. Vercel production deployment `dpl_58wGh9VtfGU36NuHw9TnZUfRt2dq` is READY at that exact commit, with the existing custom domains assigned and no alias error. Live `/api/version` returned the same commit.
+
+Changed pages: `/refrigerator-not-cooling` after temperature measurement, `/prevent-bathroom-mold-growth-steps` in the humidity-trend step, and `/dryer-not-heating` in the airflow section. Each has exactly one contextual Amazon placement and the adjacent statement "As an Amazon Associate I earn from qualifying purchases." Exact supplied URLs retain `smarthome027-20`; no tracking URLs were rebuilt. Food safety remains ahead of shopping; the hygrometer is not presented as waterproof, a remote monitor, or a mold cure; the vent cleaner is conditional on suitable accessible intact duct within its 12-foot reach, with CLOCKWISE ONLY threaded-rod instructions and no claim to repair electrical no-heat faults. No firsthand product testing is claimed. Existing design, links, analytics, robots settings, and unrelated content are preserved.
+
+Verification: the Next.js Vercel build passed (47 generated routes); all four loopback Vercel runtime tests passed; ESLint passed for the three changed source files; diff whitespace checks passed. Full-repository ESLint reports three existing `react/no-unescaped-entities` errors in untouched `app/pre-service-home-hvac-water-heater-inspection/page.tsx` at lines 364, 387, and 438. Native Windows ARM cannot run the retained Cloudflare workerd install step; a locked install with lifecycle scripts disabled supported the successful Next.js build. No dependency or lockfile edits were made, and the Sites/Vinext build was not tested here.
+
+All three live pages returned HTTP 200. Isolated Chrome checks at 1440px and 390px verified one exact URL per page, adjacent disclosure, sponsored/new-tab attributes, placement context, preserved safety instructions, and no horizontal overflow. Screenshots were inspected. This does not establish merchant availability, commission attribution, full accessibility conformance, real-device behavior, or indexing. Gardus facts were checked against the manufacturer-linked RLE202 manual at <https://online.flippingbook.com/view/446779562/>. This documentation-only update preserves the verified content release above.
+
 Updated September 18, 2026. Read this handoff before making changes.
 
 ## Canonical property
