@@ -9,12 +9,21 @@ export type ResourceSource = {
 export type DiagnosticStep = {
   title: string;
   detail: string;
+  affiliateRecommendation?: AffiliateRecommendation;
+};
+
+export type AffiliateRecommendation = {
+  beforeLink: string;
+  label: string;
+  href: string;
+  afterLink: string;
 };
 
 export type ResourceSection = {
   kicker: string;
   title: string;
   paragraphs: string[];
+  affiliateRecommendation?: AffiliateRecommendation;
 };
 
 export type TroubleshootingResource = {
@@ -235,6 +244,8 @@ export const resources: TroubleshootingResource[] = [
   },
   {
     slug: "prevent-bathroom-mold-growth-steps",
+    reviewedDate: "2026-10-02",
+    reviewedDateLabel: "October 2, 2026",
     title: "How to Prevent Bathroom Mold by Fixing the Moisture Problem",
     metaTitle: "Prevent Bathroom Mold: Control Moisture and Ventilation",
     metaDescription:
@@ -266,6 +277,13 @@ export const resources: TroubleshootingResource[] = [
         title: "Watch the humidity trend, not one instant reading",
         detail:
           "A humidity meter can show whether the room spikes during a shower and then returns toward normal. If humidity stays elevated, investigate fan capacity, duct resistance, makeup air, and other moisture sources.",
+        affiliateRecommendation: {
+          beforeLink: "If you need a meter for these checks, the",
+          label: "TempPro TP50 Classic hygrometer on Amazon",
+          href: "https://www.amazon.com/dp/B01H1R0K68/ref=cm_sw_r_as_gl_api_gl_i_86DDS4FAMJYHWB45NJ6C?linkCode=ml1&tag=smarthome027-20&linkId=1157062c1ae396c1e1e7cc85923df984&gaOptInStatus=true",
+          afterLink:
+            "is an option for comparing local humidity readings before and after a shower. Keep it away from splashes: it is not waterproof or a remote monitor. Measuring humidity does not cure mold or fix a leak; use the trend to decide which moisture or ventilation problem needs attention.",
+        },
       },
     ],
     sections: [

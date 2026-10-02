@@ -14,9 +14,37 @@ import {
 import {
   RESOURCE_REVIEWED_DATE,
   RESOURCE_REVIEWED_DATE_LABEL,
+  type AffiliateRecommendation,
   type TroubleshootingResource,
 } from "../lib/resources";
 import { SITE_NAME, SITE_URL } from "../lib/products";
+
+function ContextualRecommendation({
+  recommendation,
+}: {
+  recommendation: AffiliateRecommendation;
+}) {
+  return (
+    <>
+      <p>
+        <strong>Affiliate link:</strong> As an Amazon Associate I earn from
+        qualifying purchases.
+      </p>
+      <p>
+        {recommendation.beforeLink}{" "}
+        <a
+          href={recommendation.href}
+          target="_blank"
+          rel="sponsored noopener noreferrer"
+          style={{ textDecoration: "underline", textUnderlineOffset: "3px" }}
+        >
+          {recommendation.label}
+        </a>{" "}
+        {recommendation.afterLink}
+      </p>
+    </>
+  );
+}
 
 export function ResourcePage({ resource }: { resource: TroubleshootingResource }) {
   const articleUrl = `${SITE_URL}/${resource.slug}`;
@@ -199,6 +227,11 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
                     <div>
                       <h3>{step.title}</h3>
                       <p>{linkContextually(step.detail)}</p>
+                      {step.affiliateRecommendation ? (
+                        <ContextualRecommendation
+                          recommendation={step.affiliateRecommendation}
+                        />
+                      ) : null}
                     </div>
                   </li>
                 ))}
@@ -214,6 +247,11 @@ export function ResourcePage({ resource }: { resource: TroubleshootingResource }
                 {section.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{linkContextually(paragraph)}</p>
                 ))}
+                {section.affiliateRecommendation ? (
+                  <ContextualRecommendation
+                    recommendation={section.affiliateRecommendation}
+                  />
+                ) : null}
               </div>
             </section>
           ))}

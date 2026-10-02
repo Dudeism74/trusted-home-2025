@@ -3,6 +3,8 @@ import type { TroubleshootingResource } from "./resources";
 export const additionalResources: TroubleshootingResource[] = [
   {
     slug: "refrigerator-not-cooling",
+    reviewedDate: "2026-10-02",
+    reviewedDateLabel: "October 2, 2026",
     title: "Refrigerator Not Cooling? Diagnose the Problem Before Food Spoils",
     metaTitle: "Refrigerator Not Cooling: What to Check First",
     metaDescription:
@@ -19,6 +21,14 @@ export const additionalResources: TroubleshootingResource[] = [
         title: "Measure the temperature instead of judging by touch",
         detail:
           "Use an appliance thermometer and confirm whether the fresh-food compartment is staying at 40°F or below. A measured temperature gives you a baseline and tells you how urgent the food-safety decision is.",
+        affiliateRecommendation: {
+          beforeLink:
+            "Protect perishable food first; do not wait for a thermometer delivery to act on a cooling failure. If you need an appliance thermometer for this check, the",
+          label: "Rubbermaid fridge/freezer thermometer on Amazon",
+          href: "https://www.amazon.com/dp/B005KDEFNK/ref=cm_sw_r_as_gl_api_gl_i_9YR55N35WVF808BCNS30?linkCode=ml1&tag=smarthome027-20&linkId=e0b55b597690be1a989b07b10d6753ef&gaOptInStatus=true",
+          afterLink:
+            "is one option for a separate temperature reading. Use a thermometer you already have if it is suitable, and keep the food-safety limits above ahead of any purchase decision.",
+        },
       },
       {
         title: "Confirm power and cooling controls",
@@ -196,6 +206,8 @@ export const additionalResources: TroubleshootingResource[] = [
   },
   {
     slug: "dryer-not-heating",
+    reviewedDate: "2026-10-02",
+    reviewedDateLabel: "October 2, 2026",
     title: "Dryer Runs but Does Not Heat? Check Power and Airflow First",
     metaTitle: "Dryer Not Heating: Power, Settings, Vent, or Heater?",
     metaDescription:
@@ -250,6 +262,14 @@ export const additionalResources: TroubleshootingResource[] = [
           "The U.S. Fire Administration advises cleaning the lint filter, checking that the vent behind the dryer is not damaged, crushed, or restricted, and confirming the exterior vent opens during operation. Poor airflow can make a dryer seem weak while also increasing fire risk.",
           "If a dryer heats but drying time has steadily increased, solve the airflow problem before assuming the heater is weak. A restricted system keeps moisture and heat in the machine instead of moving them outdoors.",
         ],
+        affiliateRecommendation: {
+          beforeLink:
+            "For lint removal, consider the",
+          label: "Gardus RLE202 LintEater vent cleaner on Amazon",
+          href: "https://www.amazon.com/dp/B0014CN8Y8/ref=cm_sw_r_as_gl_api_gl_i_HSCE0PCQWPZ3STG20TRQ?linkCode=ml1&tag=smarthome027-20&linkId=8a914e2f7ace738c2cac9777e4c14450&gaOptInStatus=true",
+          afterLink:
+            "only when the duct is suitable for rotary cleaning, accessible, intact, and within the kit's 12-foot reach. Follow the operator's manual: rotate its threaded rods CLOCKWISE ONLY, including during withdrawal, so the joints do not unscrew inside the duct. Use qualified vent service for damaged, inaccessible, unsuitable, or longer runs. This cleans lint from the airflow path; it does not repair an electrical no-heat fault.",
+        },
       },
       {
         kicker: "Do not turn diagnosis into live electrical work",
@@ -284,6 +304,10 @@ export const additionalResources: TroubleshootingResource[] = [
       {
         label: "U.S. Fire Administration: Clothes dryer fire safety",
         url: "https://www.usfa.fema.gov/downloads/pdf/publications/clothes_dryer_fire_safety_flyer.pdf",
+      },
+      {
+        label: "Gardus / HY-C: RLE202 LintEater operator's manual",
+        url: "https://online.flippingbook.com/view/446779562/",
       },
     ],
     relatedSlugs: [
