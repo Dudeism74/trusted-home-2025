@@ -1,4 +1,5 @@
 import { supportsSitesServices } from "../../../lib/server-capabilities";
+import { isValidEmailAddress } from "../../../lib/email-address";
 import { and, asc, count, eq, gte, sql } from "drizzle-orm";
 import { getDb } from "../../../../db";
 import { comments } from "../../../../db/schema";
@@ -6,8 +7,6 @@ import { CORDLESS_TOOLS_SLUG } from "../../../lib/cordless-tools-guide";
 import { getProduct } from "../../../lib/products";
 
 export const dynamic = "force-dynamic";
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function normalizeText(value: string) {
   return value.replace(/\s+/g, " ").trim();
@@ -107,7 +106,7 @@ export async function POST(
         { status: 400 },
       );
     }
-    if (email && (!EMAIL_PATTERN.test(email) || email.length > 254)) {
+    if (email && !isValidEmailAddress(email)) {
       return Response.json(
         { error: "Enter a valid email address or leave it blank." },
         { status: 400 },
