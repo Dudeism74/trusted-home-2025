@@ -1,11 +1,10 @@
 import { supportsSitesServices } from "../../lib/server-capabilities";
+import { isValidEmailAddress } from "../../lib/email-address";
 import { sql } from "drizzle-orm";
 import { getDb } from "../../../db";
 import { subscribers } from "../../../db/schema";
 
 export const dynamic = "force-dynamic";
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
   if (!supportsSitesServices()) {
@@ -30,7 +29,7 @@ export async function POST(request: Request) {
     const email = payload.email?.trim().toLowerCase() ?? "";
     const source = (payload.source?.trim() || "site").slice(0, 100);
 
-    if (!EMAIL_PATTERN.test(email) || email.length > 254) {
+    if (!isValidEmailAddress(email)) {
       return Response.json(
         { error: "Enter a valid email address." },
         { status: 400 },
