@@ -9,7 +9,7 @@ function toRouteErrorMessage(error: unknown) {
   const combined = `${message}\n${detail}`;
 
   if (combined.includes("no such table") || combined.includes('from "notes"')) {
-    return "The notes table is unavailable. Generate the migration locally with `npm run db:generate`, then deploy so the platform can apply the generated SQL to the real D1 database.";
+    return "The notes table is unavailable. Follow the database schema-change process in README.md and commit the reviewed SQL migration, then deploy so the platform can apply it to the real D1 database.";
   }
 
   return message;
