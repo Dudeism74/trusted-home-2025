@@ -28,7 +28,22 @@ Scripts that need writable project-scoped home, npm, XDG, and temporary paths us
 - `db/index.ts` reads the D1 binding from the Cloudflare Worker environment
 - `db/schema.ts` starts intentionally empty
 - `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
+- `drizzle.config.ts` records the schema and migration paths for future tooling
+
+### Database schema changes
+
+The application retains Drizzle ORM, its D1 schema, and the committed SQL
+migrations under `drizzle/`. Builds and deployments use these files without a
+migration generator. `drizzle-kit` is deliberately not installed: its current
+stable dependency graph includes an obsolete loader with an affected esbuild
+version ([GHSA-67mh-4wv8-2f99](https://github.com/advisories/GHSA-67mh-4wv8-2f99)).
+
+Before a future schema change, select and validate a patched migration generator
+in an isolated development environment. Review its compatibility with the
+retained ORM and migration metadata, inspect the generated SQL, and commit the
+reviewed migration files. Do not reinstall the affected generator or execute a
+database migration as part of an application build. This change does not alter
+the existing schema, migrations, or runtime database access.
 
 ## Workspace Auth Headers
 
@@ -96,7 +111,6 @@ actions tied to the current ChatGPT user. Leave public content anonymous.
 - `npm run start`: start the built Vinext application
 - `npm test`: build, validate, and verify the rendered development-preview metadata
 - `npm run validate:artifact`: recheck an existing artifact's manifest and ESM `default.fetch` export
-- `npm run db:generate`: generate Drizzle migrations after schema changes
 
 Use build and validation commands for targeted diagnosis after a remote failure, not as part of the normal checkpoint path.
 

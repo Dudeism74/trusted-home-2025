@@ -15,8 +15,7 @@
     "indexnow:dry-run": "INDEXNOW_DRY_RUN=1 node scripts/submit-indexnow.mjs",
     "test": "npm run build && node --experimental-loader=./scripts/cloudflare-workers-loader.mjs --test tests/rendered-html.test.mjs",
     "validate:artifact": "bash scripts/validate-artifact.sh",
-    "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next",
-    "db:generate": "bash scripts/sites-env.sh -- drizzle-kit generate"
+    "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",
@@ -32,7 +31,6 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
     "@vitejs/plugin-rsc": "0.5.26",
-    "drizzle-kit": "0.31.10",
     "eslint": "9.39.4",
     "eslint-config-next": "16.4.1",
     "react-server-dom-webpack": "19.2.8",
