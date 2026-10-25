@@ -80,6 +80,10 @@ ${resourceLines}
 
 ## Product buying guides
 
+### Outdoor security cameras without a subscription
+${SITE_URL}/guides/outdoor-security-cameras-without-subscription
+Compare aosu 3K 5MP solar event recording, Tapo C325WB plug-in local recording and Reolink RLC-810A wired PoE. Includes storage, shade, Wi-Fi, hardware revision and continuous-recording limitations. Specifications checked October 25, 2026; no hands-on testing claimed.
+
 ${cordlessToolsLine}
 
 ${guideLines}

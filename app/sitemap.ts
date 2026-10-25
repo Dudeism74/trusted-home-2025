@@ -33,6 +33,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const resourceLastModified = new Date(`${RESOURCE_REVIEWED_DATE}T12:00:00Z`);
   const staticPages = [
     {
+      path: "/guides/outdoor-security-cameras-without-subscription",
+      priority: 0.85,
+      changeFrequency: "monthly" as const,
+      lastModified: new Date("2026-10-25T12:00:00Z"),
+    },
+    {
       path: "",
       priority: 1,
       changeFrequency: "weekly" as const,
@@ -48,7 +54,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       path: "/guides",
       priority: 0.75,
       changeFrequency: "weekly" as const,
-      lastModified: productLastModified,
+      lastModified: new Date("2026-10-25T12:00:00Z"),
     },
     {
       path: "/" + CORDLESS_TOOLS_SLUG,
