@@ -57,6 +57,10 @@ export default function GuidesIndex() {
       "@type": "ItemList",
       itemListElement: [
         { name: categoryGuide.name, url: SITE_URL + categoryGuide.url },
+        {
+          name: "Outdoor security cameras without a subscription",
+          url: SITE_URL + "/guides/outdoor-security-cameras-without-subscription",
+        },
         ...publicProducts.map((product) => ({
           name: product.name,
           url: SITE_URL + "/guides/" + product.slug,
@@ -127,6 +131,35 @@ export default function GuidesIndex() {
         </header>
 
         <div className="guide-directory-list">
+          <article className="guide-directory-card" style={{ gridTemplateColumns: "1fr" }}>
+            <div className="guide-directory-content">
+              <p className="product-category">Outdoor home security</p>
+              <h2>
+                <a href="/guides/outdoor-security-cameras-without-subscription">
+                  Outdoor security cameras without a subscription
+                </a>
+              </h2>
+              <p className="product-answer">
+                Compare the aosu 3K 5MP solar camera with Tapo C325WB and Reolink RLC-810A.
+                Choose between motion clips and continuous recording, then check power,
+                storage, sunlight and network requirements before buying.
+              </p>
+              <dl>
+                <div>
+                  <dt>Best fit</dt>
+                  <dd>Homeowners choosing local recording without a required monthly plan.</dd>
+                </div>
+                <div>
+                  <dt>Skip if</dt>
+                  <dd>You need hands-on image-quality tests or a professionally monitored alarm service.</dd>
+                </div>
+              </dl>
+              <a className="button button-primary" href="/guides/outdoor-security-cameras-without-subscription">
+                Compare subscription-free cameras
+              </a>
+            </div>
+          </article>
+
           <article className="guide-directory-card coral category-guide-card">
             <Link
               className="guide-directory-image"
